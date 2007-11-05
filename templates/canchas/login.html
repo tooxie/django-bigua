@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block css %}
+        <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
+{% endblock %}
+{% block content %}
+    <fieldset>
+        <legend>Entrar</legend>
+        <form method="post" action="/login/">
+            {{ form.as_p }}
+            <input type="submit" name="login" value="Entrar!" />
+        </form>
+    </fieldset>
+{% endblock %}

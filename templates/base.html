@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Bigu&aacute; Tenis - http://tenis.bigua.com.uy/</title>
+        <link rel="stylesheet" media="screen" href="{{ CSS_PATH }}layout.css" type="text/css" />
+        <link rel="stylesheet" media="print" href="{{ CSS_PATH }}print.css" type="text/css" />
+        {% block css %}{% endblock %}
+        <meta name="Title" content="Club Biguá - http://www.bigua.com.uy/" />
+        <meta name="Author" content="Alvaro Mouriño" />
+        <meta name="Subject" content="Club Biguá" />
+        <meta name="Description" content="Reserva de canchas de tenis del Club Biguá" />
+        <meta name="Keywords" content="deportes,uruguay,bigua,tenis,reserva" />
+        <meta name="Generator" content="Vi IMproved 7.1" />
+        <meta name="Language" content="Spanish" />
+        <meta name="Revisit" content="15 days" />
+        <meta name="Distribution" content="Local" />
+        <meta name="Robots" content="All" />
+        {% block javascript %}{% endblock %}
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <h1><a href="/" id="headerlink" title="Volver al inicio"><span id="home">Club Bigu&aacute;</span></a></h1>
+                <img src="{{ MEDIA_URL }}images/header.jpg" />
+            </div>
+            <div id="main_wrapper">
+                <div id="main">
+                    <div id="content">
+                        {% block content %}http://tenis.bigua.com.uy/{% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <!-- Silence is golden -->
+            </div>
+        </div>
+    </body>
+</html>
