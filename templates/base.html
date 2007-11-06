@@ -1,3 +1,4 @@
+{% load render_menu %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -18,20 +19,63 @@
         {% block javascript %}{% endblock %}
     </head>
     <body>
-        <div id="wrapper">
+        <div id="wrapper" class="clearfix">
             <div id="header">
                 <h1><a href="/" id="headerlink" title="Volver al inicio"><span id="home">Club Bigu&aacute;</span></a></h1>
-                <img src="{{ MEDIA_URL }}images/header.jpg" />
             </div>
-            <div id="main_wrapper">
-                <div id="main">
-                    <div id="content">
-                        {% block content %}http://tenis.bigua.com.uy/{% endblock %}
-                    </div>
+            <div id="titulo">
+                <div class="escondido">
+                    <a href="#content">Ir al contenido.</a>
+                </div>
+                <div class="navigation">
+                    Home &rsaquo; Noticias &rsaquo; Beach Tennis
                 </div>
             </div>
+            <div id="littlebar">
+                <!-- hack para correr el contenido sin el background -->
+                <div id="littlebarcontent">
+                    {% if user.is_authenticated %}
+                        <span class="welcome">Bienvenido {{ user }}!</span> <a href="/logout/" class="onblack">Salir de mi cuenta</a>
+                    {% else %}
+                        <span>Bienvenido/a</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="wrapper">
+                <div id="wrapperinside">
+                    <div id="menu">
+                        <h3>Men&uacute;</h3>
+                        {% render_menu Principal %}
+                        <div class="banners">
+                            <img src="{{ MEDIA_URL }}images/banner.gif" alt="Espacio para publicidad." />
+                        </div>
+                    </div>
+                    <div id="content">
+                        <p>
+                            Bienvenido al sitio de Bigu&aacute; Tenis, aqu&iacute; podr&aacute;s realizar reservas online en cuesti&oacute;n de segundos!
+                        </p>
+                        {% block content %}http://tenis.bigua.com.uy/{% endblock %}
+                    </div>
+                    <div id="news">
+                        <h3>Noticias</h3>
+                        <div class="fotonoticia">
+                            <img src="{{ MEDIA_URL }}images/beachtennis.jpg" alt="Campeonato de beach tennis!" />
+                        </div>
+                        <p>
+                            Como todos los a&ntilde;os el Club Bigu&aacute; organiza el 5to Campeonato Sudamericano de Beach Tennis en la playa pocitos.
+                        </p>
+                        <div class="fotonoticia">
+                            <img src="{{ MEDIA_URL }}images/mannschaft.jpg" alt="Campeonato de beach tennis!" />
+                        </div>
+                        <p>
+                            Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, grandes premios y muchas sorpresas que iremos descubriendo juego a juego.
+                        </p>
+                    </div>
+            </div>
             <div id="footer">
-                <!-- Silence is golden -->
+                <div id="footnotes">
+                    Desarrollado por <a href="http://www.mourino.net/" class="onblack">Alvaro Mouri&ntilde;o</a> para la materia An&aacute;lisis de Sistemas, Universidad ORT Uruguay.
+                </div>
             </div>
         </div>
     </body>

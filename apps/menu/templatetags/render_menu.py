@@ -1,5 +1,5 @@
 from django.template import Library, Node
-from mysite.menu.models import Menu, Link
+from menu.models import Menu, Link
 from string import lower
 
 register = Library()

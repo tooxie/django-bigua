@@ -34,7 +34,10 @@ def do_login(request):
                 if 'next' in request.POST:
                     return HttpResponseRedirect(request.POST['next'])
         else:
-            return login(request)
+            return auth.login(request)
 
     return HttpResponseRedirect('/')
 
+def do_logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
