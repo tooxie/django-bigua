@@ -155,13 +155,14 @@ class CanchaInhabilitada(models.Model):
         verbose_name_plural = _(u'Canchas Inhabilitadas')
 
 class Reserva(models.Model):
-
     socio = models.ForeignKey(User, related_name='reservas',
         help_text=_(u'Socio a quien se le realiza la reserva.'))
     cancha = models.ForeignKey(Cancha, related_name='reservas',
         help_text=_(u'Cancha que se desea alquilar.'))
     desde = models.DateTimeField(_(u'Fecha'),
         help_text=_(u'Día y hora de comienzo de la reserva. Formato de fecha: aaaa-mm-dd'))
+    permitir_admin_cancelar = models.BooleanField(_(u'Administrador puede cancelar'), default=True,
+        help_text=_(u'¿Desea permitir que un administrador pueda cancelar su reserva? Esto es útil para cancelar reservas por teléfono, recuerde que si no puede cancelar su reserva con anticipación será sancionado.'))
     marca_temporal = models.DateTimeField(_(u'Reservado el'), editable=False,
         help_text=_(u'Fecha y hora en que fue creada la reserva. Formato de fecha: aaaa-mm-dd'))
     cancelada = models.BooleanField(_(u'Cancelar'),
@@ -182,6 +183,11 @@ class Reserva(models.Model):
         else:
             self.cancelado_por=usuario
         self.cancelado_el=datetime.now()
+        super(Reserva, self).save()
+
+    #FIXME: Traer la hora hasta la que la reserva esta vigente.
+    def get_hasta(self):
+        desde = timedelta()
         super(Reserva, self).save()
 
     #TODO: Traer una cancha libre cualquiera a una hora determinada. Cumpliendo que:

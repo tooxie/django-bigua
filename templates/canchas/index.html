@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
+{% load repeat %}
 {% block content %}
     <fieldset>
-        <legend>Reservas</legend>
-        No tiene reservas.
+        <legend>Mis Reservas</legend>
+        {% if reservas %}
+            {% for reserva in reservas %}
+                Ud tiene una {{ reserva }}
+            {% endfor %}
+        {% else %}
+            No tiene reservas.
+        {% endif %}
     </fieldset>
     <fieldset>
         <legend>Reservar!</legend>
-        Realizar una reserva.
+        Hoy {{ hoy }}
+        <div>
+            <table border="1">
+                <tr>
+                    <td>Hora</td>
+                    <td>{% repeat "Hola" 4 %}</td>
+                </tr>
+            </table>
+        </div>
+
+        Ma&ntilde;ana {{ maniana }}
+        <div>
+        </div>
     </fieldset>
 {% endblock %}

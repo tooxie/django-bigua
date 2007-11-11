@@ -21,6 +21,7 @@
     <body>
         <div id="wrapper" class="clearfix">
             <div id="header">
+                <span class="searcharea"><input type="text" name="searchbox" id="searchbox"/> <input type="submit" name="submitsearch" id="submitsearch" value="Buscar!" /></span>
                 <h1><a href="/" id="headerlink" title="Volver al inicio"><span id="home">Club Bigu&aacute;</span></a></h1>
             </div>
             <div id="titulo">
@@ -28,20 +29,19 @@
                     <a href="#content">Ir al contenido.</a>
                 </div>
                 <div class="navigation">
-                    Home &rsaquo; Noticias &rsaquo; Beach Tennis
+                    <span class="hidden">Ud. est&aacute; en: </span>Inicio &rsaquo; Noticias &rsaquo; Beach Tennis
                 </div>
             </div>
             <div id="littlebar">
                 <!-- hack para correr el contenido sin el background -->
                 <div id="littlebarcontent">
                     {% if user.is_authenticated %}
-                        <span class="welcome">Bienvenido {{ user }}!</span> <a href="/logout/" class="onblack">Salir de mi cuenta</a>
+                        <span class="welcome">Bienvenido {{ user.first_name }}!</span> <a href="/logout/" class="onblack">Salir de mi cuenta</a>
                     {% else %}
                         <span>Bienvenido/a</span>
                     {% endif %}
                 </div>
             </div>
-            <div id="wrapper">
                 <div id="wrapperinside">
                     <div id="menu">
                         <h3>Men&uacute;</h3>

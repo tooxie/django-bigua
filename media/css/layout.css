@@ -22,6 +22,25 @@ div.escondido {
     display: none;
 }
 
+input#searchbox {
+    border: 1px inset black;
+    margin-top: 20px;
+    width: 250px;
+}
+
+input#submitsearch {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.hidden {
+    display: none;
+}
+
+.searcharea {
+    margin-right: 40px;
+}
+
 a:link {
     /* color: #666666; */
     color : #7D0D00; 
@@ -53,16 +72,19 @@ div#wrapper {
     background-image: url(/media/images/float.gif);
     background-position center top;
     background-repeat: repeat-y;
-    margin: 0 auto;
     text-align: left;
-    /* width: 868px; */
-    width: 908px;
+    width: 928px;
+    margin: 0 auto;
 }
 
-div#header, a#headerlink {
+div#header {
     background-image: url(/media/images/top.jpg);
     background-position: center top;
     background-repeat: no-repeat;
+    text-align: right;
+}
+
+div#header, a#headerlink {
     margin: 0;
     padding: 0;
     width: 908px;
@@ -109,11 +131,6 @@ div#littlebarcontent {
 
 a.onblack {
     color: white;
-}
-
-div#wrapper {
-    width: 848px;
-    margin: 0 auto;
 }
 
 div#wrapperinside {

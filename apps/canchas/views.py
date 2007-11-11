@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from decorators import render_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django import newforms as forms
@@ -41,3 +42,12 @@ def do_login(request):
 def do_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/')
+
+"""
+def tablas(request):
+    from models import 
+"""
+
+def reservas(request):
+    from models import Reserva
+    reservas = Reserva.filter(socio=request.user, hasta__gt=datetime.now())
