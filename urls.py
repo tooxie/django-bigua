@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     (r'^login/$', 'canchas.views.do_login'),
     (r'^logout/$', 'canchas.views.do_logout'),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': path_to_media }),
+    (r'^reservar/(?P<cancha>\d*)/(?P<dia>\d*)/(?P<hora>\d*)/$', 'canchas.views.reservar'),
 
     # Uncomment this for admin:
     (r'^admin/', include('django.contrib.admin.urls')),

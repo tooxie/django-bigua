@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
-{% load repeat %}
+{% block javascript %}
+<script type="text/javascript" src="/media/js/behaviour.js"></script>
+<script type="text/javascript" src="/media/js/jquery.js"></script>
+<script type="text/javascript" src="/media/js/functions.js"></script>
+{% endblock %}
 {% block content %}
     <fieldset>
         <legend>Mis Reservas</legend>
@@ -13,17 +17,49 @@
     </fieldset>
     <fieldset>
         <legend>Reservar!</legend>
-        Hoy {{ hoy }}
-        <div>
-            <table border="1">
+        <p id="hoy_link">
+            Hoy {% now "d-m-Y" %}
+        </p>
+        <div id="hoy">
+            <table id="tabla_hoy">
                 <tr>
-                    <td>Hora</td>
-                    <td>{% repeat "Hola" 4 %}</td>
+                    <td style="text-align: center;">Hora</td>
+                    {% for cancha in canchas %}
+                        <td style="text-align: center;">{{ cancha.nombre }}</td>
+                    {% endfor %}
                 </tr>
+                {{ tabla_hoy }}
+<!--
+                {% for hora in horarios %}
+                    <tr>
+                        <td>{{ hora }}:00 hs.</td>
+                        {% for cancha in canchas %}
+                            <td>
+                                {% if hoy.hora %}
+                                    Si
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+-->
             </table>
         </div>
 
-        Ma&ntilde;ana {{ maniana }}
+        <p id="maniana_link">
+            Ma&ntilde;ana {{ maniana }}
+        </p>
+        <div id="maniana">
+            <table id="tabla_maniana">
+                <tr>
+                    <td style="text-align: center;">Hora</td>
+                    {% for cancha in canchas %}
+                        <td style="text-align: center;">{{ cancha.nombre }}</td>
+                    {% endfor %}
+                </tr>
+                {{ tabla_man }}
+            </table>
+        </div>
         <div>
         </div>
     </fieldset>

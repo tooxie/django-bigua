@@ -18,7 +18,7 @@ label {
     clear: none;
 }
 
-div.escondido {
+.escondido {
     display: none;
 }
 
@@ -33,11 +33,12 @@ input#submitsearch {
     border: 1px solid black;
 }
 
-.hidden {
-    display: none;
-}
-
 .searcharea {
+    display: block;
+    float: right;
+    clear: none;
+    width: 400px;
+    margin: 0;
     margin-right: 40px;
 }
 
@@ -142,6 +143,7 @@ div#wrapperinside {
 
 div#content {
     width: 523px;
+    *width: 503px;
     margin-left: 10px;
     float: left;
     clear: none;
@@ -187,7 +189,6 @@ fieldset {
     border-width: 0;
     border-top-width: 2px;
     margin-bottom: 20px;
-    width: 80%;
 }
 
 ul.principal, ul.principal li {
@@ -233,4 +234,30 @@ div.navigation {
     color: white;
     margin-left: 40px;
     margin-top: 50px;
+}
+
+#tabla_hoy, #tabla_maniana {
+    border-width: 0;
+    background-color: white;
+    color: black;
+    width: 100%;
+}
+
+#tabla_hoy td, #tabla_maniana td {
+    border: 1px solid black;
+}
+
+td.libre {
+    background-color: green;
+}
+
+td.ocupada {
+    background-color: red;
+}
+
+td.libre a, td.ocupada a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }

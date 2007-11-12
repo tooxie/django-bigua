@@ -2,6 +2,8 @@
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.db import models
 from multilingual.translation import Translation
 from datetime import datetime, timedelta
@@ -16,6 +18,25 @@ class Club(models.Model):
     class Translation(Translation):
         direccion = models.CharField(_(u'Dirección'), max_length=150, blank=True, null=True,
             help_text=_(u'Dirección física del club. Puede quedar vacío.'))
+
+    # Si no se seteo una hora de comienzo y una de fin de alquiler, defaultea a 9 - 22
+    def get_horas(self):
+        try:
+            inicio = Configuracion.objects.get(clave='hora_inicio').valor
+            try:
+                fin = Configuracion.objects.get(clave='hora_fin').valor
+            except:
+                fin = 22
+        except:
+            inicio = 9
+            fin = 22
+
+        horas = {}
+        if inicio < fin:
+            while inicio < fin:
+                horas[inicio] = inicio
+                inicio += 1
+        return horas
 
     def __unicode__(self):
         return self.nombre
@@ -74,6 +95,18 @@ class Socio(models.Model):
         verbose_name = _(u'Socio')
         verbose_name_plural = _(u'Socios')
 
+class Invitado(models.Model):
+    nombre = models.CharField(_(u'Nombre'), max_length=100,
+        help_text=_(u'Nombre del invitado.'))
+    documento = models.CharField(_(u'Documento de Identidad'), max_length=10,
+        help_text=_(u'Documento de identidad del invitado.'))
+
+    def __unicode__(self):
+        if self.id is not None:
+            return _(u'%(nombre)s, %(documento)s') % { 'nombre': self.nombre, 'documento': self.documento }
+        else:
+            return 'Invitado'
+
 class Sancion(models.Model):
     socio = models.ForeignKey(User, related_name='sancion',
         help_text=_(u'Socio sancionado.'))
@@ -121,10 +154,23 @@ class Cancha(models.Model):
             help_text=_(u'Nombre de la cancha.'))
 
     def __unicode__(self):
-        return _(u'%(id)d (%(nombre)s)') % { 'nombre': self.nombre, 'id': self.id }
+        if self.nombre is not None:
+            return self.nombre
+        else:
+            return 'Cancha'
 
-    def esta_habilitada(self):
-        pass#self.
+    def esta_libre(self, hora, cuando):
+        dia = datetime.today().day
+        mes = datetime.today().month
+        anio = datetime.today().year
+        if cuando == 'maniana':
+            #FIXME: Si es el último día del mes, esto no anda.
+            dia += 1
+        try:
+            reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora))
+        except:
+            return True
+        return False
 
     class Admin:
         pass
@@ -159,6 +205,10 @@ class Reserva(models.Model):
         help_text=_(u'Socio a quien se le realiza la reserva.'))
     cancha = models.ForeignKey(Cancha, related_name='reservas',
         help_text=_(u'Cancha que se desea alquilar.'))
+    content_type = models.ForeignKey(ContentType, editable=False)
+    object_id = models.PositiveIntegerField(editable=False)
+    invitado = generic.GenericForeignKey()
+    # invitado = generic.GenericForeignKey('content_type', 'object_id')
     desde = models.DateTimeField(_(u'Fecha'),
         help_text=_(u'Día y hora de comienzo de la reserva. Formato de fecha: aaaa-mm-dd'))
     permitir_admin_cancelar = models.BooleanField(_(u'Administrador puede cancelar'), default=True,
@@ -173,7 +223,7 @@ class Reserva(models.Model):
         help_text=_(u'Dar de baja la reserva. Formato de fecha: aaaa-mm-dd'))
 
     def __unicode__(self):
-        return _(u'Cancha %(cancha)s reservada por %(socio)s de %(desde)s a %(hasta)s')
+        return 'Reserva'# _(u'Cancha %(cancha)s reservada por %(socio)s de %(desde)s a %(hasta)s') % { 'cancha': self.cancha, 'socio': self.socio, 'desde}
 
     #TODO: Chequear que Reservera.cancelar() ande.
     def cancelar(self, usuario=None):
@@ -205,10 +255,19 @@ class Reserva(models.Model):
             if self.cancha.desactivada:
                 from exceptions import CanchaNoDisponibleError
                 raise CanchaNoDisponibleError, self.cancha
+            #FIXME: Refucktion! Si me reserva para cualquier día que no sea hoy, se
+            # toma como que reserva para mañana. Eso apesta.
+            if self.desde.day == datetime.today().day:
+                dia = 'hoy'
+            else:
+                dia = 'maniana'
             # ¿Existen reservas para esta cancha?
-            if self.cancha_reservada():
+            if not self.cancha.esta_libre(self.desde.hour, dia):
                 from exceptions import CanchaNoDisponibleError
-                raise ReservaSuperpuestaError, self
+                raise ReservaSuperpuestaError
+            #FIXME: Hardcoded! Si no me ingresan un invitado meto a prepo el invitado con id 1.
+            if not self.content_type_id:
+                self.invitado = Invitado.objects.get(id=1)
 
             self.marca_temporal = datetime.now()
         super(Reserva, self).save()
@@ -224,7 +283,6 @@ class Reserva(models.Model):
         else:
             return False
         reservas = Reserva.objects.filter(desde_dia__exact=self.desde_dia).exclude(desde_hora__lte=self.desde_hora-self.duracion)
-        print reservas
         if reservas:
             return True
         else:
