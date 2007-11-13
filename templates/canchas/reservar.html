@@ -1,0 +1,39 @@
+{% extends "canchas/index.html" %}
+{% block content %}
+        <h2>Verifique su Reserva</h2>
+        <form method="post" action="/reservar/" id="reservaform">
+            <input type="hidden" name="dia" id="dia" value="{{ dia }}" />
+            <input type="hidden" name="hora" id="hora" value="{{ hora }}" />
+            <input type="hidden" name="cancha" id="cancha" value="{{ cancha_id }}" />
+            <p>
+                Usted desea jugar el d&iacute;a <strong>{{ dia }}</strong> a las <strong>{{ hora }}:00 horas</strong> en la cancha "<strong>{{ cancha }}</strong>" con un costo de <strong>$U{{ costo }}</strong>.
+            </p>
+            <h3>&iquest;Con qui&eacute;n va a jugar?</h3>
+            <p>
+                Ingrese el n&uacute;mero de socio de su compa&ntilde;ero.
+            </p>
+            <p>
+                {{ socio_form.as_p }}
+            </p>
+            <p>
+                Si su compa&ntilde;ero no es socio, no se preocupe, puede ingresar nombre y c&eacute;dula de la persona.
+            </p>
+            <p>
+                {{ invitado_form.as_p }}
+            </p>
+            <p>
+                Una vez que haya verificado los datos de la reserva, presione el bot&oacute;n para confirmarla.
+            </p>
+            <p>
+                <div>
+                    <label for="admin_cancela">Cancelable:</label> <input type="checkbox" name="admin_cancela" id="admin_cancela" checked />
+                </div>
+                <div class="comentario">
+                    Esto es &uacute;til cuando no tiene una computadora cerca para realizar la baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede darla de baja.
+                </div>
+            </p>
+            <p>
+                <button type="submit" name="confirmar" id="confirmar" value="confirmar"><img src="/media/images/tick.gif" /> Confirmar!</button>
+            </p>
+        </form>
+{% endblock %}
