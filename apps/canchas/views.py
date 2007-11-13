@@ -61,7 +61,7 @@ def tablas(request):
             pass
     canchas = Cancha.objects.filter(desactivada=False)
     #Solo se puede reservar a las horas en punto.
-    club = Club.objects.get(nombre='Biguá')
+    club = Club.objects.get(id=1)
     horas = club.get_horas()
     html_hoy, html_man = '', ''
     #FIXME: Un FIXME grande como una casa!!!
@@ -135,8 +135,11 @@ def do_reservar(request):
             socio_form = ReservaSocioForm(post)
             if socio_form.is_valid():
                 s=User.objects.get(id=post['socio'])
-                print s
-                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=s, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
+                if post['admin_cancela'] == 'on':
+                    admin_cancela = True
+                else:
+                    admin_cancela = False
+                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=s, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])), permitir_admin_cancelar=admin_cancela)
                 r.save();
                 return HttpResponseRedirect('/')
         else:

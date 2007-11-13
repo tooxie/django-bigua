@@ -287,3 +287,10 @@ form#cancelarform, form#imprimirform {
     float: left;
     clear: none;
 }
+
+.comentario {
+    border: 1px dashed black;
+    background-color: white;
+    color: black;
+    padding: 3px;
+}
