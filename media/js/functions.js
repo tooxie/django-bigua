@@ -19,8 +19,12 @@ function switch_visibility(obj, dis) {
 function atLoadTime() {
         $("#hoy").toggle();
         $("#maniana").toggle();
-        _('hoy_link').innerHTML = '<a href="#" id="hoy_switch">' + _('hoy_link').innerHTML + '</td>';
-        _('maniana_link').innerHTML = '<a href="#" id="maniana_switch">' + _('maniana_link').innerHTML + '</td>';
+        if(_('hoy_link')) {
+            _('hoy_link').innerHTML = '<a href="#" id="hoy_switch">' + _('hoy_link').innerHTML + '</td>';
+        }
+        if(_('maniana_link')) {
+            _('maniana_link').innerHTML = '<a href="#" id="maniana_switch">' + _('maniana_link').innerHTML + '</td>';
+        }
 }
 
 var bigua_rules = {
@@ -37,6 +41,16 @@ var bigua_rules = {
         element.onclick = function() {
             $("#maniana").addClass("ohmy").toggle("slow");
             return false;
+        }
+    },
+    'form#cancelarform' : function(element) {
+        element.onsubmit = function() {
+            alert('hola');
+            if(confirm('Realmente desea eliminar su reserva?')) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 };

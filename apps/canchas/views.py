@@ -1,4 +1,7 @@
+# coding=UTF-8
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
 from decorators import render_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django import newforms as forms
@@ -44,9 +47,18 @@ def do_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/')
 
+# Forgive me Guido for I have sin...
+@login_required
 def tablas(request):
     from models import Cancha
 
+    if not request.user.get_profile().puede_reservar():
+        try:
+            r=request.user.reservas.get(desde__gt=datetime.now())
+            mes = { 1: _(u'Enero'), 2: _(u'Febrero'), 3: _(u'Marzo'), 4: _(u'Abril'), 5: _(u'Mayo'), 6: _(u'Junio'), 7: _(u'Julio'), 8: _(u'Agosto'), 9: _(u'Setiembre'), 10: _(u'Octubre'), 11: _(u'Noviembre'), 12: _(u'Diciembre') }
+            return { 'puede_reservar': False, 'mes': mes[datetime.today().month], 'dia': r.desde.day, 'hora': r.desde.hour, 'cancha': r.cancha.nombre, 'id': r.id, 'invitado': r.invitado }
+        except Reserva.DoesNotExist:
+            pass
     canchas = Cancha.objects.filter(desactivada=False)
     #Solo se puede reservar a las horas en punto.
     club = Club.objects.get(nombre='Biguá')
@@ -81,8 +93,68 @@ def tablas(request):
             # maniana[hora] = cancha.esta_libre(hora, 'maniana')
 
     maniana = "%(dia)i-%(mes)i-%(anio)i" % { 'dia': datetime.today().day + 1, 'mes': datetime.today().month, 'anio': datetime.today().year }
-    return { 'canchas': canchas, 'horarios': horas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man }
+    return { 'canchas': canchas, 'horarios': horas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man, 'puede_reservar': request.user.get_profile().puede_reservar() }
 
 def reservas(request):
     from models import Reserva
     reservas = Reserva.filter(socio=request.user, hasta__gt=datetime.now())
+
+@login_required
+@to_response
+def reservar(request, **kwargs):
+    from django.shortcuts import get_object_or_404
+    from forms import ReservaSocioForm, ReservaInvitadoForm
+
+    hora = kwargs['hora']
+    dia = kwargs['dia']
+    cancha_id = kwargs['cancha']
+    """
+    if datetime.today().day == int(dia):
+        dia = "hoy (%s)" % dia
+    else:
+        dia = "ma&ntilde;ana (%s)" % dia
+    """
+    # reserva = Reserva(socio=request.user, cancha=cancha_id, invitado)
+    cancha = get_object_or_404(Cancha, id=cancha_id)
+    if request.method == 'POST':
+        socio = ReservaSocioForm(request.POST)
+        invitado = ReservaInvitadoForm(request.POST)
+    else:
+        socio = ReservaSocioForm()
+        invitado = ReservaInvitadoForm()
+    return 'reservar.html', { 'dia': dia, 'hora': hora, 'cancha': cancha.nombre, 'cancha_id': cancha_id, 'costo': cancha.costo, 'socio_form': socio, 'invitado_form': invitado }
+
+@login_required
+@to_response
+def do_reservar(request):
+    from forms import ReservaSocioForm, ReservaInvitadoForm
+
+    if request.method == "POST":
+        post = request.POST.copy()
+        if post['socio'] != '':
+            socio_form = ReservaSocioForm(post)
+            if socio_form.is_valid():
+                s=User.objects.get(id=post['socio'])
+                print s
+                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=s, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
+                r.save();
+                return HttpResponseRedirect('/')
+        else:
+            if post['nombre'] != '' and post['cedula'] != '':
+                i=Invitado(nombre=post['nombre'], documento=post['cedula'])
+                i.save()
+                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=i, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
+                r.save();
+                return HttpResponseRedirect('/')
+
+    return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
+
+def cancelar(request):
+    if request.method == 'POST':
+        try:
+            reserva = Reserva.objects.get(id=request.POST['reserva'])
+            reserva.delete()
+            return HttpResponseRedirect('/')
+        except:
+            return HttpResponseRedirect('/')
+

@@ -7,16 +7,36 @@
 {% block content %}
     <fieldset>
         <legend>Mis Reservas</legend>
-        {% if reservas %}
-            {% for reserva in reservas %}
-                Ud tiene una {{ reserva }}
-            {% endfor %}
+        {% if not puede_reservar %}
+            <div>
+                Dia: {{ dia }} de {{ mes }}
+            </div>
+            <div>
+                Hora: {{ hora }}:00
+            </div>
+            <div>
+                Cancha: {{ cancha }}
+            </div>
+            <div>
+                Junto a: {{ invitado }}
+            </div>
+            <p>
+                <!-- <input type="submit" name="cancelar" id="cancelar" value="Cancelar Reserva!" /> -->
+                <form method="post" action="/cancelar/reserva/" id="cancelarform" onsubmit="if(confirm('&iquest;Realmente desea eliminar su reserva?')){return true;}else{return false;}">
+                    <input type="hidden" name="reserva" id="reserva" value="{{ id }}" />
+                    <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> Cancelar!</button>
+                </form>
+                <form method="post" action="/imprimir/" id="imprimirform">
+                    <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> Imprimir</button>
+                </form>
+            </p>
         {% else %}
-            No tiene reservas.
+            No tiene reservas actualmente.
         {% endif %}
     </fieldset>
-    <fieldset>
+    <fieldset id="reservar">
         <legend>Reservar!</legend>
+        {% if puede_reservar %}
         <p id="hoy_link">
             Hoy {% now "d-m-Y" %}
         </p>
@@ -60,7 +80,10 @@
                 {{ tabla_man }}
             </table>
         </div>
-        <div>
-        </div>
+        {% else %}
+        <p>
+            No puede realizar otra reserva, ya tiene una pendiente.
+        </p>
+        {% endif %}
     </fieldset>
 {% endblock %}

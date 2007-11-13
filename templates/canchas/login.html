@@ -5,9 +5,10 @@
 {% block content %}
     <fieldset>
         <legend>Entrar</legend>
-        <form method="post" action="/login/">
+        <form method="post" action="/login/" id="loginform">
             {{ form.as_p }}
-            <input type="submit" name="login" value="Entrar!" />
+            <!-- <input type="submit" name="login" value="Entrar!" /> -->
+            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> Entrar!</button>
         </form>
     </fieldset>
 {% endblock %}

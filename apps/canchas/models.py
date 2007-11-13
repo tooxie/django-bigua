@@ -58,6 +58,9 @@ class Cuota(models.Model):
         observaciones = models.TextField(_(u'Observaciones'), blank=True, null=True,
             help_text=_(u'Observaciones que crea pertinentes.'))
 
+    def __unicode__(self):
+        return "%(mes)i/%(ano)i" % { 'mes': self.mes, 'ano': self.ano }
+
     class Admin:
         pass
 
@@ -81,12 +84,24 @@ class Socio(models.Model):
         help_text=_(u'Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd'))
     ultima_cuota_paga = models.ForeignKey(Cuota, related_name='socios_al_dia')
 
+    def __unicode__(self):
+        return self.user.username
+
     def get_numero_de_socio(self):
         if self.id is not None:
             return self.id
         else:
             return None
     numero_de_socio = property(get_numero_de_socio)
+
+    def puede_reservar(self):
+        try:
+            #reservas = self.user.reservas.get(desde__gt=datetime.now())
+            reservas = Reserva.objects.get(socio=self, desde__gt=datetime.now())
+        except:
+            return True
+        if reservas:
+            return False
 
     class Admin:
         pass
@@ -166,6 +181,9 @@ class Cancha(models.Model):
         if cuando == 'maniana':
             #FIXME: Si es el último día del mes, esto no anda.
             dia += 1
+        else:
+            if datetime.now().hour > hora:
+                return False
         try:
             reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora))
         except:
@@ -215,7 +233,7 @@ class Reserva(models.Model):
         help_text=_(u'¿Desea permitir que un administrador pueda cancelar su reserva? Esto es útil para cancelar reservas por teléfono, recuerde que si no puede cancelar su reserva con anticipación será sancionado.'))
     marca_temporal = models.DateTimeField(_(u'Reservado el'), editable=False,
         help_text=_(u'Fecha y hora en que fue creada la reserva. Formato de fecha: aaaa-mm-dd'))
-    cancelada = models.BooleanField(_(u'Cancelar'),
+    cancelada = models.BooleanField(_(u'Cancelar'), default=False,
         help_text=_(u'Dar de baja la reserva.'))
     cancelada_por = models.BooleanField(_(u'Cancelar'), editable=False, blank=True, null=True,
         help_text=_(u'Dar de baja la reserva.'))
@@ -263,10 +281,11 @@ class Reserva(models.Model):
                 dia = 'maniana'
             # ¿Existen reservas para esta cancha?
             if not self.cancha.esta_libre(self.desde.hour, dia):
-                from exceptions import CanchaNoDisponibleError
+                from exceptions import ReservaSuperpuestaError
                 raise ReservaSuperpuestaError
             #FIXME: Hardcoded! Si no me ingresan un invitado meto a prepo el invitado con id 1.
             if not self.content_type_id:
+                print 'no hay invitado'
                 self.invitado = Invitado.objects.get(id=1)
 
             self.marca_temporal = datetime.now()
