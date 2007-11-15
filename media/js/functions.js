@@ -27,10 +27,7 @@ function atLoadTime() {
         }
 }
 
-var bigua_rules = {
-    'body' : function(element) {
-        element.onload = atLoadTime();
-    },
+var bigua_reserva_rules = {
     'a#hoy_switch' : function(element) {
         element.onclick = function() {
             $("#hoy").addClass("ohmy").toggle("slow");
@@ -42,7 +39,10 @@ var bigua_rules = {
             $("#maniana").addClass("ohmy").toggle("slow");
             return false;
         }
-    },
+    }
+}
+
+var bigua_cancelar_rules = {
     'form#cancelarform' : function(element) {
         element.onsubmit = function() {
             alert('hola');
@@ -53,6 +53,17 @@ var bigua_rules = {
             }
         }
     }
+}
+
+var bigua_rules = {
+    'body' : function(element) {
+        element.onload = atLoadTime();
+    }
 };
 
+if(_('cancelarform') != null) {
+    Behaviour.register(bigua_cancelar_rules);
+} else if(_('hoy_switch') != null) {
+    Behaviour.register(bigua_reserva_rules);
+}
 Behaviour.register(bigua_rules);

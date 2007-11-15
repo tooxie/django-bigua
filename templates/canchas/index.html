@@ -38,6 +38,15 @@
     <fieldset id="reservar">
         <legend>{% trans "Reservar" %}!</legend>
         {% if puede_reservar %}
+        <p>
+            &iquest;Con qui&eacute;n va a jugar?
+            <div id="radiopartner">
+                Socio: <input type="radio" name="partner" value="socio" />
+                Invitado: <input type="radio" name="partner" value="invitado" /> 
+            </div>
+            <div id="partner">
+            </div>
+        </p>
         <p id="hoy_link">
             {% trans "Hoy" %} {% now "d-m-Y" %}
         </p>
