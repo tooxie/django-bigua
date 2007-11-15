@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block javascript %}
 <script type="text/javascript" src="/media/js/behaviour.js"></script>
 <script type="text/javascript" src="/media/js/jquery.js"></script>
@@ -6,73 +7,59 @@
 {% endblock %}
 {% block content %}
     <fieldset>
-        <legend>Mis Reservas</legend>
+        <legend>{% trans "Mis Reservas" %}</legend>
         {% if not puede_reservar %}
             <div>
-                Dia: {{ dia }} de {{ mes }}
+                {% trans "Dia" %}: {{ dia }} {% trans "de" %} {{ mes }}
             </div>
             <div>
-                Hora: {{ hora }}:00
+                {% trans "Hora" %}: {{ hora }}:00
             </div>
             <div>
-                Cancha: {{ cancha }}
+                {% trans "Cancha" %}: {{ cancha }}
             </div>
             <div>
-                Junto a: {{ invitado }}
+                {% trans "Junto a" %}: {{ invitado }}
             </div>
             <p>
                 <!-- <input type="submit" name="cancelar" id="cancelar" value="Cancelar Reserva!" /> -->
-                <form method="post" action="/cancelar/reserva/" id="cancelarform" onsubmit="if(confirm('&iquest;Realmente desea eliminar su reserva?')){return true;}else{return false;}">
+                <form method="post" action="/cancelar/reserva/" id="cancelarform" onsubmit="if(confirm('{% trans "&iquest;Realmente desea eliminar su reserva?" %}')){return true;}else{return false;}">
                     <input type="hidden" name="reserva" id="reserva" value="{{ id }}" />
-                    <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> Cancelar!</button>
+                    <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                 </form>
                 <form method="post" action="/imprimir/" id="imprimirform">
-                    <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> Imprimir</button>
+                    <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> {% trans "Imprimir" %}</button>
                 </form>
             </p>
         {% else %}
-            No tiene reservas actualmente.
+            {% trans "No tiene reservas actualmente." %}
         {% endif %}
     </fieldset>
     <fieldset id="reservar">
-        <legend>Reservar!</legend>
+        <legend>{% trans "Reservar" %}!</legend>
         {% if puede_reservar %}
         <p id="hoy_link">
-            Hoy {% now "d-m-Y" %}
+            {% trans "Hoy" %} {% now "d-m-Y" %}
         </p>
         <div id="hoy">
             <table id="tabla_hoy">
                 <tr>
-                    <td style="text-align: center;">Hora</td>
+                    <td style="text-align: center;">{% trans "Hora" %}</td>
                     {% for cancha in canchas %}
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}
                 </tr>
                 {{ tabla_hoy }}
-<!--
-                {% for hora in horarios %}
-                    <tr>
-                        <td>{{ hora }}:00 hs.</td>
-                        {% for cancha in canchas %}
-                            <td>
-                                {% if hoy.hora %}
-                                    Si
-                                {% endif %}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
--->
             </table>
         </div>
 
         <p id="maniana_link">
-            Ma&ntilde;ana {{ maniana }}
+            {% trans "Ma&ntilde;ana" %} {{ maniana }}
         </p>
         <div id="maniana">
             <table id="tabla_maniana">
                 <tr>
-                    <td style="text-align: center;">Hora</td>
+                    <td style="text-align: center;">{% trans "Hora" %}</td>
                     {% for cancha in canchas %}
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}
@@ -82,7 +69,7 @@
         </div>
         {% else %}
         <p>
-            No puede realizar otra reserva, ya tiene una pendiente.
+            {% trans "No puede realizar otra reserva, ya tiene una pendiente." %}
         </p>
         {% endif %}
     </fieldset>

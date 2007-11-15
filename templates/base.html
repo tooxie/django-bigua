@@ -1,4 +1,4 @@
-{% load render_menu %}
+{% load render_menu i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -21,24 +21,24 @@
     <body id="body">
         <div id="wrapper" class="clearfix">
             <div id="header">
-                <span class="searcharea"><input type="text" name="searchbox" id="searchbox"/> <input type="submit" name="submitsearch" id="submitsearch" value="Buscar!" /></span>
-                <h1><a href="/" id="headerlink" title="Volver al inicio"><span id="home">Club Bigu&aacute;</span></a></h1>
+                <span class="searcharea"><input type="text" name="searchbox" id="searchbox" value="" /> <input type="submit" name="submitsearch" id="submitsearch" value="Buscar!" /></span>
+                <h1><a href="/" id="headerlink" title="{% trans "Volver al inicio" %}"><span id="home">Club Bigu&aacute;</span></a></h1>
             </div>
             <div id="titulo">
                 <div class="escondido">
-                    <a href="#content">Ir al contenido.</a>
+                    <a href="#content">{% trans "Ir al contenido." %}</a>
                 </div>
                 <div class="navigation">
-                    <span class="escondido">Ud. est&aacute; en: </span>Inicio &rsaquo; Noticias &rsaquo; Beach Tennis
+                    <span class="escondido">{% trans "Ud. est&aacute; en" %}: </span>{% trans "Inicio" %} &rsaquo; {% trans "Noticias" %} &rsaquo; Beach Tennis
                 </div>
             </div>
             <div id="littlebar">
                 <!-- hack para correr el contenido sin el background -->
                 <div id="littlebarcontent">
                     {% if user.is_authenticated %}
-                        <span class="welcome">Bienvenido {{ user.first_name }}!</span> <a href="/logout/" class="onblack">Salir de mi cuenta</a>
+                        <span class="welcome">{% trans "Bienvenido" %} {{ user.first_name }}!</span> <a href="/logout/" class="onblack">{% trans "Salir de mi cuenta" %}</a>
                     {% else %}
-                        <span>Bienvenido/a</span>
+                        <span>{% trans "Bienvenido/a" %}</span>
                     {% endif %}
                 </div>
             </div>
@@ -47,12 +47,12 @@
                         <h3>Men&uacute;</h3>
                         {% render_menu Principal %}
                         <div class="banners">
-                            <img src="{{ MEDIA_URL }}images/banner.gif" alt="Espacio para publicidad." />
+                            <img src="{{ MEDIA_URL }}images/banner.gif" alt="{% trans "Espacio para publicidad." %}" />
                         </div>
                     </div>
                     <div id="content">
                         <p>
-                            Bienvenido al sitio de Bigu&aacute; Tenis, aqu&iacute; podr&aacute;s realizar reservas online en cuesti&oacute;n de segundos!
+                            {% trans "Bienvenido al sitio de Bigu&aacute; Tenis, aqu&iacute; podr&aacute;s realizar reservas online en cuesti&oacute;n de segundos!" %}
                         </p>
                         {% block content %}http://tenis.bigua.com.uy/{% endblock %}
                     </div>
@@ -62,19 +62,19 @@
                             <img src="{{ MEDIA_URL }}images/beachtennis.jpg" alt="Campeonato de beach tennis!" />
                         </div>
                         <p>
-                            Como todos los a&ntilde;os el Club Bigu&aacute; organiza el 5to Campeonato Sudamericano de Beach Tennis en la playa pocitos.
+                            {% trans "Como todos los a&ntilde;os el Club Bigu&aacute; organiza el 5to Campeonato Sudamericano de Beach Tennis en la playa pocitos." %}
                         </p>
                         <div class="fotonoticia">
                             <img src="{{ MEDIA_URL }}images/mannschaft.jpg" alt="Campeonato de beach tennis!" />
                         </div>
                         <p>
-                            Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, grandes premios y muchas sorpresas que iremos descubriendo juego a juego.
+                            {% trans "Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, grandes premios y muchas sorpresas que iremos descubriendo juego a juego." %}
                         </p>
                     </div>
             </div>
             <div id="footer">
                 <div id="footnotes">
-                    Desarrollado para la materia An&aacute;lisis de Sistemas, Universidad ORT Uruguay. <img src="/media/images/python.gif" alt="A django site" style="vertical-align: middle;" class="escondido" />
+                    {% trans "Desarrollado para la materia An&aacute;lisis de Sistemas, Universidad ORT Uruguay." %} <span class="escondido">Made with python. <img src="/media/images/python.gif" alt="A django site" style="vertical-align: middle;" /></span>
                 </div>
             </div>
         </div>
