@@ -17,14 +17,20 @@ function switch_visibility(obj, dis) {
 }
 
 function atLoadTime() {
-        $("#hoy").toggle();
-        $("#maniana").toggle();
-        if(_('hoy_link')) {
-            _('hoy_link').innerHTML = '<a href="#" id="hoy_switch">' + _('hoy_link').innerHTML + '</td>';
-        }
-        if(_('maniana_link')) {
-            _('maniana_link').innerHTML = '<a href="#" id="maniana_switch">' + _('maniana_link').innerHTML + '</td>';
-        }
+    $("#hoy").toggle();
+    $("#maniana").toggle();
+    if(_('hoy_link')) {
+        _('hoy_link').innerHTML = '<a href="#" id="hoy_switch">' + _('hoy_link').innerHTML + '</td>';
+    }
+    if(_('maniana_link')) {
+        _('maniana_link').innerHTML = '<a href="#" id="maniana_switch">' + _('maniana_link').innerHTML + '</td>';
+    }
+    if(_('cancelarform') != null) {
+        Behaviour.register(bigua_cancelar_rules);
+    }
+    if(_('hoy_switch') != null) {
+        Behaviour.register(bigua_reserva_rules);
+    }
 }
 
 var bigua_reserva_rules = {
@@ -61,9 +67,4 @@ var bigua_rules = {
     }
 };
 
-if(_('cancelarform') != null) {
-    Behaviour.register(bigua_cancelar_rules);
-} else if(_('hoy_switch') != null) {
-    Behaviour.register(bigua_reserva_rules);
-}
 Behaviour.register(bigua_rules);
