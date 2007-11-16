@@ -160,7 +160,7 @@ class Configuracion(models.Model):
 class Cancha(models.Model):
     club = models.ForeignKey(Club, related_name='canchas')
     costo = models.DecimalField(_(u'Costo'), max_digits=5, decimal_places=2,
-        help_text=_(u'Costo por hora de la cancha.'))
+        help_text=_(u'Costo por hora de la cancha en pesos uruguayos.'))
     desactivada = models.BooleanField(_(u'Desactivar'),
         help_text=_(u'Desactivar una cancha permite darla de baja sin la necesidad de eliminarla. Esto es útil cuando la cancha está en reparación y no podrá ser reservada por un tiempo indeterminado.'))
 
