@@ -69,7 +69,7 @@ def tablas(request):
     # HTML para reservar hoy
     for hora in horas:
         html_hoy += '<tr>'
-        html_hoy += '<td>%i:00 hs</td>' % hora
+        html_hoy += '<td class="tdhora">%i:00 hs</td>' % hora
         for cancha in canchas:
             if cancha.esta_libre(hora, 'hoy'):
                 html_hoy += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'), 'cancha': cancha.id, 'dia': datetime.today().day, 'hora': hora }
@@ -79,7 +79,7 @@ def tablas(request):
     # HTML para reservar mañana
     for hora in horas:
         html_man += '<tr>'
-        html_man += '<td>%i:00 hs</td>' % hora
+        html_man += '<td class="tdhora">%i:00 hs</td>' % hora
         for cancha in canchas:
             if cancha.esta_libre(hora, 'maniana'):
                 html_man += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'),'cancha': cancha.id, 'dia': datetime.today().day + 1, 'hora': hora }
@@ -153,12 +153,16 @@ def do_reservar(request):
 
     return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
 
+@to_response
 def cancelar(request):
     if request.method == 'POST':
         try:
             reserva = Reserva.objects.get(id=request.POST['reserva'])
-            reserva.delete()
-            return HttpResponseRedirect('/')
+            if request.POST['confirmada'] == 'true':
+                reserva.delete()
+                return HttpResponseRedirect('/')
+            else:
+                return 'confirmar.html', { 'reserva': reserva }
         except:
             return HttpResponseRedirect('/')
 

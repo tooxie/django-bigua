@@ -243,6 +243,18 @@ class Reserva(models.Model):
     def __unicode__(self):
         return 'Reserva'# _(u'Cancha %(cancha)s reservada por %(socio)s de %(desde)s a %(hasta)s') % { 'cancha': self.cancha, 'socio': self.socio, 'desde}
 
+    def get_dia(self):
+        return self.desde.day
+    dia = property(get_dia)
+
+    def get_hora(self):
+        return self.desde.hour
+    hora = property(get_hora)
+
+    def get_costo(self):
+        return self.cancha.costo
+    costo = property(get_costo)
+
     #TODO: Chequear que Reservera.cancelar() ande.
     def cancelar(self, usuario=None):
         self.cancelada=True

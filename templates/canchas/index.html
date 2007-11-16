@@ -23,8 +23,9 @@
             </div>
             <p>
                 <!-- <input type="submit" name="cancelar" id="cancelar" value="Cancelar Reserva!" /> -->
-                <form method="post" action="/cancelar/reserva/" id="cancelarform" onsubmit="if(confirm('{% trans "&iquest;Realmente desea eliminar su reserva?" %}')){return true;}else{return false;}">
+                <form method="post" action="/cancelar/reserva/" id="cancelarform">
                     <input type="hidden" name="reserva" id="reserva" value="{{ id }}" />
+                    <input type="hidden" name="confirmada" id="confirmada" />
                     <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                 </form>
                 <form method="post" action="/imprimir/" id="imprimirform">
@@ -53,7 +54,7 @@
         <div id="hoy">
             <table id="tabla_hoy">
                 <tr>
-                    <td style="text-align: center;">{% trans "Hora" %}</td>
+                    <td class="tdhora" style="text-align: center;">{% trans "Hora" %}</td>
                     {% for cancha in canchas %}
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}
@@ -68,7 +69,7 @@
         <div id="maniana">
             <table id="tabla_maniana">
                 <tr>
-                    <td style="text-align: center;">{% trans "Hora" %}</td>
+                    <td class="tdhora" style="text-align: center;">{% trans "Hora" %}</td>
                     {% for cancha in canchas %}
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}

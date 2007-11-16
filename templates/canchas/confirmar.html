@@ -1,0 +1,29 @@
+{% extends "canchas/index.html" %}
+{% load i18n %}
+{% block content %}
+        <h2>Confirme</h2>
+        <form method="post" action="/cancelar/reserva/" id="confirmarcancelacionform">
+            <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
+            <p>
+                {% trans "&iquest;Realmente desea eliminar su reserva?" %}
+            </p>
+                <fieldset>
+                    <legend>{% trans "Descripci&oacute;n de la reserva" %}</legend>
+                    <div>
+                        {% trans "D&iacute;a" %} <strong>{{ reserva.dia }}</strong>.
+                    </div>
+                    <div>
+                        {% trans "A las" %} <strong>{{ reserva.hora }}:00 horas</strong>.
+                    </div>
+                    <div>
+                        {% trans "En la cancha" %} "<strong>{{ reserva.cancha }}</strong>".
+                    </div>
+                    <div>
+                        {% trans "Con un costo de" %} <strong>$U{{ reserva.costo }}</strong>.
+                    </div>
+                </fieldset>
+            <p>
+                <button type="submit" name="confirmada" id="confirmada" value="true"><img src="/media/images/cancel.gif" /> {% trans "Si, deseo cancelar la reserva" %}!</button>
+            </p>
+        </form>
+{% endblock %}

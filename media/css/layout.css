@@ -263,6 +263,10 @@ div.navigation {
     border: 1px solid black;
 }
 
+.tdhora {
+    width: 80px;
+}
+
 td.libre {
     background-color: green;
 }
