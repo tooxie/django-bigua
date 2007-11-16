@@ -41,11 +41,26 @@
         {% if puede_reservar %}
         <p>
             &iquest;Con qui&eacute;n va a jugar?
-            <div id="radiopartner">
-                Socio: <input type="radio" name="partner" value="socio" />
-                Invitado: <input type="radio" name="partner" value="invitado" /> 
-            </div>
-            <div id="partner">
+            <p id="radiopartner">
+                <div>
+                    <label for="socio">{% trans "Socio" %}:</label> <input type="radio" name="partnerradio" id="socio" value="socio" />
+                </div>
+                <div>
+                    <label for="invitado">{% trans "Invitado" %}:</label> <input type="radio" name="partnerradio" id="invitado" value="invitado" /> 
+                </div>
+            </p>
+            <div id="partnerholder">
+                <div id="socio_tpl">
+                    <label for="numero">{% trans "N&uacute;mero de socio" %}:</label> <input type="text" name="numero" id="numero" />
+                </div>
+                <div id="invitado_tpl">
+                    <div>
+                        <label for="nombre">{% trans "Nombre" %}:</label> <input type="text" name="nombre" id="nombre" />
+                    </div>
+                    <div>
+                        <label for="cedula">{% trans "Documento" %}:</label> <input type="text" name="cedula" id="cedula" />
+                    </div>
+                </div>
             </div>
         </p>
         <p id="hoy_link">

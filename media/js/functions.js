@@ -1,4 +1,7 @@
 /* JavaScript functions */
+var socio_tpl;
+var invitado_tpl;
+
 function _(element_id) {
     return document.getElementById(element_id);
 }
@@ -15,8 +18,18 @@ function atLoadTime() {
     if(_('cancelarform')) {
         Behaviour.register(bigua_cancelar_rules);
     }
+    // FIXME: Esto anda 'pal culo.
+    // El sistema no funciona en IE y anda buggy en Konqueror.
+    if(_('partnerholder')) {
+        // Hermoso hack: esto me permite hacer que el contenido dinamico sea traducible.
+        socio_tpl = _('socio_tpl').innerHTML;
+        invitado_tpl = _('invitado_tpl').innerHTML;
+
+        _('partnerholder').innerHTML = '';
+    }
     if(_('hoy_switch')) {
         Behaviour.register(bigua_reserva_rules);
+        Behaviour.register(bigua_partner_rules);
     }
 }
 
@@ -43,6 +56,25 @@ var bigua_cancelar_rules = {
                 return true;
             } else {
                 return false;
+            }
+        }
+    }
+}
+
+var bigua_partner_rules = {
+    '#socio' : function(element) {
+        element.onclick = function() {
+            if(element.checked) {
+                _("partnerholder").innerHTML = '<p>' + socio_tpl + '</p>';
+                _("invitado").checked = false;
+            }
+        }
+    },
+    '#invitado' : function(element) {
+        element.onclick = function() {
+            if(element.checked) {
+                _("partnerholder").innerHTML = '<p>' + invitado_tpl + '</p>';
+                _("socio").checked = false;
             }
         }
     }

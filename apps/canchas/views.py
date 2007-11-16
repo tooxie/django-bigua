@@ -151,7 +151,9 @@ def do_reservar(request):
                 r.save();
                 return HttpResponseRedirect('/')
 
-    return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
+        return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
+    else:
+        return HttpResponseRedirect('/')
 
 @to_response
 def cancelar(request):

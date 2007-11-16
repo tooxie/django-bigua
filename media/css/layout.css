@@ -11,14 +11,14 @@ body {
 	font-size: 0.8em;
 }
 
-form#loginform label {
+form#loginform label, #radiopartner label {
     display: block;
     width: 6em;
     float: left;
     clear: none;
 }
 
-form#reservaform label {
+form#reservaform label, #partnerholder label {
     display: block;
     width: 12em;
     float: left;
