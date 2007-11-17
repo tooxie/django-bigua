@@ -9,7 +9,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(label=_(u'Password'), widget=forms.PasswordInput)
 
 class ReservaSocioForm(forms.Form):
-    socio = forms.CharField(label=_(u'Número de Socio'), max_length=10)
+    numero = forms.CharField(label=_(u'Número de Socio'), max_length=10)
 
     def clean_socio(self):
         try:

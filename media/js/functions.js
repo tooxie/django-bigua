@@ -1,14 +1,24 @@
 /* JavaScript functions */
 var socio_tpl;
 var invitado_tpl;
+var vacio;
+var socio_vacio;
+var invitado_vacio;
+var admin_cancela_ayuda;
 
 function _(element_id) {
     return document.getElementById(element_id);
 }
 
+function setError(msg) {
+    _('errorholder').innerHTML = msg;
+    $("#errorholder").show("slow");
+}
+
 function atLoadTime() {
-    $("#hoy").toggle();
-    $("#maniana").toggle();
+    $("#hoy").hide();
+    $("#maniana").hide();
+
     if(_('hoy_link')) {
         _('hoy_link').innerHTML = '<a href="#" id="hoy_switch">' + _('hoy_link').innerHTML + '</td>';
     }
@@ -21,15 +31,22 @@ function atLoadTime() {
     // FIXME: Esto anda 'pal culo.
     // El sistema no funciona en IE y anda buggy en Konqueror.
     if(_('partnerholder')) {
-        // Hermoso hack: esto me permite hacer que el contenido dinamico sea traducible.
+        // Hermoso hack: esto permite que el contenido dinamico sea traducible.
         socio_tpl = _('socio_tpl').innerHTML;
         invitado_tpl = _('invitado_tpl').innerHTML;
+        socio_vacio = _('socio_vacio').value;
+        invitado_vacio = _('invitado_vacio').value;
+        vacio = _('vacio').value;
+        admin_cancela_ayuda = _('admin_cancela_texto').value;
 
         _('partnerholder').innerHTML = '';
     }
     if(_('hoy_switch')) {
         Behaviour.register(bigua_reserva_rules);
         Behaviour.register(bigua_partner_rules);
+    }
+    if(_('errorholder')) {
+        $('#errorholder').hide();
     }
 }
 
@@ -44,6 +61,42 @@ var bigua_reserva_rules = {
         element.onclick = function() {
             $("#maniana").toggle("slow");
             return false;
+        }
+    },
+    '.reserva_link' : function(element) {
+        element.onclick = function() {
+            if(_('socio').checked) {
+                if(_('numero').value == '') {
+                    setError(socio_vacio);
+                    return false;
+                }
+            } else if(_('invitado').checked) {
+                if(_('nombre').value == '' || _('cedula').value == '') {
+                    setError(invitado_vacio);
+                    return false;
+                }
+            } else {
+                setError(vacio);
+                return false;
+            }
+            url = element.href.substring(element.href.indexOf('reservar/')+9, element.href.lastIndexOf('/'));
+            var cancha = url.substring(0, url.indexOf('/'));
+            var dia = url.substring(url.indexOf('/')+1, url.lastIndexOf('/'));
+            var hora = url.substring(url.lastIndexOf('/')+1);
+            $('#cancha').value = cancha;
+            $("#dia").value = dia;
+            $('#hora').value = hora;
+            alert($("#dia").value);
+            return false;
+            pform = $('#partnerform');
+            pform.submit();
+        }
+    },
+    '#admin_cancela_ayuda' : function(element) {
+        element.onclick = function() {
+            $('#admin_cancela_ayuda').hide().html(admin_cancela_ayuda).show("slow");
+            // _('admin_cancela_ayuda').innerHTML = admin_cancela_ayuda;
+            // $('#admin_cancela_ayuda').show("slow");
         }
     }
 }
@@ -67,6 +120,7 @@ var bigua_partner_rules = {
             if(element.checked) {
                 _("partnerholder").innerHTML = '<p>' + socio_tpl + '</p>';
                 _("invitado").checked = false;
+                _("numero").focus();
             }
         }
     },
@@ -75,6 +129,7 @@ var bigua_partner_rules = {
             if(element.checked) {
                 _("partnerholder").innerHTML = '<p>' + invitado_tpl + '</p>';
                 _("socio").checked = false;
+                _("nombre").focus();
             }
         }
     }

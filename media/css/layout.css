@@ -298,3 +298,18 @@ form#cancelarform, form#imprimirform {
     color: black;
     padding: 3px;
 }
+
+#errorholder {
+    color: red;
+    border: 1px dashed black;
+    padding: 5px 0 5px 60px;
+    background-image: url('/media/images/error.jpg');
+    background-repeat: no-repeat;
+    background-position: left top;
+    min-height: 30px;
+}
+
+#admin_cancela_ayuda {
+    margin-left: 30px;
+    text-align: justify;
+}

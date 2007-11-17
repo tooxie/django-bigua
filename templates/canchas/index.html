@@ -39,29 +39,49 @@
     <fieldset id="reservar">
         <legend>{% trans "Reservar" %}!</legend>
         {% if puede_reservar %}
-        <p>
-            &iquest;Con qui&eacute;n va a jugar?
-            <p id="radiopartner">
-                <div>
-                    <label for="socio">{% trans "Socio" %}:</label> <input type="radio" name="partnerradio" id="socio" value="socio" />
-                </div>
-                <div>
-                    <label for="invitado">{% trans "Invitado" %}:</label> <input type="radio" name="partnerradio" id="invitado" value="invitado" /> 
-                </div>
-            </p>
-            <div id="partnerholder">
-                <div id="socio_tpl">
-                    <label for="numero">{% trans "N&uacute;mero de socio" %}:</label> <input type="text" name="numero" id="numero" />
-                </div>
-                <div id="invitado_tpl">
-                    <div>
-                        <label for="nombre">{% trans "Nombre" %}:</label> <input type="text" name="nombre" id="nombre" />
-                    </div>
-                    <div>
-                        <label for="cedula">{% trans "Documento" %}:</label> <input type="text" name="cedula" id="cedula" />
-                    </div>
-                </div>
-            </div>
+        <script type="text/javascript">
+            var output = '';
+            output += '<p>';
+            output += '    <form method="post" action="/reservar/" id="partnerform">';
+            output += '        {% trans "&iquest;Con qui&eacute;n va a jugar?" %}';
+            output += '        <p id="radiopartner">';
+            output += '            <div>';
+            output += '                <label for="socio">{% trans "Socio" %}:</label> <input type="radio" name="partnerradio" id="socio" value="socio" />';
+            output += '            </div>';
+            output += '            <div>';
+            output += '                <label for="invitado">{% trans "Invitado" %}:</label> <input type="radio" name="partnerradio" id="invitado" value="invitado" /> ';
+            output += '            </div>';
+            output += '        </p>';
+            output += '        <div id="partnerholder">';
+            output += '            <input type="hidden" name="cancha" id="cancha" value="" /> ';
+            output += '            <input type="hidden" name="dia" id="dia" value="" /> ';
+            output += '            <input type="hidden" name="hora" id="hora" value="" /> ';
+            output += '            <input type="hidden" name="socio_vacio" id="socio_vacio" value="{% trans "No olvide ingresar el n&uacute;mero de socio de su compa&ntilde;ero." %}" /> ';
+            output += '            <input type="hidden" name="invitado_vacio" id="invitado_vacio" value="{% trans "Si va a jugar con alguien que no es socio del club debe ingresar nombre y documento de identidad de la persona." %}" /> ';
+            output += '            <input type="hidden" name="vacio" id="vacio" value="{% trans "No olvide elegir con quien desea jugar." %}" /> ';
+            output += '            <input type="hidden" name="admin_cancela_texto" id="admin_cancela_texto" value="{% trans "Esto es &uacute;til cuando no tiene una computadora cerca para realizar la baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede darla de baja." %}" /> ';
+            output += '            <div id="socio_tpl">';
+            output += '                <label for="numero">{% trans "N&uacute;mero de socio" %}:</label> <input type="text" name="numero" id="numero" />';
+            output += '            </div>';
+            output += '            <div id="invitado_tpl">';
+            output += '                <div>';
+            output += '                    <label for="nombre">{% trans "Nombre" %}:</label> <input type="text" name="nombre" id="nombre" />';
+            output += '                </div>';
+            output += '                <div>';
+            output += '                    <label for="cedula">{% trans "Documento" %}:</label> <input type="text" name="cedula" id="cedula" />';
+            output += '                </div>';
+            output += '            </div>';
+            output += '        </div>';
+            output += '        <p>';
+            output += '            <label for="admin_cancela">Cancelable por admin:</label> <input type="checkbox" name="admin_cancela" id="admin_cancela" checked="checked" /> <span id="admin_cancela_ayuda"><a href="#">&iquest;Qu&eacute; es esto?</a></span>';
+            output += '        </p>';
+            output += '    </form>';
+            output += '</p>';
+            document.write(output);
+        </script>
+        <noscript>
+        </noscript>
+        <p id="errorholder">
         </p>
         <p id="hoy_link">
             {% trans "Hoy" %} {% now "d-m-Y" %}

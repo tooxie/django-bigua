@@ -106,6 +106,12 @@ def reservar(request, **kwargs):
     from django.shortcuts import get_object_or_404
     from forms import ReservaSocioForm, ReservaInvitadoForm
 
+    if 'numero' in request.POST:
+        if request.POST['numero'] != '':
+            return do_reservar(request)
+    elif 'nombre' in request.POST and 'cedula' in request.POST:
+        if request.POST['nombre'] != '' and request.POST['cedula']:
+            return do_reservar(request)
     hora = kwargs['hora']
     dia = kwargs['dia']
     cancha_id = kwargs['cancha']
@@ -130,12 +136,16 @@ def reservar(request, **kwargs):
 def do_reservar(request):
     from forms import ReservaSocioForm, ReservaInvitadoForm
 
+    # Si no hay datos por post pasa algo raro... me voy al mazo.
+    print "entrando en do_reservar"
     if request.method == "POST":
         post = request.POST.copy()
-        if post['socio'] != '':
+        for var in post:
+            print var
+        if post['numero'] != '':
             socio_form = ReservaSocioForm(post)
             if socio_form.is_valid():
-                s=User.objects.get(id=post['socio'])
+                s=User.objects.get(id=post['numero'])
                 if post['admin_cancela'] == 'on':
                     admin_cancela = True
                 else:
