@@ -23,14 +23,10 @@ def main(request):
 def login(request):
     from forms import LoginForm
 
-    login = LoginForm(auto_id=True)
-    return 'login.html', { 'form': login }
-
-def do_login(request):
-    from forms import LoginForm
+    login_form = LoginForm(auto_id=True)
     if request.method == 'POST':
         login_form = LoginForm(request.POST, auto_id=True)
-        if not login_form.errors:
+        if login_form.is_valid():
             username = request.POST['usuario']
             password = request.POST['password']
             usuario = auth.authenticate(username=username, password=password)
@@ -39,10 +35,8 @@ def do_login(request):
                     auth.login(request, usuario)
                     if 'next' in request.POST:
                         return HttpResponseRedirect(request.POST['next'])
-        else:
-            return auth.login(request)
 
-    return HttpResponseRedirect('/')
+    return 'login.html', { 'form': login_form }
 
 def do_logout(request):
     auth.logout(request)
@@ -182,6 +176,8 @@ def admin_login(request):
     if request.method == 'POST':
         post = request.POST.copy()
         admin_form = AdminLoginForm(post)
+        if admin_form.is_valid():
     else:
         admin_form = AdminLoginForm()
     return 'admin.html', { 'admin': admin_form }
+

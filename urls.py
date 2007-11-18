@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     # Example:
     # (r'^soma/', include('soma.foo.urls')),
     (r'^$', 'canchas.views.index'),
-    (r'^login/$', 'canchas.views.do_login'),
+    (r'^login/$', 'canchas.views.login'),
     (r'^logout/$', 'canchas.views.do_logout'),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': path_to_media }),
     (r'^reservar/(?P<cancha>\d*)/(?P<dia>\d*)/(?P<hora>\d*)/$', 'canchas.views.reservar'),
