@@ -43,6 +43,9 @@
             var output = '';
             output += '<p>';
             output += '    <form method="post" action="/reservar/" id="partnerform">';
+            output += '        <input type="hidden" name="cancha" id="cancha" value="" />';
+            output += '        <input type="hidden" name="dia" id="dia" value="" />';
+            output += '        <input type="hidden" name="hora" id="hora" value="" />';
             output += '        {% trans "&iquest;Con qui&eacute;n va a jugar?" %}';
             output += '        <p id="radiopartner">';
             output += '            <div>';
@@ -53,13 +56,10 @@
             output += '            </div>';
             output += '        </p>';
             output += '        <div id="partnerholder">';
-            output += '            <input type="hidden" name="cancha" id="cancha" value="" /> ';
-            output += '            <input type="hidden" name="dia" id="dia" value="" /> ';
-            output += '            <input type="hidden" name="hora" id="hora" value="" /> ';
-            output += '            <input type="hidden" name="socio_vacio" id="socio_vacio" value="{% trans "No olvide ingresar el n&uacute;mero de socio de su compa&ntilde;ero." %}" /> ';
-            output += '            <input type="hidden" name="invitado_vacio" id="invitado_vacio" value="{% trans "Si va a jugar con alguien que no es socio del club debe ingresar nombre y documento de identidad de la persona." %}" /> ';
-            output += '            <input type="hidden" name="vacio" id="vacio" value="{% trans "No olvide elegir con quien desea jugar." %}" /> ';
-            output += '            <input type="hidden" name="admin_cancela_texto" id="admin_cancela_texto" value="{% trans "Esto es &uacute;til cuando no tiene una computadora cerca para realizar la baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede darla de baja." %}" /> ';
+            output += '            <input type="hidden" name="socio_vacio" id="socio_vacio" value="{% trans "No olvide ingresar el n&uacute;mero de socio de su compa&ntilde;ero." %}" />';
+            output += '            <input type="hidden" name="invitado_vacio" id="invitado_vacio" value="{% trans "Si va a jugar con alguien que no es socio del club debe ingresar nombre y documento de identidad de la persona." %}" />';
+            output += '            <input type="hidden" name="vacio" id="vacio" value="{% trans "No olvide elegir con quien desea jugar." %}" />';
+            output += '            <input type="hidden" name="admin_cancela_texto" id="admin_cancela_texto" value="{% trans "Esto es &uacute;til cuando no tiene una computadora cerca para realizar la baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede darla de baja." %}" />';
             output += '            <div id="socio_tpl">';
             output += '                <label for="numero">{% trans "N&uacute;mero de socio" %}:</label> <input type="text" name="numero" id="numero" />';
             output += '            </div>';

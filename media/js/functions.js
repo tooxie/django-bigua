@@ -83,20 +83,18 @@ var bigua_reserva_rules = {
             var cancha = url.substring(0, url.indexOf('/'));
             var dia = url.substring(url.indexOf('/')+1, url.lastIndexOf('/'));
             var hora = url.substring(url.lastIndexOf('/')+1);
-            $('#cancha').value = cancha;
-            $("#dia").value = dia;
-            $('#hora').value = hora;
-            alert($("#dia").value);
-            return false;
-            pform = $('#partnerform');
+            _("cancha").value = cancha;
+            _("dia").value = dia;
+            _("hora").value = hora;
+            pform = _('partnerform');
             pform.submit();
+            return false;
         }
     },
     '#admin_cancela_ayuda' : function(element) {
         element.onclick = function() {
             $('#admin_cancela_ayuda').hide().html(admin_cancela_ayuda).show("slow");
-            // _('admin_cancela_ayuda').innerHTML = admin_cancela_ayuda;
-            // $('#admin_cancela_ayuda').show("slow");
+            return false;
         }
     }
 }
@@ -105,7 +103,7 @@ var bigua_cancelar_rules = {
     'form#cancelarform' : function(element) {
         element.onsubmit = function() {
             if(confirm('Realmente desea eliminar su reserva?')) {
-                $('#confirmada').value = 'true';
+                _('confirmada').value = 'true';
                 return true;
             } else {
                 return false;

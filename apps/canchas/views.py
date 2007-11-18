@@ -137,11 +137,9 @@ def do_reservar(request):
     from forms import ReservaSocioForm, ReservaInvitadoForm
 
     # Si no hay datos por post pasa algo raro... me voy al mazo.
-    print "entrando en do_reservar"
     if request.method == "POST":
         post = request.POST.copy()
         for var in post:
-            print var
         if post['numero'] != '':
             socio_form = ReservaSocioForm(post)
             if socio_form.is_valid():
