@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 INSERT INTO `auth_user` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `is_staff`, `is_active`, `is_superuser`, `last_login`, `date_joined`) VALUES
 (1, 'alvaro', 'Alvaro', 'Mouriño', 'alvaro@mourino.net', 'sha1$b217d$c8b3e359f982d9dff3ddd5feff35234f6fbbfe44', 1, 1, 1, '2007-11-14 00:35:51', '2007-10-09 22:51:34'),
 (2, 'lore', 'Lorena', 'Bigua', 'lorena@bigua.com.uy', 'sha1$c5727$3e38aa7aa674ec7cbd340d213bcb97bc429ad278', 0, 1, 0, '2007-10-10 16:14:10', '2007-10-10 16:14:10');
+(3, 'danny', 'Daniel', 'Alaniz', 'danny@bigua.com.uy', 'sha1$33528$e7863dd3329699a1f2745eb300b9af935b3cf52a', 1, 1, 1, '2007-10-10 16:14:10', '2007-10-10 16:14:10');
 
 -- --------------------------------------------------------
 
