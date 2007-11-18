@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block css %}
+        <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
+{% endblock %}
+{% block content %}
+    <fieldset>
+        <legend>Login de Administrador</legend>
+        <form method="post" action="/login/" id="loginform">
+            {{ admin.as_p }}
+            <!-- <input type="submit" name="login" value="Entrar!" /> -->
+            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> Entrar!</button>
+        </form>
+    </fieldset>
+{% endblock %}
+
