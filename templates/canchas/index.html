@@ -77,12 +77,12 @@
             output += '        </p>';
             output += '    </form>';
             output += '</p>';
+            output += '<p id="errorholder">';
+            output += '</p>';
             document.write(output);
         </script>
         <noscript>
         </noscript>
-        <p id="errorholder">
-        </p>
         <p id="hoy_link">
             {% trans "Hoy" %} {% now "d-m-Y" %}
         </p>

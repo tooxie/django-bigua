@@ -139,7 +139,6 @@ def do_reservar(request):
     # Si no hay datos por post pasa algo raro... me voy al mazo.
     if request.method == "POST":
         post = request.POST.copy()
-        for var in post:
         if post['numero'] != '':
             socio_form = ReservaSocioForm(post)
             if socio_form.is_valid():
@@ -176,3 +175,13 @@ def cancelar(request):
         except:
             return HttpResponseRedirect('/')
 
+@to_response
+def admin_login(request):
+    from forms import AdminLoginForm
+
+    if request.method == 'POST':
+        post = request.POST.copy()
+        admin_form = AdminLoginForm(post)
+    else:
+        admin_form = AdminLoginForm()
+    return 'admin.html', { 'admin': admin_form }

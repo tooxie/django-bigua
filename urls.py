@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     (r'^reservar/(?P<cancha>\d*)/(?P<dia>\d*)/(?P<hora>\d*)/$', 'canchas.views.reservar'),
     (r'^reservar/$', 'canchas.views.do_reservar'),
     (r'^cancelar/reserva/$', 'canchas.views.cancelar'),
+    (r'^administrador/$', 'canchas.views.admin_login'),
 
     # Uncomment this for admin:
     (r'^admin/', include('django.contrib.admin.urls')),

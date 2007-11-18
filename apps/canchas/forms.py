@@ -21,3 +21,8 @@ class ReservaSocioForm(forms.Form):
 class ReservaInvitadoForm(forms.Form):
     nombre = forms.CharField(label=_(u'Nombre'), max_length=50)
     cedula = forms.CharField(label=_(u'Cédula de Identidad'), max_length=11)
+
+class AdminLoginForm(forms.Form):
+    usuario = forms.CharField(label=_(u'Usuario'), max_length=150)
+    password = forms.CharField(label=_(u'Contraseña'), widget=forms.PasswordInput)
+
