@@ -25,7 +25,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
@@ -47,7 +47,7 @@ LANGUAGES = (
   ('es', 'Español'),
   ('en', 'English'),
 )
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-uy'
 DEFAULT_LANGUAGE = 1
 
 DEFAULT_CHARSET = 'utf-8'

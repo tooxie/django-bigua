@@ -20,22 +20,30 @@ def index(request):
 def main(request):
     return 'index.html', tablas(request)
 
+@to_response
 def login(request):
     from forms import LoginForm
 
     login_form = LoginForm(auto_id=True)
     if request.method == 'POST':
+        print request.method
         login_form = LoginForm(request.POST, auto_id=True)
         if login_form.is_valid():
+            print "login_form is valid!"
             username = request.POST['usuario']
             password = request.POST['password']
             usuario = auth.authenticate(username=username, password=password)
             if usuario is not None:
+                print usuario
                 if usuario.get_profile().en_regla():
+                    print "usuario en regla"
                     auth.login(request, usuario)
                     if 'next' in request.POST:
                         return HttpResponseRedirect(request.POST['next'])
+                    else:
+                        return HttpResponseRedirect('/')
 
+    print "nada, me voy"
     return 'login.html', { 'form': login_form }
 
 def do_logout(request):
@@ -177,6 +185,7 @@ def admin_login(request):
         post = request.POST.copy()
         admin_form = AdminLoginForm(post)
         if admin_form.is_valid():
+            pass
     else:
         admin_form = AdminLoginForm()
     return 'admin.html', { 'admin': admin_form }
