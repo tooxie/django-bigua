@@ -13,7 +13,11 @@ to_response = render_response('canchas/')
 @to_response
 def index(request):
     if request.user.is_authenticated():
-        return main(request)
+        try:
+            p=request.user.get_profile()
+            return main(request)
+        except Socio.DoesNotExist:
+            return 'error.html', { 'error': _(u'No existe aún un socio para este usuario. Comunique este error a webmaster@bigua.com.uy') }
     else:
         return login(request)
 
@@ -23,51 +27,55 @@ def main(request):
 @to_response
 def login(request):
     from forms import LoginForm
+    from exceptions import FichaMedicaVencidaError, SocioDeudorError, SocioSancionadoError
 
+    error=''
+    if request.user.is_authenticated():
+        HttpResponseRedirect('/')
     login_form = LoginForm(auto_id=True)
     if request.method == 'POST':
-        print request.method
         login_form = LoginForm(request.POST, auto_id=True)
         if login_form.is_valid():
-            print "login_form is valid!"
             username = request.POST['usuario']
             password = request.POST['password']
             usuario = auth.authenticate(username=username, password=password)
             if usuario is not None:
-                print usuario
-                if usuario.get_profile().en_regla():
-                    print "usuario en regla"
-                    auth.login(request, usuario)
-                    if 'next' in request.POST:
-                        return HttpResponseRedirect(request.POST['next'])
-                    else:
-                        return HttpResponseRedirect('/')
+                try:
+                    if usuario.get_profile().en_regla():
+                        auth.login(request, usuario)
+                        if 'next' in request.POST:
+                            return HttpResponseRedirect(request.POST['next'])
+                        else:
+                            return HttpResponseRedirect('/')
+                except (FichaMedicaVencidaError, SocioDeudorError, SocioSancionadoError):
+                    return inhabilitado(request, e.message)
+                except Socio.DoesNotExist:
+                    error = _(u'El socio especificado no existe. Si usted es socio del club entonces aún no lo ingresaron a la base del sistema. Si el problema persiste comuníquelo al club. Muchas gracias.')
+                    pass
 
-    print "nada, me voy"
-    return 'login.html', { 'form': login_form }
+    return 'login.html', { 'form': login_form, 'error': error }
 
 def do_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/')
 
 # Forgive me Guido for I have sin...
+#FIXME: Un FIXME grande como una casa!!!
 @login_required
 def tablas(request):
-    from models import Cancha
+    from utils import mes_to_string
 
     if not request.user.get_profile().puede_reservar():
         try:
             r=request.user.reservas.get(desde__gt=datetime.now())
-            mes = { 1: _(u'Enero'), 2: _(u'Febrero'), 3: _(u'Marzo'), 4: _(u'Abril'), 5: _(u'Mayo'), 6: _(u'Junio'), 7: _(u'Julio'), 8: _(u'Agosto'), 9: _(u'Setiembre'), 10: _(u'Octubre'), 11: _(u'Noviembre'), 12: _(u'Diciembre') }
-            return { 'puede_reservar': False, 'mes': mes[datetime.today().month], 'dia': r.desde.day, 'hora': r.desde.hour, 'cancha': r.cancha.nombre, 'id': r.id, 'invitado': r.invitado }
+            return { 'puede_reservar': False, 'mes': mes_to_string(datetime.today().month), 'dia': r.desde.day, 'hora': r.desde.hour, 'cancha': r.cancha.nombre, 'id': r.id, 'invitado': r.invitado }
         except Reserva.DoesNotExist:
             pass
     canchas = Cancha.objects.filter(desactivada=False)
-    #Solo se puede reservar a las horas en punto.
+    # Solo se puede reservar a las horas en punto.
     club = Club.objects.get(id=1)
     horas = club.get_horas()
     html_hoy, html_man = '', ''
-    #FIXME: Un FIXME grande como una casa!!!
     # HTML para reservar hoy
     for hora in horas:
         html_hoy += '<tr>'
@@ -96,10 +104,14 @@ def tablas(request):
             # maniana[hora] = cancha.esta_libre(hora, 'maniana')
 
     maniana = "%(dia)i-%(mes)i-%(anio)i" % { 'dia': datetime.today().day + 1, 'mes': datetime.today().month, 'anio': datetime.today().year }
-    return { 'canchas': canchas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man, 'puede_reservar': request.user.get_profile().puede_reservar() }
+    canceladas = []
+    for reserva_cancelada in request.user.reservas.filter(cancelada=True):
+        canceladas.append(reserva_cancelada)
+    for reserva_cancelada in Reserva.objects.filter(invitado=request.user, cancelada=True).exclude(socio=request.user):
+        canceladas.append(reserva_cancelada)
+    return { 'canchas': canchas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man, 'puede_reservar': request.user.get_profile().puede_reservar(), 'reservas_canceladas': canceladas }
 
 def reservas(request):
-    from models import Reserva
     reservas = Reserva.filter(socio=request.user, hasta__gt=datetime.now())
 
 @login_required
@@ -167,10 +179,11 @@ def do_reservar(request):
 @to_response
 def cancelar(request):
     if request.method == 'POST':
+        post=request.POST.copy()
         try:
-            reserva = Reserva.objects.get(id=request.POST['reserva'])
-            if request.POST['confirmada'] == 'true':
-                reserva.delete()
+            reserva = Reserva.objects.get(id=post['reserva'], socio=request.user)
+            if post['confirmada'] == 'true':
+                reserva.cancelar(request.user)
                 return HttpResponseRedirect('/')
             else:
                 return 'confirmar.html', { 'reserva': reserva }

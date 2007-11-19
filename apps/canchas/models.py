@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 from multilingual.translation import Translation
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 
 # Create your models here.
 class Club(models.Model):
@@ -65,6 +65,7 @@ class Cuota(models.Model):
         pass
 
     class Meta:
+        ordering = ['-ano', '-mes']
         verbose_name = 'Cuota'
         verbose_name_plural = 'Cuotas'
 
@@ -76,32 +77,47 @@ class Socio(models.Model):
         help_text=_(u'Documento de Identidad del nuevo socio.'))
     domicilio = models.CharField(_(u'Domicilio'), max_length=255,
         help_text=_(u'Domicilio donde vive el socio.'))
-#    numero_de_socio = models.PositiveIntegerField(_(u'Número de Socio'))
+    numero_de_socio = models.PositiveIntegerField(_(u'Número de Socio'))
     fecha_de_nacimiento = models.DateField(_(u'Fecha de Nacimiento'),
         help_text=_(u'Formato: aaaa-mm-dd'))
     sexo = models.CharField(_(u'Sexo'), max_length=1, choices=SEXO_CHOICES)
     vencimiento_ficha_medica = models.DateField(_(u'Vencimiento de ficha médica'),
         help_text=_(u'Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd'))
     ultima_cuota_paga = models.ForeignKey(Cuota, related_name='socios_al_dia')
+    invitado_en = generic.GenericRelation('Reserva', related_name='invitado')
 
     def __unicode__(self):
         return self.user.username
 
-    def get_numero_de_socio(self):
-        if self.id is not None:
-            return self.id
-        else:
-            return None
-    numero_de_socio = property(get_numero_de_socio)
-
     def puede_reservar(self):
-        try:
-            #reservas = self.user.reservas.get(desde__gt=datetime.now())
-            reservas = Reserva.objects.get(socio=self, desde__gt=datetime.now())
-        except:
-            return True
-        if reservas:
+        reservas = self.user.reservas.filter(desde__gt=datetime.now(), cancelada=False)
+        #reservas = Reserva.objects.get(socio=self, desde__gt=datetime.now())
+        if len(reservas) > 0:
             return False
+        else:
+            return True
+
+    def en_regla(self):
+        # Si la ficha médica esta vencida.
+        if self.vencimiento_ficha_medica < date.today():
+            from exceptions import FichaMediaVencidaError
+            raise FichaMediaVencidaError, _(u'Lo sentimos, pero usted no tiene su ficha médica al día, por lo que no podemos permitirle reservar. Regularice su situación para poder continuar disfrutando de nuestro servicio. Muchas gracias.')
+        # Si no está al día con las cuotas
+        cuotas = Cuota.objects.all()[:2]
+        al_dia = False
+        for cuota in cuotas:
+            if cuota == self.ultima_cuota_paga:
+                al_dia = True
+        if not al_dia:
+            from exceptions import SocioDeudorError
+            raise SocioDeudorError
+        # Si está sancionado
+        sancion = self.sanciones.filter(hasta__gt=date.today())
+        if sancion is not None:
+            from exceptions import SocioSancionadoError
+            raise SocioSancionadoError
+        # Sino
+        return True
 
     class Admin:
         pass
@@ -123,9 +139,9 @@ class Invitado(models.Model):
             return 'Invitado'
 
 class Sancion(models.Model):
-    socio = models.ForeignKey(User, related_name='sancion',
+    socio = models.ForeignKey(User, related_name='sanciones',
         help_text=_(u'Socio sancionado.'))
-    hasta = models.PositiveIntegerField(_(u'¿Hasta cuando?'),
+    hasta = models.DateField(_(u'¿Hasta cuando?'),
         help_text=_(u'¿Cuándo termina la sanción?'))
 
     class Translation(Translation):
@@ -235,13 +251,18 @@ class Reserva(models.Model):
         help_text=_(u'Fecha y hora en que fue creada la reserva. Formato de fecha: aaaa-mm-dd'))
     cancelada = models.BooleanField(_(u'Cancelar'), default=False,
         help_text=_(u'Dar de baja la reserva.'))
-    cancelada_por = models.BooleanField(_(u'Cancelar'), editable=False, blank=True, null=True,
-        help_text=_(u'Dar de baja la reserva.'))
+    cancelada_por = models.CharField(_(u'Cancelada por'), max_length=150, blank=True, null=True,
+        help_text=_(u'Usuario que canceló la reserva.'))
     cancelada_el = models.DateTimeField(_(u'Cancelar'), editable=False, blank=True, null=True,
         help_text=_(u'Dar de baja la reserva. Formato de fecha: aaaa-mm-dd'))
 
     def __unicode__(self):
         return 'Reserva'# _(u'Cancha %(cancha)s reservada por %(socio)s de %(desde)s a %(hasta)s') % { 'cancha': self.cancha, 'socio': self.socio, 'desde}
+
+    def get_mes(self):
+        from utils import mes_to_string
+        return mes_to_string(datetime.today().month)
+    mes = property(get_mes)
 
     def get_dia(self):
         return self.desde.day
@@ -259,10 +280,13 @@ class Reserva(models.Model):
     def cancelar(self, usuario=None):
         self.cancelada=True
         if usuario is None:
-            self.cancelado_por=self.socio
+            print "usuario es none"
+            self.cancelada_por="%(nombre)s %(apellido)s" % { 'nombre': self.socio.first_name, 'apellido': self.socio.last_name }
         else:
-            self.cancelado_por=usuario
-        self.cancelado_el=datetime.now()
+            print "usuario es %s" % usuario
+            xcancelada_por=u"%(nombre)s %(apellido)s" % { 'nombre': self.usuario.first_name, 'apellido': self.usuario.last_name }
+            self.cancelada_por=xcancelada_por
+        self.cancelada_el=datetime.now()
         super(Reserva, self).save()
 
     #FIXME: Traer la hora hasta la que la reserva esta vigente.
@@ -297,7 +321,6 @@ class Reserva(models.Model):
                 raise ReservaSuperpuestaError
             #FIXME: Hardcoded! Si no me ingresan un invitado meto a prepo el invitado con id 1.
             if not self.content_type_id:
-                print 'no hay invitado'
                 self.invitado = Invitado.objects.get(id=1)
 
             self.marca_temporal = datetime.now()

@@ -11,6 +11,12 @@ body {
 	font-size: 0.8em;
 }
 
+hr {
+    width: 90%;
+    border: 1px inset white;
+    margin: 15px auto;
+}
+
 form#loginform label, #radiopartner label {
     display: block;
     width: 6em;
@@ -312,4 +318,9 @@ form#cancelarform, form#imprimirform {
 #admin_cancela_ayuda {
     margin-left: 30px;
     text-align: justify;
+}
+
+.titulito {
+    font-weight: bold;
+    padding-left: 15px;
 }
