@@ -25,8 +25,15 @@ function atLoadTime() {
     if(_('maniana_link')) {
         _('maniana_link').innerHTML = '<a href="#" id="maniana_switch">' + _('maniana_link').innerHTML + '</td>';
     }
+    if(_('canceladas_link')) {
+        _('canceladas_link').innerHTML = '<a href="#" id="canceladas_switch">' + _('canceladas_link').innerHTML + '</td>';
+        $("#canceladas").hide();
+    }
     if(_('cancelarform')) {
         Behaviour.register(bigua_cancelar_rules);
+    }
+    if(_('canceladas')) {
+        Behaviour.register(bigua_canceladas_rules);
     }
     // FIXME: Esto anda 'pal culo.
     // El sistema no funciona en IE y anda buggy en Konqueror.
@@ -108,6 +115,15 @@ var bigua_cancelar_rules = {
             } else {
                 return false;
             }
+        }
+    }
+}
+
+var bigua_canceladas_rules = {
+    '#canceladas_link' : function(element) {
+        element.onclick = function() {
+            $("#canceladas").toggle("slow");
+            return false;
         }
     }
 }

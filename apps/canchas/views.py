@@ -65,12 +65,30 @@ def do_logout(request):
 def tablas(request):
     from utils import mes_to_string
 
+    # Reservas canceladas
+    canceladas = []
+    for reserva_cancelada in request.user.reservas.filter(cancelada=True):
+        canceladas.append(reserva_cancelada)
+    for reserva_cancelada in Reserva.objects.filter(invitado=request.user, cancelada=True).exclude(socio=request.user):
+        canceladas.append(reserva_cancelada)
+    # Reservas pendientes
+    print "Podrá reservar?"
     if not request.user.get_profile().puede_reservar():
+        print "No!!!"
+        mi_reserva=None
         try:
-            r=request.user.reservas.get(desde__gt=datetime.now())
-            return { 'puede_reservar': False, 'mes': mes_to_string(datetime.today().month), 'dia': r.desde.day, 'hora': r.desde.hour, 'cancha': r.cancha.nombre, 'id': r.id, 'invitado': r.invitado }
-        except Reserva.DoesNotExist:
-            pass
+            mi_reserva=request.user.reservas.get(desde__gt=datetime.now(), cancelada=False)
+        except Reserva.DoesNotExist, e:
+            print "No tengo reservas propias. Error: %s" % e
+            try:
+                mi_reserva=Reserva.objects.get(desde__gt=datetime.now(), cancelada=False, invitado=request.user)
+            except Reserva.DoesNotExist, e:
+                print "No tengo reservas prestadas. Error: %s" % e
+                pass
+        if mi_reserva is not None:
+            return { 'puede_reservar': False, 'mes': mes_to_string(datetime.today().month), 'reserva': mi_reserva, 'reservas_canceladas': canceladas }
+
+    # Interfaz de reserva
     canchas = Cancha.objects.filter(desactivada=False)
     # Solo se puede reservar a las horas en punto.
     club = Club.objects.get(id=1)
@@ -81,7 +99,7 @@ def tablas(request):
         html_hoy += '<tr>'
         html_hoy += '<td class="tdhora">%i:00 hs</td>' % hora
         for cancha in canchas:
-            if cancha.esta_libre(hora, 'hoy'):
+            if cancha.esta_libre(hora, datetime.today().day):
                 html_hoy += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'), 'cancha': cancha.id, 'dia': datetime.today().day, 'hora': hora }
             else:
                 html_hoy += '<td class="ocupada" title="%(ocupada)s"><span class="escondido">%(ocupada)s</span>&nbsp;</td>' % { 'ocupada': u_(u'Ocupada') }
@@ -91,7 +109,8 @@ def tablas(request):
         html_man += '<tr>'
         html_man += '<td class="tdhora">%i:00 hs</td>' % hora
         for cancha in canchas:
-            if cancha.esta_libre(hora, 'maniana'):
+            maniana=datetime.today()+timedelta(1)
+            if cancha.esta_libre(hora, maniana.day):
                 html_man += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'),'cancha': cancha.id, 'dia': datetime.today().day + 1, 'hora': hora }
             else:
                 html_man += '<td class="ocupada" title="%(ocupada)s"><span class="escondido">%(ocupada)s</span>&nbsp;</td>' % { 'ocupada': u_(u'Ocupada') }
@@ -100,19 +119,10 @@ def tablas(request):
     hoy, maniana = {}, {}
     for hora in horas:
         for cancha in canchas:
-            hoy[hora] = cancha.esta_libre(hora, 'hoy')
-            # maniana[hora] = cancha.esta_libre(hora, 'maniana')
+            hoy[hora] = cancha.esta_libre(hora, date.today().day)
 
     maniana = "%(dia)i-%(mes)i-%(anio)i" % { 'dia': datetime.today().day + 1, 'mes': datetime.today().month, 'anio': datetime.today().year }
-    canceladas = []
-    for reserva_cancelada in request.user.reservas.filter(cancelada=True):
-        canceladas.append(reserva_cancelada)
-    for reserva_cancelada in Reserva.objects.filter(invitado=request.user, cancelada=True).exclude(socio=request.user):
-        canceladas.append(reserva_cancelada)
     return { 'canchas': canchas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man, 'puede_reservar': request.user.get_profile().puede_reservar(), 'reservas_canceladas': canceladas }
-
-def reservas(request):
-    reservas = Reserva.filter(socio=request.user, hasta__gt=datetime.now())
 
 @login_required
 @to_response
@@ -129,12 +139,6 @@ def reservar(request, **kwargs):
     hora = kwargs['hora']
     dia = kwargs['dia']
     cancha_id = kwargs['cancha']
-    """
-    if datetime.today().day == int(dia):
-        dia = "hoy (%s)" % dia
-    else:
-        dia = "ma&ntilde;ana (%s)" % dia
-    """
     # reserva = Reserva(socio=request.user, cancha=cancha_id, invitado)
     cancha = get_object_or_404(Cancha, id=cancha_id)
     if request.method == 'POST':
@@ -150,20 +154,15 @@ def reservar(request, **kwargs):
 def do_reservar(request):
     from forms import ReservaSocioForm, ReservaInvitadoForm
 
-    # Si no hay datos por post pasa algo raro... me voy al mazo.
     if request.method == "POST":
         post = request.POST.copy()
-        if post['numero'] != '':
-            socio_form = ReservaSocioForm(post)
-            if socio_form.is_valid():
-                s=User.objects.get(id=post['numero'])
-                if post['admin_cancela'] == 'on':
-                    admin_cancela = True
-                else:
-                    admin_cancela = False
-                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=s, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])), permitir_admin_cancelar=admin_cancela)
-                r.save();
-                return HttpResponseRedirect('/')
+        socio_form = ReservaSocioForm(post)
+        if socio_form.is_valid():
+            try:
+                if reservar_socio(request):
+                    return HttpResponseRedirect('/')
+            except Exception, e:
+                return 'error.html', { 'error': e }
         else:
             if post['nombre'] != '' and post['cedula'] != '':
                 i=Invitado(nombre=post['nombre'], documento=post['cedula'])
@@ -173,15 +172,29 @@ def do_reservar(request):
                 return HttpResponseRedirect('/')
 
         return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
+    # Si no hay datos por post pasa algo raro... me voy al mazo.
     else:
         return HttpResponseRedirect('/')
+
+def reservar_socio(request):
+    post=request.POST.copy()
+    if post['admin_cancela'] == 'on':
+        admin = True
+    else:
+        admin = False
+    usuario=User.objects.get(id=post['numero'])
+    if not usuario.get_profile().puede_reservar():
+        return False
+    r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=usuario, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])), permitir_admin_cancelar=admin)
+    r.save();
+    return True
 
 @to_response
 def cancelar(request):
     if request.method == 'POST':
         post=request.POST.copy()
         try:
-            reserva = Reserva.objects.get(id=post['reserva'], socio=request.user)
+            reserva = Reserva.objects.get(id=post['reserva'])
             if post['confirmada'] == 'true':
                 reserva.cancelar(request.user)
                 return HttpResponseRedirect('/')

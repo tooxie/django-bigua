@@ -1,7 +1,7 @@
 # coding=UTF-8
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext as u_
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
@@ -90,8 +90,11 @@ class Socio(models.Model):
         return self.user.username
 
     def puede_reservar(self):
-        reservas = self.user.reservas.filter(desde__gt=datetime.now(), cancelada=False)
-        #reservas = Reserva.objects.get(socio=self, desde__gt=datetime.now())
+        reservas=[]
+        for reserva in self.user.reservas.filter(desde__gt=datetime.now(), cancelada=False):
+            reservas.append(reserva)
+        for reserva in Reserva.objects.filter(desde__gt=datetime.now(), cancelada=False, invitado=self.user):
+            reservas.append(reserva)
         if len(reservas) > 0:
             return False
         else:
@@ -101,7 +104,7 @@ class Socio(models.Model):
         # Si la ficha médica esta vencida.
         if self.vencimiento_ficha_medica < date.today():
             from exceptions import FichaMediaVencidaError
-            raise FichaMediaVencidaError, _(u'Lo sentimos, pero usted no tiene su ficha médica al día, por lo que no podemos permitirle reservar. Regularice su situación para poder continuar disfrutando de nuestro servicio. Muchas gracias.')
+            raise FichaMediaVencidaError, u_(u'Lo sentimos, pero usted no tiene su ficha médica al día, por lo que no podemos permitirle reservar. Regularice su situación para poder continuar disfrutando de nuestro servicio. Muchas gracias.')
         # Si no está al día con las cuotas
         cuotas = Cuota.objects.all()[:2]
         al_dia = False
@@ -110,12 +113,12 @@ class Socio(models.Model):
                 al_dia = True
         if not al_dia:
             from exceptions import SocioDeudorError
-            raise SocioDeudorError, _(u'Usted tiene una deuda con el club, por favor regularice su situación para poder realizar reservas.')
+            raise SocioDeudorError, u_(u'Usted tiene una deuda con el club, por favor regularice su situación para poder realizar reservas.')
         # Si está sancionado
         sancion = self.user.sanciones.filter(hasta__gt=date.today())
         if len(sancion) > 0:
             from exceptions import SocioSancionadoError
-            raise SocioSancionadoError, _(u'Lo sentimos, pero usted tiene una sanción en curso, la cual le impide realizar reservas. En menos de una semana podrá continuar disfrutando de nuestro servicio.')
+            raise SocioSancionadoError, u_(u'Lo sentimos, pero usted tiene una sanción en curso, la cual le impide realizar reservas. En menos de una semana podrá continuar disfrutando de nuestro servicio.')
         # Sino
         return True
 
@@ -190,19 +193,17 @@ class Cancha(models.Model):
         else:
             return 'Cancha'
 
-    def esta_libre(self, hora, cuando):
-        dia = datetime.today().day
+    def esta_libre(self, hora, dia):
         mes = datetime.today().month
         anio = datetime.today().year
-        if cuando == 'maniana':
-            #FIXME: Si es el último día del mes, esto no anda.
-            dia += 1
-        else:
-            if datetime.now().hour > hora:
-                return False
+        # Si ya se pasó la hora de la reserva...
+        if datetime.now().hour > hora:
+            return False
         try:
-            reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora))
-        except:
+            reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora), cancelada=False)
+            print reserva
+        except Exception, e:
+            print e
             return True
         return False
 
@@ -257,7 +258,7 @@ class Reserva(models.Model):
         help_text=_(u'Dar de baja la reserva. Formato de fecha: aaaa-mm-dd'))
 
     def __unicode__(self):
-        return 'Reserva'# _(u'Cancha %(cancha)s reservada por %(socio)s de %(desde)s a %(hasta)s') % { 'cancha': self.cancha, 'socio': self.socio, 'desde}
+        return _(u'%(socio)s con %(invitado)s a las %(desde)i:00 hs.') % { 'socio': self.socio.username, 'invitado': self.invitado, 'desde': self.desde.hour }
 
     def get_mes(self):
         from utils import mes_to_string
@@ -280,7 +281,6 @@ class Reserva(models.Model):
     def cancelar(self, usuario=None):
         self.cancelada=True
         if usuario is None:
-            print "usuario es none"
             self.cancelada_por='%(nombre)s %(apellido)s' % { 'nombre': self.socio.first_name, 'apellido': self.socio.last_name }
         else:
             self.cancelada_por='%(nombre)s %(apellido)s' % { 'nombre': usuario.first_name, 'apellido': usuario.last_name }
@@ -290,7 +290,6 @@ class Reserva(models.Model):
     #FIXME: Traer la hora hasta la que la reserva esta vigente.
     def get_hasta(self):
         desde = timedelta()
-        super(Reserva, self).save()
 
     #TODO: Traer una cancha libre cualquiera a una hora determinada. Cumpliendo que:
     # No este desactivada.
@@ -307,22 +306,21 @@ class Reserva(models.Model):
             if self.cancha.desactivada:
                 from exceptions import CanchaNoDisponibleError
                 raise CanchaNoDisponibleError, self.cancha
-            #FIXME: Refucktion! Si me reserva para cualquier día que no sea hoy, se
-            # toma como que reserva para mañana. Eso apesta.
-            if self.desde.day == datetime.today().day:
-                dia = 'hoy'
-            else:
-                dia = 'maniana'
             # ¿Existen reservas para esta cancha?
-            if not self.cancha.esta_libre(self.desde.hour, dia):
+            if not self.cancha.esta_libre(self.desde.hour, self.desde.day):
                 from exceptions import ReservaSuperpuestaError
-                raise ReservaSuperpuestaError
+                raise ReservaSuperpuestaError, u_(u'Su reserva se superpone con otra existente.')
             #FIXME: Hardcoded! Si no me ingresan un invitado meto a prepo el invitado con id 1.
             if not self.content_type_id:
                 self.invitado = Invitado.objects.get(id=1)
 
             self.marca_temporal = datetime.now()
-        super(Reserva, self).save()
+        if self.socio.get_profile().en_regla():
+            if self.invitado.__class__.__name__ == "User":
+                if self.invitado.get_profile().en_regla:
+                    super(Reserva, self).save()
+            else:
+                super(Reserva, self).save()
 
     #FIXME: Refucktion!!!
     def cancha_reservada(self):

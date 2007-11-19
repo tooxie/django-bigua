@@ -9,48 +9,50 @@
     <fieldset>
         <legend>{% trans "Mis Reservas" %}</legend>
         {% if reservas_canceladas %}
-            <p class="titulito">
+            <p class="titulito" id="canceladas_link">
                 Reservas Canceladas
             </p>
-            {% for reserva in reservas_canceladas %}
+            <div id="canceladas">
+            {% for cancelada in reservas_canceladas %}
                 <div>
-                    {% trans "Dia" %}: {{ reserva.dia }} {% trans "de" %} {{ reserva.mes }}
+                    {% trans "Dia" %}: {{ cancelada.dia }} {% trans "de" %} {{ cancelada.mes }}
                 </div>
                 <div>
-                    {% trans "Hora" %}: {{ reserva.hora }}:00
+                    {% trans "Hora" %}: {{ cancelada.hora }}:00
                 </div>
                 <div>
-                    {% trans "Cancha" %}: {{ reserva.cancha }}
+                    {% trans "Cancha" %}: {{ cancelada.cancha }}
                 </div>
                 <div>
-                    {% trans "Junto a" %}: {{ reserva.invitado }}
+                    {% trans "Junto a" %}: {{ cancelada.invitado }}
                 </div>
                 <div>
-                    {% trans "Cancelada por" %} {{ reserva.cancelada_por }} {% trans "el" %} {{ reserva.cancelada_el }}
+                    {% trans "Cancelada por" %} {{ cancelada.cancelada_por }} {% trans "el" %} {{ cancelada.cancelada_el }}
                 </div>
+                <hr />
             {% endfor %}
-            <hr />
+            </div>
         {% endif %}
         {% if not puede_reservar %}
             <p class="titulito">
                 Reserva Actual
             </p>
             <div>
-                {% trans "Dia" %}: {{ dia }} {% trans "de" %} {{ mes }}
+                {% trans "Dia" %}: {{ reserva.dia }} {% trans "de" %} {{ reserva.mes }}
             </div>
             <div>
-                {% trans "Hora" %}: {{ hora }}:00
+                {% trans "Hora" %}: {{ reserva.hora }}:00
             </div>
             <div>
-                {% trans "Cancha" %}: {{ cancha }}
+                {% trans "Cancha" %}: {{ reserva.cancha }}
             </div>
             <div>
-                {% trans "Junto a" %}: {{ invitado }}
+                {% trans "Junto a" %}: {{ reserva.invitado }}
             </div>
             <p>
                 <!-- <input type="submit" name="cancelar" id="cancelar" value="Cancelar Reserva!" /> -->
                 <form method="post" action="/cancelar/reserva/" id="cancelarform">
-                    <input type="hidden" name="reserva" id="reserva" value="{{ id }}" />
+                    <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
                     <input type="hidden" name="confirmada" id="confirmada" />
                     <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                 </form>

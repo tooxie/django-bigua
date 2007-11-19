@@ -2,30 +2,6 @@ from django.template import loader, Context, RequestContext, TemplateSyntaxError
 from django.http import HttpResponse
 
 def render_response(template_prefix=None, always_use_requestcontext=True):
-    """
-    Create a decorator which can be used as a shortcut to render templates to
-    an HttpResponse.
-
-    The decorated function must return either:
-     * an HttpResponse object,
-     * a string containing the template name (if doesn't start with '/' then
-       will be combined with the template_prefix) or
-     * a tuple comprising of:
-         * a string or tuple containing the template name(s),
-         * a dictionary to add to the Context or RequestContext and
-         * (optionally) a list of context processors (if given, forces use of
-           RequestContext).
-
-    Example usage (in a views module)::
-
-        from projectname.renderer import render_response
-        render_response = render_response('app_name/')     # Template dir.
-
-        @render_response
-        app_view(request):
-            ...
-            return 'app_view_template.htm', dict(object=object)
-"""
     def renderer(func):
         def _dec(request, *args, **kwargs):
             response = func(request, *args, **kwargs)
