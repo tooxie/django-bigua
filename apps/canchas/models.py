@@ -201,9 +201,7 @@ class Cancha(models.Model):
             return False
         try:
             reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora), cancelada=False)
-            print reserva
         except Exception, e:
-            print e
             return True
         return False
 

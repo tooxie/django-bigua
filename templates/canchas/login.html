@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
     <fieldset>
-        <legend>Entrar</legend>
+        <legend>{% trans "Entrar" %}</legend>
         <form method="post" action="/login/" id="loginform">
             {% if error %}
                 <p id="errorholder">
@@ -12,8 +12,7 @@
                 </p>
             {% endif %}
             {{ form.as_p }}
-            <!-- <input type="submit" name="login" value="Entrar!" /> -->
-            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> Entrar!</button>
+            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> {% trans "Entrar" %}!</button>
         </form>
     </fieldset>
 {% endblock %}

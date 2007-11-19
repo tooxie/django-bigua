@@ -20,7 +20,7 @@ class Link(models.Model):
         return self.nombre
     def get_href(self):
         if self.pagina:
-            return self.pagina
+            return self.pagina.url
         elif self.url:
             return self.url
         else:

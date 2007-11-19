@@ -1,7 +1,7 @@
 {% extends "canchas/index.html" %}
 {% load i18n %}
 {% block content %}
-        <h2>Confirme</h2>
+        <h2>{% trans "Confirme" %}</h2>
         <form method="post" action="/cancelar/reserva/" id="confirmarcancelacionform">
             <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
             <p>
@@ -13,7 +13,7 @@
                         {% trans "D&iacute;a" %} <strong>{{ reserva.dia }}</strong>.
                     </div>
                     <div>
-                        {% trans "A las" %} <strong>{{ reserva.hora }}:00 horas</strong>.
+                        {% trans "A las" %} <strong>{{ reserva.hora }}:00 {% trans "horas" %}</strong>.
                     </div>
                     <div>
                         {% trans "En la cancha" %} "<strong>{{ reserva.cancha }}</strong>".

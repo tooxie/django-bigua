@@ -1,15 +1,25 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block css %}
         <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
 {% endblock %}
 {% block content %}
+    {% if not user.is_authenticated %}
     <fieldset>
-        <legend>Login de Administrador</legend>
+        <legend>{% trans "Login de Administrador" %}</legend>
         <form method="post" action="/login/" id="loginform">
             {{ admin.as_p }}
-            <!-- <input type="submit" name="login" value="Entrar!" /> -->
-            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> Entrar!</button>
+            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> {% trans "Entrar" %}!</button>
         </form>
     </fieldset>
+    {% else %}
+        {% if user.is_staff %}
+        <h2>{% trans "&iquest;Qu&eacute; desea hacer?" %}</h2>
+        <ul>
+            <li><a href="/administrador/socio/nuevo/">{% trans "Ingresar un socio" %}</a></li>
+            <li><a href="/administrador/reservas/">{% trans "Administrar las reservas" %}</a></li>
+        </ul>
+        {% endif %}
+    {% endif %}
 {% endblock %}
 

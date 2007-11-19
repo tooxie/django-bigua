@@ -1,7 +1,7 @@
 {% extends "canchas/index.html" %}
 {% load i18n %}
 {% block content %}
-        <h2>Verifique su Reserva</h2>
+        <h2>{% trans "Verifique su Reserva" %}</h2>
         <form method="post" action="/reservar/" id="reservaform">
             <input type="hidden" name="dia" id="dia" value="{{ dia }}" />
             <input type="hidden" name="hora" id="hora" value="{{ hora }}" />
@@ -11,7 +11,7 @@
                 Usted desea jugar el d&iacute;a <strong>{{ dia }}</strong> a las <strong>{{ hora }}:00 horas</strong> en la cancha "<strong>{{ cancha }}</strong>" con un costo de <strong>$U{{ costo }}</strong>.
                 {% endblocktrans %}
             </p>
-            <h3>&iquest;Con qui&eacute;n va a jugar?</h3>
+            <h3>{% trans "&iquest;Con qui&eacute;n va a jugar?" %}</h3>
             <p>
                 {% trans "Ingrese el n&uacute;mero de socio de su compa&ntilde;ero." %}
             </p>

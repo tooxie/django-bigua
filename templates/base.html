@@ -36,7 +36,7 @@
                 <!-- hack para correr el contenido sin el background -->
                 <div id="littlebarcontent">
                     {% if user.is_authenticated %}
-                        <span class="welcome">{% trans "Bienvenido" %} {{ user.first_name }}!</span> <a href="/logout/" class="onblack">{% trans "Salir de mi cuenta" %}</a>
+                        <span class="welcome">{% trans "Bienvenido" %} {{ user.first_name }}! {% if user.is_staff %}<img src="/media/images/sheriff.png" alt="Administrador." style="vertical-align: middle;" />{% endif %}</span> <a href="/logout/" class="onblack">{% trans "Salir de mi cuenta" %}</a>
                     {% else %}
                         <span>{% trans "Bienvenido/a" %}</span>
                     {% endif %}

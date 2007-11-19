@@ -72,18 +72,14 @@ def tablas(request):
     for reserva_cancelada in Reserva.objects.filter(invitado=request.user, cancelada=True).exclude(socio=request.user):
         canceladas.append(reserva_cancelada)
     # Reservas pendientes
-    print "Podrá reservar?"
     if not request.user.get_profile().puede_reservar():
-        print "No!!!"
         mi_reserva=None
         try:
             mi_reserva=request.user.reservas.get(desde__gt=datetime.now(), cancelada=False)
         except Reserva.DoesNotExist, e:
-            print "No tengo reservas propias. Error: %s" % e
             try:
                 mi_reserva=Reserva.objects.get(desde__gt=datetime.now(), cancelada=False, invitado=request.user)
             except Reserva.DoesNotExist, e:
-                print "No tengo reservas prestadas. Error: %s" % e
                 pass
         if mi_reserva is not None:
             return { 'puede_reservar': False, 'mes': mes_to_string(datetime.today().month), 'reserva': mi_reserva, 'reservas_canceladas': canceladas }
@@ -160,7 +156,10 @@ def do_reservar(request):
         if socio_form.is_valid():
             try:
                 if reservar_socio(request):
-                    return HttpResponseRedirect('/')
+                    if 'next' in post:
+                        return HttpResponseRedirect(post['next'])
+                    else:
+                        return HttpResponseRedirect('/')
             except Exception, e:
                 return 'error.html', { 'error': e }
         else:
@@ -169,7 +168,10 @@ def do_reservar(request):
                 i.save()
                 r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=i, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
                 r.save();
-                return HttpResponseRedirect('/')
+                if 'next' in post:
+                    return HttpResponseRedirect(post['next'])
+                else:
+                    return HttpResponseRedirect('/')
 
         return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
     # Si no hay datos por post pasa algo raro... me voy al mazo.
@@ -197,22 +199,15 @@ def cancelar(request):
             reserva = Reserva.objects.get(id=post['reserva'])
             if post['confirmada'] == 'true':
                 reserva.cancelar(request.user)
-                return HttpResponseRedirect('/')
+                if 'next' in post:
+                    return HttpResponseRedirect(post['next'])
+                else:
+                    return HttpResponseRedirect('/')
             else:
                 return 'confirmar.html', { 'reserva': reserva }
         except:
-            return HttpResponseRedirect('/')
-
-@to_response
-def admin_login(request):
-    from forms import AdminLoginForm
-
-    if request.method == 'POST':
-        post = request.POST.copy()
-        admin_form = AdminLoginForm(post)
-        if admin_form.is_valid():
-            pass
-    else:
-        admin_form = AdminLoginForm()
-    return 'admin.html', { 'admin': admin_form }
+            if 'next' in post:
+                return HttpResponseRedirect(post['next'])
+            else:
+                return HttpResponseRedirect('/')
 

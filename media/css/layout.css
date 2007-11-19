@@ -17,18 +17,28 @@ hr {
     margin: 15px auto;
 }
 
-form#loginform label, #radiopartner label {
+form#loginform label, #radiopartner label, form#reservaform label, #partnerholder label, form#newuserform label {
     display: block;
-    width: 6em;
     float: left;
     clear: none;
 }
 
+form#loginform label, #radiopartner label {
+    width: 6em;
+}
+
 form#reservaform label, #partnerholder label {
-    display: block;
     width: 12em;
-    float: left;
-    clear: none;
+}
+
+form#newuserform li {
+    clear: both;
+    list-style-type: none;
+    padding-bottom: 20px;
+}
+
+form#newuserform label {
+    width: 16em;
 }
 
 button img {

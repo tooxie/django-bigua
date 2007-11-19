@@ -13,7 +13,7 @@ class MenuNode(Node):
             html = '<ul class="%s">' % (lower(self.menu_name))
             menu = Menu.objects.get(nombre=self.menu_name)
             for link in menu.links.filter(desactivar=False):
-                html += '<li class="%s_link"><a href="%s" title="%s">%s</a></li>' % (lower(self.menu_name), link.href, link.nombre, link.nombre)
+                html += '<li class="%s_link"><a href="%s" title="%s">%s</a></li>' % (lower(self.menu_name), link.get_href(), link.nombre, link.nombre)
             html += '</ul>'
         except:
             html = ""

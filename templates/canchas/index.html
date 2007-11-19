@@ -10,7 +10,7 @@
         <legend>{% trans "Mis Reservas" %}</legend>
         {% if reservas_canceladas %}
             <p class="titulito" id="canceladas_link">
-                Reservas Canceladas
+                {% trans "Reservas Canceladas" %}
             </p>
             <div id="canceladas">
             {% for cancelada in reservas_canceladas %}
@@ -18,7 +18,7 @@
                     {% trans "Dia" %}: {{ cancelada.dia }} {% trans "de" %} {{ cancelada.mes }}
                 </div>
                 <div>
-                    {% trans "Hora" %}: {{ cancelada.hora }}:00
+                    {% trans "Hora" %}: {{ cancelada.hora }}:00 {% trans "horas" %}
                 </div>
                 <div>
                     {% trans "Cancha" %}: {{ cancelada.cancha }}
@@ -35,13 +35,13 @@
         {% endif %}
         {% if not puede_reservar %}
             <p class="titulito">
-                Reserva Actual
+                 {% trans "Reserva Actual" %}
             </p>
             <div>
                 {% trans "Dia" %}: {{ reserva.dia }} {% trans "de" %} {{ reserva.mes }}
             </div>
             <div>
-                {% trans "Hora" %}: {{ reserva.hora }}:00
+                {% trans "Hora" %}: {{ reserva.hora }}:00 {% trans "horas" %}
             </div>
             <div>
                 {% trans "Cancha" %}: {{ reserva.cancha }}
@@ -50,7 +50,6 @@
                 {% trans "Junto a" %}: {{ reserva.invitado }}
             </div>
             <p>
-                <!-- <input type="submit" name="cancelar" id="cancelar" value="Cancelar Reserva!" /> -->
                 <form method="post" action="/cancelar/reserva/" id="cancelarform">
                     <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
                     <input type="hidden" name="confirmada" id="confirmada" />
