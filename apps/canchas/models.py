@@ -281,11 +281,9 @@ class Reserva(models.Model):
         self.cancelada=True
         if usuario is None:
             print "usuario es none"
-            self.cancelada_por="%(nombre)s %(apellido)s" % { 'nombre': self.socio.first_name, 'apellido': self.socio.last_name }
+            self.cancelada_por='%(nombre)s %(apellido)s' % { 'nombre': self.socio.first_name, 'apellido': self.socio.last_name }
         else:
-            print "usuario es %s" % usuario
-            xcancelada_por=u"%(nombre)s %(apellido)s" % { 'nombre': self.usuario.first_name, 'apellido': self.usuario.last_name }
-            self.cancelada_por=xcancelada_por
+            self.cancelada_por='%(nombre)s %(apellido)s' % { 'nombre': usuario.first_name, 'apellido': usuario.last_name }
         self.cancelada_el=datetime.now()
         super(Reserva, self).save()
 
