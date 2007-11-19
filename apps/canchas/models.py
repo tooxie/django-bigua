@@ -110,12 +110,12 @@ class Socio(models.Model):
                 al_dia = True
         if not al_dia:
             from exceptions import SocioDeudorError
-            raise SocioDeudorError
+            raise SocioDeudorError, _(u'Usted tiene una deuda con el club, por favor regularice su situación para poder realizar reservas.')
         # Si está sancionado
-        sancion = self.sanciones.filter(hasta__gt=date.today())
-        if sancion is not None:
+        sancion = self.user.sanciones.filter(hasta__gt=date.today())
+        if len(sancion) > 0:
             from exceptions import SocioSancionadoError
-            raise SocioSancionadoError
+            raise SocioSancionadoError, _(u'Lo sentimos, pero usted tiene una sanción en curso, la cual le impide realizar reservas. En menos de una semana podrá continuar disfrutando de nuestro servicio.')
         # Sino
         return True
 

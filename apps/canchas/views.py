@@ -47,8 +47,8 @@ def login(request):
                             return HttpResponseRedirect(request.POST['next'])
                         else:
                             return HttpResponseRedirect('/')
-                except (FichaMedicaVencidaError, SocioDeudorError, SocioSancionadoError):
-                    return inhabilitado(request, e.message)
+                except (FichaMedicaVencidaError, SocioDeudorError, SocioSancionadoError), e:
+                    error = e.message
                 except Socio.DoesNotExist:
                     error = _(u'El socio especificado no existe. Si usted es socio del club entonces aún no lo ingresaron a la base del sistema. Si el problema persiste comuníquelo al club. Muchas gracias.')
                     pass

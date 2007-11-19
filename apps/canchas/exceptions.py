@@ -5,10 +5,13 @@ class ReservaSuperpuestaError(Exception):
     pass
 
 class FichaMedicaVencidaError(Exception):
-    pass
+    def __init__(self, message):
+        self.message = message
 
 class SocioDeudorError(Exception):
-    pass
+    def __init__(self, message):
+        self.message = message
 
 class SocioSancionadoError(Exception):
-    pass
+    def __init__(self, message):
+        self.message = message
