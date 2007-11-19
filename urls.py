@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 
 info_dict = {
     'queryset': Reserva.objects.all().order_by('cancelada', '-desde'),
-    'paginate_by': 2,
+    'paginate_by': 5,
 }
 
 urlpatterns += patterns('django.views.generic.list_detail',

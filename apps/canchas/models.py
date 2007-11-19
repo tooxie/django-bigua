@@ -160,9 +160,9 @@ class Sancion(models.Model):
 
 class Configuracion(models.Model):
     clave = models.CharField(_(u'Dato'), max_length=150,
-        help_text=_(u''))
+        help_text=_(u'Un nombre para la clave. Recuerde que existen algunos nombre predefinidos como "hora_inicio", "hora_fin", "cancelar_antes_de", etc...'))
     valor = models.CharField(_(u'Valor'), max_length=255,
-        help_text=_(u''))
+        help_text=_(u'Un valor para la clave. Según el tipo de clave esto pueden ser horas, minutos, pesos o cualquier unidad. Le recomendamos que solo modifique claves que sepa para que sirven.'))
     core = models.BooleanField(_(u'¿Administrador?'),
         help_text=_(u'¿Es un dato modificable únicamente por el administrador del sistema?'))
 
@@ -194,13 +194,19 @@ class Cancha(models.Model):
             return 'Cancha'
 
     def esta_libre(self, hora, dia):
-        mes = datetime.today().month
-        anio = datetime.today().year
-        # Si ya se pasó la hora de la reserva...
-        if datetime.now().hour > hora:
-            return False
+        if dia == date.today().day:
+            mes = datetime.today().month
+            anio = datetime.today().year
+            # Si ya se pasó la hora de la reserva...
+            if datetime.now().hour > hora:
+                return False
+        else:
+            fecha = date.today()+timedelta(1)
+            mes = fecha.month
+            anio = fecha.year
         try:
             reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora), cancelada=False)
+            print reserva
         except Exception, e:
             return True
         return False

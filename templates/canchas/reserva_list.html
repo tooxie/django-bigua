@@ -6,7 +6,7 @@
 {% block content %}
     <h2>{% trans "Reservas" %}</h2>
     <div>
-        Total: {{ hits }} reservas, mostrando de a {{ results_per_page }}.
+        Total: {{ hits }} reservas{% if is_paginated %}, mostrando de a {{ results_per_page }}{% endif %}.
     </div>
     {% for reserva in object_list %}
         <p>
