@@ -281,6 +281,10 @@ class Reserva(models.Model):
         return self.cancha.costo
     costo = property(get_costo)
 
+    def get_permitir_admin_cancelar(self):
+        return self.permitir_admin_canclear
+    cancelable_por_admin = property(get_permitir_admin_cancelar)
+
     #TODO: Chequear que Reservera.cancelar() ande.
     def cancelar(self, usuario=None):
         self.cancelada=True

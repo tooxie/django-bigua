@@ -17,7 +17,11 @@
         <h2>{% trans "&iquest;Qu&eacute; desea hacer?" %}</h2>
         <ul>
             <li><a href="/administrador/socio/nuevo/">{% trans "Ingresar un socio" %}</a></li>
-            <li><a href="/administrador/reservas/">{% trans "Administrar las reservas" %}</a></li>
+            <li>{% trans "Reservas" %}
+                <ul>
+                    <li><a href="/administrador/reservas/">{% trans "Administrar" %}</a></li>
+                    <li><a href="/administrador/reserva/nueva/">{% trans "Crear una nueva" %}</a></li>
+                </ul>
         </ul>
         {% endif %}
     {% endif %}

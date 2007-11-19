@@ -27,12 +27,16 @@
                     {% trans "Cancelada por" %} {{ reserva.cancelada_por }} {% trans "el" %} {{ reserva.cancelada_el }}
                 </div>
             {% else %}
+                {% if reserva.cancelable_por_admin %}
                 <form method="post" action="/cancelar/reserva/" onSubmit="if(confirm('{% trans "Confirme que realmente desea cancelar la reserva." %}')){document.getElementById('confirmada').value='true'; return true;}else{return false;}">
                     <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
                     <input type="hidden" name="next" id="next" value="/administrador/reservas/?page={{ page }}" />
                     <input type="hidden" name="confirmada" id="confirmada" />
                     <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                 </form>
+                {% else %}
+                    <button name="cancelar" id="cancelar" value="cancelar" title="{% trans "Solo el dueño de la reserva puede cancelarla." %}" disabled><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
+                {% endif %}
             {% endif %}
         </p>
     {% endfor %}

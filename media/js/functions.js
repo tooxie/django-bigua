@@ -109,14 +109,16 @@ var bigua_reserva_rules = {
 var bigua_cancelar_rules = {
     'form#cancelarform' : function(element) {
         element.onsubmit = function() {
-            if(confirm('Realmente desea eliminar su reserva?')) {
+            if(confirm(_('confirmar_text').value)) {
                 _('confirmada').value = 'true';
+                _('cancelar').disabled = true;
+                setTimeout(function() { _('cancelar').disabled = false; }, 5000);
                 return true;
             } else {
                 return false;
             }
         }
-    }
+    },
 }
 
 var bigua_canceladas_rules = {
