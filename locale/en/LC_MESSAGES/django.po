@@ -18,78 +18,78 @@ msgstr ""
 
 #: apps/canchas/choices.py:40
 msgid "Masculino"
-msgstr ""
+msgstr "Male"
 
 #: apps/canchas/choices.py:41
 msgid "Femenino"
-msgstr ""
+msgstr "Female"
 
 #: apps/canchas/choices.py:46 templates/canchas/index.html:124
 msgid "Hoy"
-msgstr ""
+msgstr "Today"
 
 #: apps/canchas/choices.py:47
 msgid "Mañana"
-msgstr ""
+msgstr "Tomorrow"
 
 #: apps/canchas/forms.py:9 apps/canchas/forms.py:27 apps/canchas/models.py:421
 msgid "Usuario"
-msgstr ""
+msgstr "User"
 
 #: apps/canchas/forms.py:10
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: apps/canchas/forms.py:13 apps/canchas/forms.py:35 apps/canchas/models.py:80
 msgid "Número de Socio"
-msgstr ""
+msgstr "Member Number"
 
 #: apps/canchas/forms.py:23 apps/canchas/forms.py:74
 #: apps/canchas/models.py:149 apps/canchas/models.py:203
 #: templates/canchas/index.html:104 templates/canchas/socio_list.html:11
 msgid "Nombre"
-msgstr ""
+msgstr "Name"
 
 #: apps/canchas/forms.py:24 apps/canchas/forms.py:34
 msgid "Cédula de Identidad"
-msgstr ""
+msgstr "Document"
 
 #: apps/canchas/forms.py:28 apps/canchas/forms.py:46
 msgid "Contraseña"
-msgstr ""
+msgstr "Password"
 
 #: apps/canchas/forms.py:36
 msgid "Primer Nombre"
-msgstr ""
+msgstr "First Name"
 
 #: apps/canchas/forms.py:37
 msgid "Segundo Nombre"
-msgstr ""
+msgstr "Second Name"
 
 #: apps/canchas/forms.py:38
 msgid "Primer Apellido"
-msgstr ""
+msgstr "Father Last Name"
 
 #: apps/canchas/forms.py:39
 msgid "Segundo Apellido"
-msgstr ""
+msgstr "Mother Last Name"
 
 #: apps/canchas/forms.py:40 apps/canchas/models.py:81
 msgid "Fecha de Nacimiento"
-msgstr ""
+msgstr "Date of Birth"
 
 #: apps/canchas/forms.py:41 apps/canchas/models.py:83
 msgid "Sexo"
-msgstr ""
+msgstr "Gender"
 
 #: apps/canchas/forms.py:42 apps/canchas/models.py:19
 #: templates/canchas/socio_list.html:24
 msgid "Dirección"
-msgstr ""
+msgstr "Address"
 
 #: apps/canchas/forms.py:43 templates/canchas/socio_list.html:20
 msgid "e-Mail"
-msgstr ""
+msgstr "e-Mail"
 
 #: apps/canchas/forms.py:44
 msgid "Vencimiento de Ficha Médica"
