@@ -6,7 +6,9 @@
         <legend>{% trans "Nuevo Socio" %}</legend>
         <form method="post" action="/administrador/socio/nuevo/" id="newuserform">
             {{ socio_form.as_p }}
-            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/save.gif" /> {% trans "Guardar Socio" %}</button>
+            <div>
+                <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/save.gif" alt="" /> {% trans "Guardar Socio" %}</button>
+            </div>
         </form>
     </fieldset>
     {% endif %}
