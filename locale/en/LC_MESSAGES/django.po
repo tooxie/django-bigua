@@ -93,156 +93,156 @@ msgstr "e-Mail"
 
 #: apps/canchas/forms.py:44
 msgid "Vencimiento de Ficha Médica"
-msgstr ""
+msgstr "Medical Card is Valid Until"
 
 #: apps/canchas/forms.py:45
 msgid "Última Cuota Paga"
-msgstr ""
+msgstr "Last Month Payed"
 
 #: apps/canchas/forms.py:47
 msgid "Repita la Contraseña"
-msgstr ""
+msgstr "Repeat Password"
 
 #: apps/canchas/forms.py:53
 #, python-format
 msgid "Ya existe un usuario con número de socio %i, por favor verifique."
-msgstr ""
+msgstr "A user with memebership number %i already exists, please verify."
 
 #: apps/canchas/forms.py:59
 msgid "Ambas contraseñas deben coincidir."
-msgstr ""
+msgstr "Passwords do not match."
 
 #: apps/canchas/forms.py:68 apps/canchas/models.py:145
 #: templates/canchas/index.html:88 templates/canchas/reserva_list.html:11
 msgid "Socio"
-msgstr ""
+msgstr "Member"
 
 #: apps/canchas/forms.py:69
 msgid "¿Cuando?"
-msgstr ""
+msgstr "When?"
 
 #: apps/canchas/forms.py:70
 msgid "¿A qué hora?"
-msgstr ""
+msgstr "What time?"
 
 #: apps/canchas/forms.py:71
 msgid "Ingrese solo la hora, de 00 a 24, sin minutos ni segundos."
-msgstr ""
+msgstr "Just input time, from 00 to 23, without minutes or seconds."
 
 #: apps/canchas/forms.py:72
 msgid "Compañero"
-msgstr ""
+msgstr "Partner"
 
 #: apps/canchas/forms.py:73
 msgid "¿Va a jugar con un socio del club?"
-msgstr ""
+msgstr "Is a member playing?"
 
 #: apps/canchas/forms.py:75
 msgid "¿O con una persona ajena al club?"
-msgstr ""
+msgstr "Or an outsider?"
 
 #: apps/canchas/forms.py:76 templates/canchas/index.html:107
 #: templates/canchas/socio_list.html:14
 msgid "Documento"
-msgstr ""
+msgstr "Document"
 
 #: apps/canchas/forms.py:77
 msgid ""
 "Si el compañero no es un socio del club, solicite nombre y documento del "
 "mismo."
-msgstr ""
+msgstr "if the partner is not a club member, ask for name and document."
 
 #: apps/canchas/forms.py:78 apps/canchas/models.py:246
 #: templates/canchas/index.html:27 templates/canchas/index.html.py:50
 #: templates/canchas/reserva_list.html:20
 msgid "Cancha"
-msgstr ""
+msgstr "Court"
 
 #: apps/canchas/models.py:13 apps/canchas/models.py:48
 msgid "Club"
-msgstr ""
+msgstr "Club"
 
 #: apps/canchas/models.py:14
 msgid "Nombre del club dueño de las canchas."
-msgstr ""
+msgstr "Name of the club that owns the courts."
 
 #: apps/canchas/models.py:16
 msgid "Dirección en Internet del club. Puede quedar vacío."
-msgstr ""
+msgstr "Club's web site. May be empty."
 
 #: apps/canchas/models.py:20
 msgid "Dirección física del club. Puede quedar vacío."
-msgstr ""
+msgstr "Club's physical address. May be empty."
 
 #: apps/canchas/models.py:49
 msgid "Clubes"
-msgstr ""
+msgstr "Clubs"
 
 #: apps/canchas/models.py:52
 msgid "Mes"
-msgstr ""
+msgstr "Month"
 
 #: apps/canchas/models.py:53
 msgid "¿A qué número de mes corresponde la cuota?"
-msgstr ""
+msgstr "What month number does it correspond to?"
 
 #: apps/canchas/models.py:54
 msgid "Año"
-msgstr ""
+msgstr "Year"
 
 #: apps/canchas/models.py:55
 msgid "¿A qué año corresponde la cuota?"
-msgstr ""
+msgstr "Which year does it correspond to?"
 
 #: apps/canchas/models.py:58
 msgid "Observaciones"
-msgstr ""
+msgstr "Observations"
 
 #: apps/canchas/models.py:59
 msgid "Observaciones que crea pertinentes."
-msgstr ""
+msgstr "Observations that you consider appropiate."
 
 #: apps/canchas/models.py:76 apps/canchas/models.py:151
 msgid "Documento de Identidad"
-msgstr ""
+msgstr "Document of Identity"
 
 #: apps/canchas/models.py:77
 msgid "Documento de Identidad del nuevo socio."
-msgstr ""
+msgstr "New Member's Document of Identidy."
 
 #: apps/canchas/models.py:78
 msgid "Domicilio"
-msgstr ""
+msgstr "Address"
 
 #: apps/canchas/models.py:79
 msgid "Domicilio donde vive el socio."
-msgstr ""
+msgstr "Address where the new member lives."
 
 #: apps/canchas/models.py:82
 msgid "Formato: aaaa-mm-dd"
-msgstr ""
+msgstr "Format: aaaa-mm-dd"
 
 #: apps/canchas/models.py:84
 msgid "Vencimiento de ficha médica"
-msgstr ""
+msgstr "Medical card expires"
 
 #: apps/canchas/models.py:85
 msgid "Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd"
-msgstr ""
+msgstr "Member's medical card expiration date. Format: aaaa-mm-dd"
 
 #: apps/canchas/models.py:87
 msgid "¿Es administrador?"
-msgstr ""
+msgstr "Is administrator?"
 
 #: apps/canchas/models.py:91
 #, python-format
 msgid "%(nombre)s %(apellido)s"
-msgstr ""
+msgstr "%(nombre)s %(apellido)s"
 
 #: apps/canchas/models.py:146 templates/canchas/admin.html:16
 #: templates/canchas/socio_list.html:4
 msgid "Socios"
-msgstr ""
+msgstr "Members"
 
 #: apps/canchas/models.py:150
 msgid "Nombre del invitado."

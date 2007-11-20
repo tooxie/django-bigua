@@ -47,8 +47,8 @@ LANGUAGES = (
   ('es', 'Español'),
   ('en', 'English'),
 )
-LANGUAGE_CODE = 'es-uy'
-DEFAULT_LANGUAGE = 1
+LANGUAGE_CODE = 'en-us'
+DEFAULT_LANGUAGE = 2
 
 DEFAULT_CHARSET = 'utf-8'
 
