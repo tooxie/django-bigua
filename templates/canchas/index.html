@@ -52,17 +52,21 @@
             <div>
                 {% trans "Junto a" %}: {{ reserva.invitado }}
             </div>
-            <p>
+            <div>
                 <form method="post" action="/cancelar/reserva/" id="cancelarform">
-                    <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
-                    <input type="hidden" name="confirmada" id="confirmada" />
-                    <input type="hidden" name="confirmar_text" id="confirmar_text" value="¿Realmente desea eliminar su reserva?" />
-                    <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
+                    <div>
+                        <input type="hidden" name="reserva" id="reserva" value="{{ reserva.id }}" />
+                        <input type="hidden" name="confirmada" id="confirmada" />
+                        <input type="hidden" name="confirmar_text" id="confirmar_text" value="¿Realmente desea eliminar su reserva?" />
+                        <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
+                    </div>
                 </form>
                 <form method="post" action="/imprimir/" id="imprimirform">
-                    <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> {% trans "Imprimir" %}</button>
+                    <div>
+                        <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> {% trans "Imprimir" %}</button>
+                    </div>
                 </form>
-            </p>
+            </div>
         {% else %}
             <strong>{% trans "No tiene reservas actualmente." %}</strong>
         {% endif %}
@@ -71,6 +75,7 @@
         <legend>{% trans "Reservar" %}!</legend>
         {% if puede_reservar %}
         <script type="text/javascript">
+            <!--
             var output = '';
             output += '<p>';
             output += '    <form method="post" action="/reservar/" id="partnerform">';
@@ -111,6 +116,7 @@
             output += '<p id="errorholder">';
             output += '</p>';
             document.write(output);
+            -->
         </script>
         <noscript>
         </noscript>

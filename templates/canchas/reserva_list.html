@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block css %}
-    <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
-{% endblock %}
 {% block content %}
     <h2>{% trans "Reservas" %}</h2>
     <div>
-        Total: {{ hits }} reservas{% if is_paginated %}, mostrando de a {{ results_per_page }}{% endif %}.
+        {% trans "Total" %}: {{ hits }} {% trans "reservas" %}{% if is_paginated %}, {% trans "mostrando de a" %} {{ results_per_page }}{% endif %}.
     </div>
     {% for reserva in object_list %}
-        <p>
+        <p class="reserva">
+            <div>
+                {% trans "Socio" %}: {{ reserva.socio }}
+            </div>
             <div>
                 {% trans "Dia" %}: {{ reserva.dia }} {% trans "de" %} {{ reserva.mes }}
             </div>
@@ -23,7 +23,7 @@
                 {% trans "Junto a" %}: {{ reserva.invitado }}
             </div>
             {% if reserva.cancelada %}
-                <div>
+                <div class="cancelada">
                     {% trans "Cancelada por" %} {{ reserva.cancelada_por }} {% trans "el" %} {{ reserva.cancelada_el }}
                 </div>
             {% else %}
@@ -35,13 +35,15 @@
                     <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                 </form>
                 {% else %}
-                    <button name="cancelar" id="cancelar" value="cancelar" title="{% trans "Solo el dueño de la reserva puede cancelarla." %}" disabled><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
+                    <div class="pendiente">
+                        Reserva no cancelada. No Cancelable.
+                    </div>
                 {% endif %}
             {% endif %}
         </p>
     {% endfor %}
     {% if is_paginated %}
-        <p>
+        <p class="paginado">
             {% if has_previous %}
                 <a href="?page=1">{% trans "Primera" %}</a>
                 <a href="?page={{ previous }}">{% trans "Anterior" %}</a>

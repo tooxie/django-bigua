@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    {% if user.is_staff %}
+    <h2>{% trans "Reservar" %}</h2>
+    {% if error %}
+        <p id="errorholder">
+            {{ error }}
+        </p>
+    {% endif %}
+    <form method="post" action="/administrador/reservar/" id="adminreservar">
+        {{ admin_reservar.as_p }}
+        <div>
+            <button type="submit" name="admin_reservar" id="admin_reservar"><img src="/media/images/save.gif" alt="{% trans "Guardar" %}" /> Reservar!</button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}
+

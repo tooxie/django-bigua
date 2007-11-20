@@ -1,4 +1,4 @@
-{% load render_menu i18n %}
+{% load render_menu multilingual_tags i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -35,10 +35,11 @@
                 <!-- hack para correr el contenido sin el background -->
                 <div id="littlebarcontent">
                     {% if user.is_authenticated %}
-                        <span class="welcome">{% trans "Bienvenido" %} {{ user.first_name }}! {% if user.is_staff %}<img src="/media/images/sheriff.png" alt="Administrador." style="vertical-align: middle;" />{% endif %}</span> <a href="/logout/" class="onblack">{% trans "Salir de mi cuenta" %}</a>
+                        <span class="welcome">{% trans "Bienvenido" %} {{ user.first_name }}! {% if user.is_staff %}<img src="/media/images/staff.png" alt="Administrador." style="vertical-align: middle;" />{% endif %}</span> <a href="/logout/" class="onblack" id="salir">{% trans "Salir de mi cuenta" %}</a>
                     {% else %}
                         <span>{% trans "Bienvenido/a" %}</span>
                     {% endif %}
+                    <span class="languages"><a href="/lang/es/"><img src="/media/images/es.jpg" alt="Español" title="Español" /></a> <a href="/lang/en/"><img src="/media/images/en.jpg" alt="English" title="English" /></a></span>
                 </div>
             </div>
                 <div id="wrapperinside">
@@ -69,6 +70,20 @@
                         <p>
                             {% trans "Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, grandes premios y muchas sorpresas que iremos descubriendo juego a juego." %}
                         </p>
+                        <div class="icons">
+                            <p>
+                                <a href="http://www.w3c.es/Traducciones/es/Markup/2004/xhtml-faq.htm"><img src="/media/images/valid-xhtml10.png" alt="{% trans "&iexcl;XHTML 1.0 Strict V&aacute;lido!" %}" /></a>
+                            </p>
+                            <p>
+                                <a href="http://www.python.org/"><img src="/media/images/text-x-python.png" alt="{% trans "&iexcl;Potenciado por Python!" %}" /></a>
+                            </p>
+                            <p>
+                                <a href="http://www.djangoproject.com/"><img src="/media/images/django.png" alt="{% trans "&iexcl;Un sitio en django!" %}" /></a>
+                            </p>
+                            <p>
+                                <a href="http://code.google.com/p/django-bigua/"><img src="/media/images/code.google.png" alt="{% trans "Hosteado en Google Code." %}" /></a>
+                            </p>
+                        </div>
                     </div>
             </div>
             <div id="footer">

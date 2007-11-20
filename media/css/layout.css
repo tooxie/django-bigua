@@ -11,13 +11,18 @@ body {
 	font-size: 0.8em;
 }
 
+img {
+    border-width: 0;
+    vertical-align: middle;
+}
+
 hr {
     width: 90%;
     border: 1px inset white;
     margin: 15px auto;
 }
 
-form#loginform label, #radiopartner label, form#reservaform label, #partnerholder label, form#newuserform label {
+form#loginform label, #radiopartner label, form#reservaform label, #partnerholder label, form#newuserform label, form#adminreservar label {
     display: block;
     float: left;
     clear: none;
@@ -27,11 +32,15 @@ form#loginform label, #radiopartner label {
     width: 6em;
 }
 
+form#adminreservar label {
+    width: 8em;
+}
+
 form#reservaform label, #partnerholder label {
     width: 12em;
 }
 
-form#newuserform li {
+form#newuserform li, form#adminreservar li {
     clear: both;
     list-style-type: none;
     padding-bottom: 20px;
@@ -127,6 +136,18 @@ span#home {
 
 span.welcome {
     padding-right: 25px;
+}
+
+span.languages {
+    padding-right: 25px;
+}
+
+.languages {
+    float: right;
+    display: block;
+    clear: none;
+    margin-top: -18px;
+    margin-right: 25px;
 }
 
 div#titulo {
@@ -319,7 +340,7 @@ form#cancelarform, form#imprimirform {
     color: red;
     border: 1px dashed black;
     padding: 5px 0 5px 60px;
-    background-image: url('/media/images/error.jpg');
+    background-image: url('/media/images/dialog-error.png');
     background-repeat: no-repeat;
     background-position: left top;
     min-height: 30px;
@@ -333,4 +354,26 @@ form#cancelarform, form#imprimirform {
 .titulito {
     font-weight: bold;
     padding-left: 15px;
+}
+
+.icons {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.icons img {
+    border-width: 0;
+}
+
+.cancelada, .vencida {
+    color: red;
+}
+
+.pendiente {
+    color: green;
+}
+
+.paginado {
+    text-align: center;
+    margin-top: 40px;
 }

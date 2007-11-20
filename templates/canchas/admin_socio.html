@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    {% if user.is_staff %}
+    <fieldset>
+        <legend>{% trans "Nuevo Socio" %}</legend>
+        <form method="post" action="/administrador/socio/nuevo/" id="newuserform">
+            {{ socio_form.as_p }}
+            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/save.gif" /> {% trans "Guardar Socio" %}</button>
+        </form>
+    </fieldset>
+    {% endif %}
+{% endblock %}
+

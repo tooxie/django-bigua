@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% block css %}
-    <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
-{% endblock %}
+{% load i18n %}
 {% block content %}
     <fieldset>
         <legend>{% trans "Entrar" %}</legend>
@@ -12,7 +10,9 @@
                 </p>
             {% endif %}
             {{ form.as_p }}
-            <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" /> {% trans "Entrar" %}!</button>
+            <p>
+                <button name="login" id="login" value="entrar" type="submit"><img src="/media/images/login.gif" alt="{% trans "Autentificarse" %}" /> {% trans "Entrar" %}!</button>
+            </p>
         </form>
     </fieldset>
 {% endblock %}

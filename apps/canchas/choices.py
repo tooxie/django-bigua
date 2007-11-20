@@ -1,4 +1,6 @@
+# coding=UTF-8
 from django.utils.translation import ugettext_lazy as _
+from datetime import date, timedelta
 
 DESDE_HORA_CHOICES = (
     ('0800', '08:00'),
@@ -38,3 +40,10 @@ SEXO_CHOICES = (
     ('M', _(u'Masculino')),
     ('F', _(u'Femenino')),
 )
+
+maniana=date.today()+timedelta(1)
+CUANDO_DIA_CHOICES = (
+    (date.today().day, _(u'Hoy')),
+    (maniana.day, _(u'Mañana')),
+)
+

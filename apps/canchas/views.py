@@ -13,6 +13,8 @@ to_response = render_response('canchas/')
 @to_response
 def index(request):
     if request.user.is_authenticated():
+        if request.user.is_staff == 1:
+            return HttpResponseRedirect('/administrador/')
         try:
             p=request.user.get_profile()
             return main(request)
@@ -23,6 +25,13 @@ def index(request):
 
 def main(request):
     return 'index.html', tablas(request)
+
+def set_lang(request, lang):
+    from settings import LANGUAGES
+    from multilingual.languages import set_default_language
+
+    set_default_language(lang)
+    return HttpResponseRedirect('/')
 
 @to_response
 def login(request):
@@ -150,31 +159,35 @@ def reservar(request, **kwargs):
 def do_reservar(request):
     from forms import ReservaSocioForm, ReservaInvitadoForm
 
-    if request.method == "POST":
-        post = request.POST.copy()
-        socio_form = ReservaSocioForm(post)
-        if socio_form.is_valid():
-            try:
-                if reservar_socio(request):
+    if request.user.is_staff == 0:
+        if request.method == "POST":
+            post = request.POST.copy()
+            socio_form = ReservaSocioForm(post)
+            if socio_form.is_valid():
+                try:
+                    if reservar_socio(request):
+                        if 'next' in post:
+                            return HttpResponseRedirect(post['next'])
+                        else:
+                            return HttpResponseRedirect('/')
+                except User.DoesNotExist:
+                    error=_(u'No existe ningun socio registrado con ese número, por favor verifique los datos antes de ingresarlos.')
+                return 'error.html', { 'error': error }
+            else:
+                if post['nombre'] != '' and post['cedula'] != '':
+                    i=Invitado(nombre=post['nombre'], documento=post['cedula'])
+                    i.save()
+                    r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=i, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
+                    r.save();
                     if 'next' in post:
                         return HttpResponseRedirect(post['next'])
                     else:
                         return HttpResponseRedirect('/')
-            except Exception, e:
-                return 'error.html', { 'error': e }
-        else:
-            if post['nombre'] != '' and post['cedula'] != '':
-                i=Invitado(nombre=post['nombre'], documento=post['cedula'])
-                i.save()
-                r=Reserva(socio=request.user, cancha=Cancha.objects.get(id=post['cancha']), invitado=i, desde=datetime(datetime.today().year, datetime.today().month, int(post['dia']), int(post['hora'])))
-                r.save();
-                if 'next' in post:
-                    return HttpResponseRedirect(post['next'])
-                else:
-                    return HttpResponseRedirect('/')
 
-        return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
-    # Si no hay datos por post pasa algo raro... me voy al mazo.
+            return reservar(request, dia=post['dia'], hora=post['hora'], cancha=post['cancha'])
+        # Si no hay datos por post pasa algo raro... me voy al mazo.
+        else:
+            return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/')
 
@@ -210,4 +223,6 @@ def cancelar(request):
                 return HttpResponseRedirect(post['next'])
             else:
                 return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
 

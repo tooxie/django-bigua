@@ -39,17 +39,72 @@ def login(request):
 def socio_nuevo(request):
     from forms import NuevoSocioForm
 
-    if request.user.is_authenticated():
-        if request.user.is_staff == 1:
-            socio=NuevoSocioForm()
-            if request.method == "POST":
-                post=request.POST.copy()
-                socio=NuevoSocioForm(post)
-                if socio.is_valid():
-                    pass
-            return 'socio.html', { 'socio_form': socio }
-        else:
-             return HttpResponseRedirect('/')
+    if request.user.is_staff == 1:
+        socio_form=NuevoSocioForm()
+        if request.method == "POST":
+            post=request.POST.copy()
+            socio_form=NuevoSocioForm(post)
+            if socio_form.is_valid():
+                usuario=User(
+                    username=post['numero_de_socio'],
+                    email=post['email'],
+                    first_name="%s %s" % (post['primer_nombre'], post['segundo_nombre']),
+                    last_name="%s %s" % (post['primer_apellido'], post['segundo_apellido']),
+                )
+                usuario.set_password(post['password2'])
+                usuario.save()
+                cuota=Cuota.objects.get(id=post['ultima_cuota_paga'])
+                socio=Socio(
+                    user=usuario,
+                    cedula=post['cedula'],
+                    domicilio=post['domicilio'],
+                    numero_de_socio=post['numero_de_socio'],
+                    fecha_de_nacimiento=post['fecha_de_nacimiento'],
+                    sexo=post['sexo'],
+                    vencimiento_ficha_medica=post['vencimiento_ficha_medica'],
+                    ultima_cuota_paga=cuota
+                )
+                socio.save()
+                return HttpResponseRedirect('/administrador/socios/')
+        return 'admin_socio.html', { 'socio_form': socio_form }
     else:
-         return HttpResponseRedirect('/')
+         return do_logout(request)
+
+@login_required
+@to_response
+def reservar(request):
+    from forms import AdminReservarForm
+    from exceptions import CanchaNoDisponibleError, ReservaSuperpuestaError
+
+    if request.user.is_staff == 1:
+        reservar=AdminReservarForm()
+        error=''
+        if request.method == "POST":
+            post=request.POST.copy()
+            reservar=AdminReservarForm(post)
+            if reservar.is_valid():
+                if post['junto_a_socio'] != "":
+                    invitado=User.objects.get(id=post['junto_a_socio'])
+                else:
+                    invitado=Invitado(nombre=post['junto_a_invitado_nombre'], documento=post['junto_a_invitado_documento'])
+                if post['cuando_dia'] == date.today().day:
+                    cuando=datetime(date.today().year, date.today().month, post['cuando_dia'], post['cuando_hora'])
+                else:
+                    maniana=date.today()+timedelta(1)
+                    dia=datetime(maniana.year, maniana.month, maniana.day, int(post['cuando_hora']))
+                    cuando=datetime(dia.year, dia.month, dia.day, dia.hour)
+                reserva=Reserva(socio=User.objects.get(id=post['socio']), cancha=Cancha.objects.get(id=post['cancha']), invitado=invitado, desde=cuando, permitir_admin_cancelar=True)
+                try:
+                    reserva.save()
+                    return HttpResponseRedirect('/administrador/reservas/')
+                except (CanchaNoDisponibleError, ReservaSuperpuestaError), e:
+                    error=e.message
+
+        return 'admin_reservar.html', { 'admin_reservar': reservar, 'error': error }
+    else:
+        return do_logout(request)
+
+def do_logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
 

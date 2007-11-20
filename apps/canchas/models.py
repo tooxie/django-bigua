@@ -84,10 +84,19 @@ class Socio(models.Model):
     vencimiento_ficha_medica = models.DateField(_(u'Vencimiento de ficha médica'),
         help_text=_(u'Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd'))
     ultima_cuota_paga = models.ForeignKey(Cuota, related_name='socios_al_dia')
+    administrador = models.BooleanField(_(u'¿Es administrador?'), editable=False, default=False)
     invitado_en = generic.GenericRelation('Reserva', related_name='invitado')
 
     def __unicode__(self):
-        return self.user.username
+        return _(u'%(nombre)s %(apellido)s') % { 'nombre': self.user.first_name, 'apellido': self.user.last_name }
+
+    def get_is_staff(self):
+        return self.user.is_staff
+    is_staff=property(get_is_staff)
+
+    def get_vencimiento_ficha_medica(self):
+        return self.vencimiento_ficha_medica < date.today()
+    ficha_medica_vencida=property(get_vencimiento_ficha_medica)
 
     def puede_reservar(self):
         reservas=[]
@@ -103,8 +112,8 @@ class Socio(models.Model):
     def en_regla(self):
         # Si la ficha médica esta vencida.
         if self.vencimiento_ficha_medica < date.today():
-            from exceptions import FichaMediaVencidaError
-            raise FichaMediaVencidaError, u_(u'Lo sentimos, pero usted no tiene su ficha médica al día, por lo que no podemos permitirle reservar. Regularice su situación para poder continuar disfrutando de nuestro servicio. Muchas gracias.')
+            from exceptions import FichaMedicaVencidaError
+            raise FichaMedicaVencidaError, u_(u'Lo sentimos, pero usted no tiene su ficha médica al día, por lo que no podemos permitirle reservar. Regularice su situación para poder continuar disfrutando de nuestro servicio. Muchas gracias.')
         # Si no está al día con las cuotas
         cuotas = Cuota.objects.all()[:2]
         al_dia = False
@@ -121,6 +130,13 @@ class Socio(models.Model):
             raise SocioSancionadoError, u_(u'Lo sentimos, pero usted tiene una sanción en curso, la cual le impide realizar reservas. En menos de una semana podrá continuar disfrutando de nuestro servicio.')
         # Sino
         return True
+
+    def save(self):
+        if self.user.is_staff == 1:
+            self.administrador=True
+        else:
+            self.administrador=False
+        super(Socio, self).save()
 
     class Admin:
         pass
@@ -193,6 +209,17 @@ class Cancha(models.Model):
         else:
             return 'Cancha'
 
+    def esta_habilitada(self, diayhora):
+        inhabilitacion=self.inhabilitacion.all()
+        if len(inhabilitacion) > 0:
+            # Pedriiito! ;)
+            hora_tentativa=datetime(date.today().year, date.today().month, diayhora.day, diayhora.hour)
+            inhabilitada_hasta=inhabilitacion.desde+timedelta(minutes=inhabilitacion.hasta)
+            if inhabilitacion.desde <= hora_tentativa and inhabilitada_hasta > hora_tentativa:
+                return False
+
+        return True
+
     def esta_libre(self, hora, dia):
         if dia == date.today().day:
             mes = datetime.today().month
@@ -220,7 +247,7 @@ class Cancha(models.Model):
         verbose_name_plural = _(u'Canchas')
 
 class CanchaInhabilitada(models.Model):
-    cancha = models.ForeignKey(Cancha,
+    cancha = models.ForeignKey(Cancha, related_name="inhabilitacion",
         help_text=_(u'¿Qué cancha se encuentra inhabilitada para jugar?'))
     hora = models.DateTimeField(_(u'Hora'),
         help_text=_(u'Fecha a la que comienza/comenzó la inhabilitación. Formato de fecha: aaaa-mm-dd'))
@@ -282,7 +309,7 @@ class Reserva(models.Model):
     costo = property(get_costo)
 
     def get_permitir_admin_cancelar(self):
-        return self.permitir_admin_canclear
+        return self.permitir_admin_cancelar
     cancelable_por_admin = property(get_permitir_admin_cancelar)
 
     #TODO: Chequear que Reservera.cancelar() ande.
@@ -309,11 +336,25 @@ class Reserva(models.Model):
             pass
 
     def save(self):
+        if self.desde.day != date.today().day:
+            from utils import ntp_time
+            from exceptions import NTPInvalidResponseError, NTPNoDataReturnedError, ReservaAntesDeHorarioError
+            try:
+                hora_ntp=ntp_time()
+                ahora=datetime(hora_ntp.tm_year, hora_ntp.tm_mon, hora_ntp.tm_mday, hora_ntp.tm_hour, hora_ntp.tm_min)
+            except (NTPInvalidResponseError, NTPNoDataReturnedError), e:
+                print e
+                ahora=datetime.now()
+            if ahora.hour < 11:
+                raise ReservaAntesDeHorarioError, u_(u'Las reservas para el día siguiente se habilitan a las 11:50 hs de cada día.')
+            elif ahora.hour == 11:
+                if ahora.minute < 50:
+                    raise ReservaAntesDeHorarioError, u_(u'Las reservas para el día siguiente se habilitan a las 11:50 hs de cada día.')
         if not self.id:
             # ¿La cancha está habilitada?
-            if self.cancha.desactivada:
+            if not self.cancha.esta_habilitada(self.desde):
                 from exceptions import CanchaNoDisponibleError
-                raise CanchaNoDisponibleError, self.cancha
+                raise CanchaNoDisponibleError, u_(u'La cancha no se encuentra habilitada para jugar. Disculpe las molestias.')
             # ¿Existen reservas para esta cancha?
             if not self.cancha.esta_libre(self.desde.hour, self.desde.day):
                 from exceptions import ReservaSuperpuestaError
@@ -321,7 +362,6 @@ class Reserva(models.Model):
             #FIXME: Hardcoded! Si no me ingresan un invitado meto a prepo el invitado con id 1.
             if not self.content_type_id:
                 self.invitado = Invitado.objects.get(id=1)
-
             self.marca_temporal = datetime.now()
         if self.socio.get_profile().en_regla():
             if self.invitado.__class__.__name__ == "User":

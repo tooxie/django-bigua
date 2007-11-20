@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <h2>{% trans "Socios" %}</h2>
+    <div>
+        {% trans "Total" %}: {{ hits }} {% trans "socios" %}{% if is_paginated %}, {% trans "mostrando de a" %} {{ results_per_page }}{% endif %}.
+    </div>
+    {% for socio in object_list %}
+        <p class="socio">
+            <div>
+                {% trans "Nombre" %}: {{ socio }}
+            </div>
+            <div>
+                {% trans "Documento" %}: {{ socio.cedula }}
+            </div>
+            <div>
+                {% trans "Número de socio" %}: {{ socio.numero_de_socio }}
+            </div>
+            <div>
+                {% trans "e-Mail" %}: {{ socio.user.email }}
+            </div>
+            {% if socio.direccion %}
+            <div>
+                {% trans "Dirección" %}: {{ socio.direccion }}
+            </div>
+            {% endif %}
+            {% if socio.fecha_de_nacimiento %}
+            <div>
+                {% trans "Fecha de nacimiento" %}: {{ socio.fecha_de_nacimiento }}
+            </div>
+            {% endif %}
+            {% if socio.ficha_medica_vencida %}
+            <div class="vencida">
+                {% trans "ATENCION: Ficha médica vencida." %}
+            </div>
+            {% endif %}
+        </p>
+    {% endfor %}
+    {% if is_paginated %}
+        <p class="paginado">
+            {% if has_previous %}
+                <a href="?page=1">{% trans "Primera" %}</a>
+                <a href="?page={{ previous }}">{% trans "Anterior" %}</a>
+            {% endif %}
+                {% trans "Página" %} {{ page }} {% trans "de" %} {{ pages }}
+            {% if has_next %}
+                <a href="?page={{ next }}">{% trans "Siguiente" %}</a>
+                <a href="?page=last">{% trans "Última" %}</a>
+            {% endif %}
+        </p>
+    {% endif %}
+{% endblock %}

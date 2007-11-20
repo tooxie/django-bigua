@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block css %}
-        <link rel="stylesheet" href="{{ CSS_PATH }}canchas.css" type="text/css" />
-{% endblock %}
 {% block content %}
     {% if not user.is_authenticated %}
     <fieldset>
@@ -16,12 +13,19 @@
         {% if user.is_staff %}
         <h2>{% trans "&iquest;Qu&eacute; desea hacer?" %}</h2>
         <ul>
-            <li><a href="/administrador/socio/nuevo/">{% trans "Ingresar un socio" %}</a></li>
+            <li>{% trans "Socios" %}
+                <ul>
+                    <li><a href="/administrador/socios/"><img src="/media/images/agenda.png" alt="{% trans "Agenda de socios" %}" /> {% trans "Directorio" %}</a></li>
+                    <li><a href="/administrador/socio/nuevo/"><img src="/media/images/socio_nuevo.png" alt="{% trans "Socio nuevo" %}" /> {% trans "Ingresar nuevo" %}</a></li>
+                </ul>
+                
+            </li>
             <li>{% trans "Reservas" %}
                 <ul>
-                    <li><a href="/administrador/reservas/">{% trans "Administrar" %}</a></li>
-                    <li><a href="/administrador/reserva/nueva/">{% trans "Crear una nueva" %}</a></li>
+                    <li><a href="/administrador/reservas/"><img src="/media/images/administrar.png" alt="{% trans "Icono de reservas" %}" /> {% trans "Administrar" %}</a></li>
+                    <li><a href="/administrador/reservar/"><img src="/media/images/reserva_nueva.png" alt="{% trans "Icono de nueva reserva" %}" /> {% trans "Crear nueva" %}</a></li>
                 </ul>
+            </li>
         </ul>
         {% endif %}
     {% endif %}
