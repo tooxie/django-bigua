@@ -1,0 +1,983 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-11-20 10:09-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: apps/canchas/choices.py:40
+msgid "Masculino"
+msgstr ""
+
+#: apps/canchas/choices.py:41
+msgid "Femenino"
+msgstr ""
+
+#: apps/canchas/choices.py:46 templates/canchas/index.html:124
+msgid "Hoy"
+msgstr ""
+
+#: apps/canchas/choices.py:47
+msgid "Mañana"
+msgstr ""
+
+#: apps/canchas/forms.py:9 apps/canchas/forms.py:27 apps/canchas/models.py:421
+msgid "Usuario"
+msgstr ""
+
+#: apps/canchas/forms.py:10
+msgid "Password"
+msgstr ""
+
+#: apps/canchas/forms.py:13 apps/canchas/forms.py:35 apps/canchas/models.py:80
+msgid "Número de Socio"
+msgstr ""
+
+#: apps/canchas/forms.py:23 apps/canchas/forms.py:74
+#: apps/canchas/models.py:149 apps/canchas/models.py:203
+#: templates/canchas/index.html:104 templates/canchas/socio_list.html:11
+msgid "Nombre"
+msgstr ""
+
+#: apps/canchas/forms.py:24 apps/canchas/forms.py:34
+msgid "Cédula de Identidad"
+msgstr ""
+
+#: apps/canchas/forms.py:28 apps/canchas/forms.py:46
+msgid "Contraseña"
+msgstr ""
+
+#: apps/canchas/forms.py:36
+msgid "Primer Nombre"
+msgstr ""
+
+#: apps/canchas/forms.py:37
+msgid "Segundo Nombre"
+msgstr ""
+
+#: apps/canchas/forms.py:38
+msgid "Primer Apellido"
+msgstr ""
+
+#: apps/canchas/forms.py:39
+msgid "Segundo Apellido"
+msgstr ""
+
+#: apps/canchas/forms.py:40 apps/canchas/models.py:81
+msgid "Fecha de Nacimiento"
+msgstr ""
+
+#: apps/canchas/forms.py:41 apps/canchas/models.py:83
+msgid "Sexo"
+msgstr ""
+
+#: apps/canchas/forms.py:42 apps/canchas/models.py:19
+#: templates/canchas/socio_list.html:24
+msgid "Dirección"
+msgstr ""
+
+#: apps/canchas/forms.py:43 templates/canchas/socio_list.html:20
+msgid "e-Mail"
+msgstr ""
+
+#: apps/canchas/forms.py:44
+msgid "Vencimiento de Ficha Médica"
+msgstr ""
+
+#: apps/canchas/forms.py:45
+msgid "Última Cuota Paga"
+msgstr ""
+
+#: apps/canchas/forms.py:47
+msgid "Repita la Contraseña"
+msgstr ""
+
+#: apps/canchas/forms.py:53
+#, python-format
+msgid "Ya existe un usuario con número de socio %i, por favor verifique."
+msgstr ""
+
+#: apps/canchas/forms.py:59
+msgid "Ambas contraseñas deben coincidir."
+msgstr ""
+
+#: apps/canchas/forms.py:68 apps/canchas/models.py:145
+#: templates/canchas/index.html:88 templates/canchas/reserva_list.html:11
+msgid "Socio"
+msgstr ""
+
+#: apps/canchas/forms.py:69
+msgid "¿Cuando?"
+msgstr ""
+
+#: apps/canchas/forms.py:70
+msgid "¿A qué hora?"
+msgstr ""
+
+#: apps/canchas/forms.py:71
+msgid "Ingrese solo la hora, de 00 a 24, sin minutos ni segundos."
+msgstr ""
+
+#: apps/canchas/forms.py:72
+msgid "Compañero"
+msgstr ""
+
+#: apps/canchas/forms.py:73
+msgid "¿Va a jugar con un socio del club?"
+msgstr ""
+
+#: apps/canchas/forms.py:75
+msgid "¿O con una persona ajena al club?"
+msgstr ""
+
+#: apps/canchas/forms.py:76 templates/canchas/index.html:107
+#: templates/canchas/socio_list.html:14
+msgid "Documento"
+msgstr ""
+
+#: apps/canchas/forms.py:77
+msgid ""
+"Si el compañero no es un socio del club, solicite nombre y documento del "
+"mismo."
+msgstr ""
+
+#: apps/canchas/forms.py:78 apps/canchas/models.py:246
+#: templates/canchas/index.html:27 templates/canchas/index.html.py:50
+#: templates/canchas/reserva_list.html:20
+msgid "Cancha"
+msgstr ""
+
+#: apps/canchas/models.py:13 apps/canchas/models.py:48
+msgid "Club"
+msgstr ""
+
+#: apps/canchas/models.py:14
+msgid "Nombre del club dueño de las canchas."
+msgstr ""
+
+#: apps/canchas/models.py:16
+msgid "Dirección en Internet del club. Puede quedar vacío."
+msgstr ""
+
+#: apps/canchas/models.py:20
+msgid "Dirección física del club. Puede quedar vacío."
+msgstr ""
+
+#: apps/canchas/models.py:49
+msgid "Clubes"
+msgstr ""
+
+#: apps/canchas/models.py:52
+msgid "Mes"
+msgstr ""
+
+#: apps/canchas/models.py:53
+msgid "¿A qué número de mes corresponde la cuota?"
+msgstr ""
+
+#: apps/canchas/models.py:54
+msgid "Año"
+msgstr ""
+
+#: apps/canchas/models.py:55
+msgid "¿A qué año corresponde la cuota?"
+msgstr ""
+
+#: apps/canchas/models.py:58
+msgid "Observaciones"
+msgstr ""
+
+#: apps/canchas/models.py:59
+msgid "Observaciones que crea pertinentes."
+msgstr ""
+
+#: apps/canchas/models.py:76 apps/canchas/models.py:151
+msgid "Documento de Identidad"
+msgstr ""
+
+#: apps/canchas/models.py:77
+msgid "Documento de Identidad del nuevo socio."
+msgstr ""
+
+#: apps/canchas/models.py:78
+msgid "Domicilio"
+msgstr ""
+
+#: apps/canchas/models.py:79
+msgid "Domicilio donde vive el socio."
+msgstr ""
+
+#: apps/canchas/models.py:82
+msgid "Formato: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:84
+msgid "Vencimiento de ficha médica"
+msgstr ""
+
+#: apps/canchas/models.py:85
+msgid "Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:87
+msgid "¿Es administrador?"
+msgstr ""
+
+#: apps/canchas/models.py:91
+#, python-format
+msgid "%(nombre)s %(apellido)s"
+msgstr ""
+
+#: apps/canchas/models.py:146 templates/canchas/admin.html:16
+#: templates/canchas/socio_list.html:4
+msgid "Socios"
+msgstr ""
+
+#: apps/canchas/models.py:150
+msgid "Nombre del invitado."
+msgstr ""
+
+#: apps/canchas/models.py:152
+msgid "Documento de identidad del invitado."
+msgstr ""
+
+#: apps/canchas/models.py:156
+#, python-format
+msgid "%(nombre)s, %(documento)s"
+msgstr ""
+
+#: apps/canchas/models.py:162
+msgid "Socio sancionado."
+msgstr ""
+
+#: apps/canchas/models.py:163
+msgid "¿Hasta cuando?"
+msgstr ""
+
+#: apps/canchas/models.py:164
+msgid "¿Cuándo termina la sanción?"
+msgstr ""
+
+#: apps/canchas/models.py:167 apps/canchas/models.py:258
+msgid "Razón"
+msgstr ""
+
+#: apps/canchas/models.py:168
+msgid "Breve razón de la sanción."
+msgstr ""
+
+#: apps/canchas/models.py:174
+msgid "Sanción"
+msgstr ""
+
+#: apps/canchas/models.py:175
+msgid "Sanciones"
+msgstr ""
+
+#: apps/canchas/models.py:178
+msgid "Dato"
+msgstr ""
+
+#: apps/canchas/models.py:179
+msgid ""
+"Un nombre para la clave. Recuerde que existen algunos nombre predefinidos "
+"como \"hora_inicio\", \"hora_fin\", \"cancelar_antes_de\", etc..."
+msgstr ""
+
+#: apps/canchas/models.py:180
+msgid "Valor"
+msgstr ""
+
+#: apps/canchas/models.py:181
+msgid ""
+"Un valor para la clave. Según el tipo de clave esto pueden ser horas, "
+"minutos, pesos o cualquier unidad. Le recomendamos que solo modifique claves "
+"que sepa para que sirven."
+msgstr ""
+
+#: apps/canchas/models.py:182
+msgid "¿Administrador?"
+msgstr ""
+
+#: apps/canchas/models.py:183
+msgid "¿Es un dato modificable únicamente por el administrador del sistema?"
+msgstr ""
+
+#: apps/canchas/models.py:186
+#, python-format
+msgid "%(clave)s: %(valor)s"
+msgstr ""
+
+#: apps/canchas/models.py:192
+msgid "Configuración"
+msgstr ""
+
+#: apps/canchas/models.py:193
+msgid "Configuraciones"
+msgstr ""
+
+#: apps/canchas/models.py:197
+msgid "Costo"
+msgstr ""
+
+#: apps/canchas/models.py:198
+msgid "Costo por hora de la cancha en pesos uruguayos."
+msgstr ""
+
+#: apps/canchas/models.py:199
+msgid "Desactivar"
+msgstr ""
+
+#: apps/canchas/models.py:200
+msgid ""
+"Desactivar una cancha permite darla de baja sin la necesidad de eliminarla. "
+"Esto es útil cuando la cancha está en reparación y no podrá ser reservada "
+"por un tiempo indeterminado."
+msgstr ""
+
+#: apps/canchas/models.py:204
+msgid "Nombre de la cancha."
+msgstr ""
+
+#: apps/canchas/models.py:247
+msgid "Canchas"
+msgstr ""
+
+#: apps/canchas/models.py:251
+msgid "¿Qué cancha se encuentra inhabilitada para jugar?"
+msgstr ""
+
+#: apps/canchas/models.py:252 apps/canchas/models.py:400
+#: templates/canchas/index.html:24 templates/canchas/index.html.py:47
+#: templates/canchas/index.html:129 templates/canchas/index.html.py:144
+#: templates/canchas/reserva_list.html:17
+msgid "Hora"
+msgstr ""
+
+#: apps/canchas/models.py:253
+msgid ""
+"Fecha a la que comienza/comenzó la inhabilitación. Formato de fecha: aaaa-mm-"
+"dd"
+msgstr ""
+
+#: apps/canchas/models.py:254
+msgid "Duración"
+msgstr ""
+
+#: apps/canchas/models.py:255
+msgid "¿Cuántos minutos durará el bloqueo?"
+msgstr ""
+
+#: apps/canchas/models.py:259
+msgid "Una breve razón de porqué se inhabilitó."
+msgstr ""
+
+#: apps/canchas/models.py:266
+msgid "Cancha Inhabilitada"
+msgstr ""
+
+#: apps/canchas/models.py:267
+msgid "Canchas Inhabilitadas"
+msgstr ""
+
+#: apps/canchas/models.py:271
+msgid "Socio a quien se le realiza la reserva."
+msgstr ""
+
+#: apps/canchas/models.py:273
+msgid "Cancha que se desea alquilar."
+msgstr ""
+
+#: apps/canchas/models.py:278 apps/canchas/models.py:417
+msgid "Fecha"
+msgstr ""
+
+#: apps/canchas/models.py:279
+msgid "Día y hora de comienzo de la reserva. Formato de fecha: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:280
+msgid "Administrador puede cancelar"
+msgstr ""
+
+#: apps/canchas/models.py:281
+msgid ""
+"¿Desea permitir que un administrador pueda cancelar su reserva? Esto es útil "
+"para cancelar reservas por teléfono, recuerde que si no puede cancelar su "
+"reserva con anticipación será sancionado."
+msgstr ""
+
+#: apps/canchas/models.py:282
+msgid "Reservado el"
+msgstr ""
+
+#: apps/canchas/models.py:283
+msgid "Fecha y hora en que fue creada la reserva. Formato de fecha: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:284 apps/canchas/models.py:288
+#: templates/canchas/index.html:61 templates/canchas/reserva_list.html:35
+msgid "Cancelar"
+msgstr ""
+
+#: apps/canchas/models.py:285
+msgid "Dar de baja la reserva."
+msgstr ""
+
+#: apps/canchas/models.py:286 templates/canchas/index.html:33
+#: templates/canchas/reserva_list.html:27
+msgid "Cancelada por"
+msgstr ""
+
+#: apps/canchas/models.py:287
+msgid "Usuario que canceló la reserva."
+msgstr ""
+
+#: apps/canchas/models.py:289
+msgid "Dar de baja la reserva. Formato de fecha: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:292
+#, python-format
+msgid "%(socio)s con %(invitado)s a las %(desde)i:00 hs."
+msgstr ""
+
+#: apps/canchas/models.py:393
+msgid "Reserva"
+msgstr ""
+
+#: apps/canchas/models.py:394 templates/canchas/admin.html:23
+#: templates/canchas/reserva_list.html:4
+msgid "Reservas"
+msgstr ""
+
+#: apps/canchas/models.py:399
+msgid "¿Desea alguna cancha en particular?"
+msgstr ""
+
+#: apps/canchas/models.py:401
+msgid "¿Desea alguna hora en particular?"
+msgstr ""
+
+#: apps/canchas/models.py:410
+msgid "Lista de Espera"
+msgstr ""
+
+#: apps/canchas/models.py:411
+msgid "Listas de Espera"
+msgstr ""
+
+#: apps/canchas/models.py:418
+msgid "Fecha y hora del evento. Formato de fecha: aaaa-mm-dd"
+msgstr ""
+
+#: apps/canchas/models.py:419
+msgid "Mensaje"
+msgstr ""
+
+#: apps/canchas/models.py:420
+msgid "Mensaje grabado."
+msgstr ""
+
+#: apps/canchas/models.py:422
+msgid "Usuario logueado."
+msgstr ""
+
+#: apps/canchas/models.py:431
+msgid "Registro"
+msgstr ""
+
+#: apps/canchas/models.py:432
+msgid "Registros"
+msgstr ""
+
+#: apps/canchas/utils.py:6
+msgid "Enero"
+msgstr ""
+
+#: apps/canchas/utils.py:7
+msgid "Febrero"
+msgstr ""
+
+#: apps/canchas/utils.py:8
+msgid "Marzo"
+msgstr ""
+
+#: apps/canchas/utils.py:9
+msgid "Abril"
+msgstr ""
+
+#: apps/canchas/utils.py:10
+msgid "Mayo"
+msgstr ""
+
+#: apps/canchas/utils.py:11
+msgid "Junio"
+msgstr ""
+
+#: apps/canchas/utils.py:12
+msgid "Julio"
+msgstr ""
+
+#: apps/canchas/utils.py:13
+msgid "Agosto"
+msgstr ""
+
+#: apps/canchas/utils.py:14
+msgid "Setiembre"
+msgstr ""
+
+#: apps/canchas/utils.py:15
+msgid "Octubre"
+msgstr ""
+
+#: apps/canchas/utils.py:16
+msgid "Noviembre"
+msgstr ""
+
+#: apps/canchas/utils.py:17
+msgid "Diciembre"
+msgstr ""
+
+#: apps/canchas/utils.py:36
+msgid "Respuesta inválida."
+msgstr ""
+
+#: apps/canchas/utils.py:41
+msgid "El servidor no devolvió datos."
+msgstr ""
+
+#: apps/canchas/views.py:22
+msgid ""
+"No existe aún un socio para este usuario. Comunique este error a "
+"webmaster@bigua.com.uy"
+msgstr ""
+
+#: apps/canchas/views.py:62
+msgid ""
+"El socio especificado no existe. Si usted es socio del club entonces aún no "
+"lo ingresaron a la base del sistema. Si el problema persiste comuníquelo al "
+"club. Muchas gracias."
+msgstr ""
+
+#: apps/canchas/views.py:174
+msgid ""
+"No existe ningun socio registrado con ese número, por favor verifique los "
+"datos antes de ingresarlos."
+msgstr ""
+
+#: apps/menu/models.py:8 apps/menu/models.py:31
+msgid "nombre"
+msgstr ""
+
+#: apps/menu/models.py:10
+msgid "dirección"
+msgstr ""
+
+#: apps/menu/models.py:10
+msgid ""
+"Puede elegir una página ya creada o un sitio en Internet, por ej \"http://"
+"www.brasil.gov.br/\". Si elige ámbas se le dará preferencia a la página."
+msgstr ""
+
+#: apps/menu/models.py:11
+msgid ""
+"Si elige otro link en esta lista, este item del menú se mostrará como un "
+"subitem del elegido."
+msgstr ""
+
+#: apps/menu/models.py:12
+msgid "posición en lista"
+msgstr ""
+
+#: apps/menu/models.py:13
+msgid "desactivar"
+msgstr ""
+
+#: apps/menu/models.py:13
+msgid "Si desactiva un link no se mostrará en el menú pero no será borrado."
+msgstr ""
+
+#: apps/menu/models.py:32
+msgid "descripción"
+msgstr ""
+
+#: apps/menu/models.py:34
+msgid "plantilla"
+msgstr ""
+
+#: apps/menu/models.py:34
+msgid ""
+"Ejemplo: 'menu/principal.html'. Si no es proporcionado, el sistema usará "
+"'menu/default.html'."
+msgstr ""
+
+#: apps/menu/models.py:36
+msgid "menu"
+msgstr ""
+
+#: apps/menu/models.py:37
+msgid "menues"
+msgstr ""
+
+#: templates/base.html:24
+msgid "Volver al inicio"
+msgstr ""
+
+#: templates/base.html:28
+msgid "Ir al contenido."
+msgstr ""
+
+#: templates/base.html:31
+msgid "Ud. est&aacute; en"
+msgstr ""
+
+#: templates/base.html:31
+msgid "Inicio"
+msgstr ""
+
+#: templates/base.html:31
+msgid "Noticias"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Bienvenido"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Salir de mi cuenta"
+msgstr ""
+
+#: templates/base.html:40
+msgid "Bienvenido/a"
+msgstr ""
+
+#: templates/base.html:50
+msgid "Espacio para publicidad."
+msgstr ""
+
+#: templates/base.html:55
+msgid ""
+"Bienvenido al sitio de Bigu&aacute; Tenis, aqu&iacute; podr&aacute;s "
+"realizar reservas online en cuesti&oacute;n de segundos!"
+msgstr ""
+
+#: templates/base.html:65
+msgid ""
+"Como todos los a&ntilde;os el Club Bigu&aacute; organiza el 5to Campeonato "
+"Sudamericano de Beach Tennis en la playa pocitos."
+msgstr ""
+
+#: templates/base.html:71
+msgid ""
+"Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de "
+"Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, "
+"grandes premios y muchas sorpresas que iremos descubriendo juego a juego."
+msgstr ""
+
+#: templates/base.html:75
+msgid "&iexcl;XHTML 1.0 Strict V&aacute;lido!"
+msgstr ""
+
+#: templates/base.html:78
+msgid "&iexcl;Potenciado por Python!"
+msgstr ""
+
+#: templates/base.html:81
+msgid "&iexcl;Un sitio en django!"
+msgstr ""
+
+#: templates/base.html:84
+msgid "Hosteado en Google Code."
+msgstr ""
+
+#: templates/base.html:91
+msgid ""
+"Desarrollado para la materia An&aacute;lisis de Sistemas, Universidad ORT "
+"Uruguay."
+msgstr ""
+
+#: templates/canchas/admin.html:6
+msgid "Login de Administrador"
+msgstr ""
+
+#: templates/canchas/admin.html:9 templates/canchas/login.html:5
+#: templates/canchas/login.html.py:14
+msgid "Entrar"
+msgstr ""
+
+#: templates/canchas/admin.html:14
+msgid "&iquest;Qu&eacute; desea hacer?"
+msgstr ""
+
+#: templates/canchas/admin.html:18
+msgid "Agenda de socios"
+msgstr ""
+
+#: templates/canchas/admin.html:18
+msgid "Directorio"
+msgstr ""
+
+#: templates/canchas/admin.html:19
+msgid "Socio nuevo"
+msgstr ""
+
+#: templates/canchas/admin.html:19
+msgid "Ingresar nuevo"
+msgstr ""
+
+#: templates/canchas/admin.html:25
+msgid "Icono de reservas"
+msgstr ""
+
+#: templates/canchas/admin.html:25
+msgid "Administrar"
+msgstr ""
+
+#: templates/canchas/admin.html:26
+msgid "Icono de nueva reserva"
+msgstr ""
+
+#: templates/canchas/admin.html:26
+msgid "Crear nueva"
+msgstr ""
+
+#: templates/canchas/admin_reservar.html:5 templates/canchas/index.html:75
+msgid "Reservar"
+msgstr ""
+
+#: templates/canchas/admin_reservar.html:14
+msgid "Guardar"
+msgstr ""
+
+#: templates/canchas/admin_socio.html:6
+msgid "Nuevo Socio"
+msgstr ""
+
+#: templates/canchas/admin_socio.html:9
+msgid "Guardar Socio"
+msgstr ""
+
+#: templates/canchas/confirmar.html:4
+msgid "Confirme"
+msgstr ""
+
+#: templates/canchas/confirmar.html:8
+msgid "&iquest;Realmente desea eliminar su reserva?"
+msgstr ""
+
+#: templates/canchas/confirmar.html:11
+msgid "Descripci&oacute;n de la reserva"
+msgstr ""
+
+#: templates/canchas/confirmar.html:13
+msgid "D&iacute;a"
+msgstr ""
+
+#: templates/canchas/confirmar.html:16
+msgid "A las"
+msgstr ""
+
+#: templates/canchas/confirmar.html:16 templates/canchas/index.html:24
+#: templates/canchas/index.html.py:47 templates/canchas/reserva_list.html:17
+msgid "horas"
+msgstr ""
+
+#: templates/canchas/confirmar.html:19
+msgid "En la cancha"
+msgstr ""
+
+#: templates/canchas/confirmar.html:22
+msgid "Con un costo de"
+msgstr ""
+
+#: templates/canchas/confirmar.html:26
+msgid "Si, deseo cancelar la reserva"
+msgstr ""
+
+#: templates/canchas/index.html:13
+msgid "Mis Reservas"
+msgstr ""
+
+#: templates/canchas/index.html:16
+msgid "Reservas Canceladas"
+msgstr ""
+
+#: templates/canchas/index.html:21 templates/canchas/index.html.py:44
+#: templates/canchas/reserva_list.html:14
+msgid "Dia"
+msgstr ""
+
+#: templates/canchas/index.html:21 templates/canchas/index.html.py:44
+#: templates/canchas/reserva_list.html:14
+#: templates/canchas/reserva_list.html:51 templates/canchas/socio_list.html:45
+msgid "de"
+msgstr ""
+
+#: templates/canchas/index.html:30 templates/canchas/index.html.py:53
+#: templates/canchas/reserva_list.html:23
+msgid "Junto a"
+msgstr ""
+
+#: templates/canchas/index.html:33 templates/canchas/reserva_list.html:27
+msgid "el"
+msgstr ""
+
+#: templates/canchas/index.html:41
+msgid "Reserva Actual"
+msgstr ""
+
+#: templates/canchas/index.html:66
+msgid "Imprimir"
+msgstr ""
+
+#: templates/canchas/index.html:71
+msgid "No tiene reservas actualmente."
+msgstr ""
+
+#: templates/canchas/index.html:85 templates/canchas/reservar.html:14
+msgid "&iquest;Con qui&eacute;n va a jugar?"
+msgstr ""
+
+#: templates/canchas/index.html:91
+msgid "Invitado"
+msgstr ""
+
+#: templates/canchas/index.html:95
+msgid "No olvide ingresar el n&uacute;mero de socio de su compa&ntilde;ero."
+msgstr ""
+
+#: templates/canchas/index.html:96
+msgid ""
+"Si va a jugar con alguien que no es socio del club debe ingresar nombre y "
+"documento de identidad de la persona."
+msgstr ""
+
+#: templates/canchas/index.html:97
+msgid "No olvide elegir con quien desea jugar."
+msgstr ""
+
+#: templates/canchas/index.html:98 templates/canchas/reservar.html:35
+msgid ""
+"Esto es &uacute;til cuando no tiene una computadora cerca para realizar la "
+"baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la "
+"cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede "
+"darla de baja."
+msgstr ""
+
+#: templates/canchas/index.html:100
+msgid "N&uacute;mero de socio"
+msgstr ""
+
+#: templates/canchas/index.html:139
+msgid "Ma&ntilde;ana"
+msgstr ""
+
+#: templates/canchas/index.html:154
+msgid "No puede realizar otra reserva, ya tiene una pendiente."
+msgstr ""
+
+#: templates/canchas/login.html:14
+msgid "Autentificarse"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:6 templates/canchas/socio_list.html:6
+msgid "Total"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:6
+msgid "reservas"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:6 templates/canchas/socio_list.html:6
+msgid "mostrando de a"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:31
+msgid "Confirme que realmente desea cancelar la reserva."
+msgstr ""
+
+#: templates/canchas/reserva_list.html:48 templates/canchas/socio_list.html:42
+msgid "Primera"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:49 templates/canchas/socio_list.html:43
+msgid "Anterior"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:51 templates/canchas/socio_list.html:45
+msgid "Página"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:53 templates/canchas/socio_list.html:47
+msgid "Siguiente"
+msgstr ""
+
+#: templates/canchas/reserva_list.html:54 templates/canchas/socio_list.html:48
+msgid "Última"
+msgstr ""
+
+#: templates/canchas/reservar.html:4
+msgid "Verifique su Reserva"
+msgstr ""
+
+#: templates/canchas/reservar.html:10
+#, python-format
+msgid ""
+"\n"
+"                Usted desea jugar el d&iacute;a <strong>%(dia)s</strong> a "
+"las <strong>%(hora)s:00 horas</strong> en la cancha \"<strong>%(cancha)s</"
+"strong>\" con un costo de <strong>$U%(costo)s</strong>.\n"
+"                "
+msgstr ""
+
+#: templates/canchas/reservar.html:16
+msgid "Ingrese el n&uacute;mero de socio de su compa&ntilde;ero."
+msgstr ""
+
+#: templates/canchas/reservar.html:22
+msgid ""
+"Si su compa&ntilde;ero no es socio, no se preocupe, puede ingresar nombre y "
+"c&eacute;dula de la persona."
+msgstr ""
+
+#: templates/canchas/reservar.html:28
+msgid ""
+"Una vez que haya verificado los datos de la reserva, presione el bot&oacute;"
+"n para confirmarla."
+msgstr ""
+
+#: templates/canchas/reservar.html:32
+msgid "Cancelable"
+msgstr ""
+
+#: templates/canchas/reservar.html:39
+msgid "Confirmar"
+msgstr ""
+
+#: templates/canchas/socio_list.html:6
+msgid "socios"
+msgstr ""
+
+#: templates/canchas/socio_list.html:17
+msgid "Número de socio"
+msgstr ""
+
+#: templates/canchas/socio_list.html:29
+msgid "Fecha de nacimiento"
+msgstr ""
+
+#: templates/canchas/socio_list.html:34
+msgid "ATENCION: Ficha médica vencida."
+msgstr ""
