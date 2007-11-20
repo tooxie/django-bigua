@@ -13,7 +13,7 @@ DATABASE_NAME = 'bigua'
 DATABASE_USER = 'user'
 DATABASE_PASSWORD = 'password'
 
-TIME_ZONE = 'Uruguay/America'
+TIME_ZONE = 'America/Montevideo'
 
 USE_I18N = True
 
