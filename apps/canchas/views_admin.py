@@ -54,6 +54,7 @@ def socio_nuevo(request):
                 usuario.set_password(post['password2'])
                 usuario.save()
                 cuota=Cuota.objects.get(id=post['ultima_cuota_paga'])
+                print "\"", post['fecha_de_nacimiento'], "\""
                 socio=Socio(
                     user=usuario,
                     cedula=post['cedula'],

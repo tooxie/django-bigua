@@ -61,11 +61,9 @@
                         <button name="cancelar" id="cancelar" value="cancelar" type="submit"><img src="/media/images/cancel.gif" alt="" /> {% trans "Cancelar" %}!</button>
                     </div>
                 </form>
-                <form method="post" action="/imprimir/" id="imprimirform">
-                    <div>
-                        <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> {% trans "Imprimir" %}</button>
-                    </div>
-                </form>
+                <div>
+                    <button name="imprimir" id="imprimir" value="imprimir" type="submit"><img src="/media/images/print.gif" alt="" /> {% trans "Imprimir" %}</button>
+                </div>
             </div>
         {% else %}
             <strong>{% trans "No tiene reservas actualmente." %}</strong>
@@ -109,7 +107,7 @@
             output += '            </div>';
             output += '        </div>';
             output += '        <p>';
-            output += '            <label for="admin_cancela">Cancelable por admin:</label> <input type="checkbox" name="admin_cancela" id="admin_cancela" checked="checked" /> <span id="admin_cancela_ayuda"><a href="#">&iquest;Qu&eacute; es esto?</a></span>';
+            output += '            <label for="admin_cancela">{% trans "Cancelable por admin" %}:</label> <input type="checkbox" name="admin_cancela" id="admin_cancela" checked="checked" /> <span id="admin_cancela_ayuda"><a href="#">{% trans "&iquest;Qu&eacute; es esto?" %}</a></span>';
             output += '        </p>';
             output += '    </form>';
             output += '</p>';

@@ -75,10 +75,10 @@ class Socio(models.Model):
     user = models.ForeignKey(User, unique=True)
     cedula = models.CharField(_(u'Documento de Identidad'), max_length=15,
         help_text=_(u'Documento de Identidad del nuevo socio.'))
-    domicilio = models.CharField(_(u'Domicilio'), max_length=255,
+    domicilio = models.CharField(_(u'Domicilio'), max_length=255, blank=True, null=True,
         help_text=_(u'Domicilio donde vive el socio.'))
     numero_de_socio = models.PositiveIntegerField(_(u'Número de Socio'))
-    fecha_de_nacimiento = models.DateField(_(u'Fecha de Nacimiento'),
+    fecha_de_nacimiento = models.DateField(_(u'Fecha de Nacimiento'), blank=True, null=True,
         help_text=_(u'Formato: aaaa-mm-dd'))
     sexo = models.CharField(_(u'Sexo'), max_length=1, choices=SEXO_CHOICES)
     vencimiento_ficha_medica = models.DateField(_(u'Vencimiento de ficha médica'),
@@ -233,7 +233,6 @@ class Cancha(models.Model):
             anio = fecha.year
         try:
             reserva = self.reservas.get(desde=datetime(anio, mes, dia, hora), cancelada=False)
-            print reserva
         except Exception, e:
             return True
         return False
@@ -342,7 +341,7 @@ class Reserva(models.Model):
             try:
                 hora_ntp=ntp_time()
                 ahora=datetime(hora_ntp.tm_year, hora_ntp.tm_mon, hora_ntp.tm_mday, hora_ntp.tm_hour, hora_ntp.tm_min)
-            except (NTPInvalidResponseError, NTPNoDataReturnedError), e:
+            except Exception, e:
                 print e
                 ahora=datetime.now()
             if ahora.hour < 11:

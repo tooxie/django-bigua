@@ -100,7 +100,9 @@ var bigua_reserva_rules = {
     },
     '#admin_cancela_ayuda' : function(element) {
         element.onclick = function() {
-            $('#admin_cancela_ayuda').hide().html(admin_cancela_ayuda).show("slow");
+            if(_('admin_cancela_ayuda').innerHTML!=admin_cancela_ayuda) {
+                $('#admin_cancela_ayuda').hide().html(admin_cancela_ayuda).show("slow");
+            }
             return false;
         }
     }
@@ -119,6 +121,12 @@ var bigua_cancelar_rules = {
             }
         }
     },
+    '#imprimir' : function(element) {
+        element.onclick = function() {
+            window.print();
+            return false;
+        }
+    }
 }
 
 var bigua_canceladas_rules = {

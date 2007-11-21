@@ -1,7 +1,7 @@
 WORKING_DIRECTORY=`pwd`
 cd ..
 mv local_settings.py local_settings.p_y
-tar cf doc/django-bigua.tar settings.py
+tar cf doc/django-bigua.tar locale/
 find . -name '*.py' -exec tar rf ./doc/django-bigua.tar '{}' \;
 find . -name '*.js' -exec tar rf ./doc/django-bigua.tar '{}' \;
 find . -name '*.html' -exec tar rf ./doc/django-bigua.tar '{}' \;

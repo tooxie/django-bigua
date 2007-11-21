@@ -27,10 +27,16 @@ def main(request):
     return 'index.html', tablas(request)
 
 def set_lang(request, lang):
+    from django.utils.translation import check_for_language, activate, to_locale, get_language
     from settings import LANGUAGES
     from multilingual.languages import set_default_language
 
-    set_default_language(lang)
+    if lang and check_for_language(lang):
+        set_default_language(lang)
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang
+        else:
+            response.set_cookie('django_language', lang)
     return HttpResponseRedirect('/')
 
 @to_response

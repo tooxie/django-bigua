@@ -1,17 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# django-bigua
+# Copyleft (CC) 2007
+# This file is distributed under the same license as the django-bigua package.
+# Alvaro Mouriño <alvaro@mourino.net>, 2007.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-20 10:09-0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2007-11-20 15:26+GMT-3\n"
+"Last-Translator: Alvaro Mouriño <alvaro@mourino.net>\n"
+"Language-Team: English <alvaro@mourino.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -168,11 +168,11 @@ msgstr "Name of the club that owns the courts."
 
 #: apps/canchas/models.py:16
 msgid "Dirección en Internet del club. Puede quedar vacío."
-msgstr "Club's web site. May be empty."
+msgstr "Club&apos;s web site. May be empty."
 
 #: apps/canchas/models.py:20
 msgid "Dirección física del club. Puede quedar vacío."
-msgstr "Club's physical address. May be empty."
+msgstr "Club&apos;s physical address. May be empty."
 
 #: apps/canchas/models.py:49
 msgid "Clubes"
@@ -208,7 +208,7 @@ msgstr "Document of Identity"
 
 #: apps/canchas/models.py:77
 msgid "Documento de Identidad del nuevo socio."
-msgstr "New Member's Document of Identidy."
+msgstr "New Member&apos;s Document of Identidy."
 
 #: apps/canchas/models.py:78
 msgid "Domicilio"
@@ -228,7 +228,7 @@ msgstr "Medical card expires"
 
 #: apps/canchas/models.py:85
 msgid "Fecha de vencimiento de la ficha médica del socio. Formato: aaaa-mm-dd"
-msgstr "Member's medical card expiration date. Format: aaaa-mm-dd"
+msgstr "Member&apos;s medical card expiration date. Format: aaaa-mm-dd"
 
 #: apps/canchas/models.py:87
 msgid "¿Es administrador?"
@@ -246,11 +246,11 @@ msgstr "Members"
 
 #: apps/canchas/models.py:150
 msgid "Nombre del invitado."
-msgstr "Partner's name."
+msgstr "Partner&apos;s name."
 
 #: apps/canchas/models.py:152
 msgid "Documento de identidad del invitado."
-msgstr "Partner's document."
+msgstr "Partner&apos;s document."
 
 #: apps/canchas/models.py:156
 #, python-format
@@ -348,7 +348,7 @@ msgstr "Deactivating a court allows you to prevent people from renting it while 
 
 #: apps/canchas/models.py:204
 msgid "Nombre de la cancha."
-msgstr "Court's name."
+msgstr "Court&apos;s name."
 
 #: apps/canchas/models.py:247
 msgid "Canchas"
@@ -562,20 +562,20 @@ msgstr "The server did not respond."
 msgid ""
 "No existe aún un socio para este usuario. Comunique este error a "
 "webmaster@bigua.com.uy"
-msgstr "There's no member for this user. Report this error to webmaster@bigua.com.uy"
+msgstr "There&apos;s no member for this user. Report this error to webmaster@bigua.com.uy"
 
 #: apps/canchas/views.py:62
 msgid ""
 "El socio especificado no existe. Si usted es socio del club entonces aún no "
 "lo ingresaron a la base del sistema. Si el problema persiste comuníquelo al "
 "club. Muchas gracias."
-msgstr "The specified member does not exist. If you are actually a member, then you have not been added to the system's database. If the problem persists report it to the club. Thanks."
+msgstr "The specified member does not exist. If you are actually a member, then you have not been added to the system&apos;s database. If the problem persists report it to the club. Thanks."
 
 #: apps/canchas/views.py:174
 msgid ""
 "No existe ningun socio registrado con ese número, por favor verifique los "
 "datos antes de ingresarlos."
-msgstr "There's no member registered with that number, please verify your data."
+msgstr "There&apos;s no member registered with that number, please verify your data."
 
 #: apps/menu/models.py:8 apps/menu/models.py:31
 msgid "nombre"
@@ -619,9 +619,9 @@ msgstr "template"
 
 #: apps/menu/models.py:34
 msgid ""
-"Ejemplo: 'menu/principal.html'. Si no es proporcionado, el sistema usará "
-"'menu/default.html'."
-msgstr "Example: 'menu/principal.html'. If not provided, the system will default to 'menu/default.html'."
+"Ejemplo: &apos;menu/principal.html&apos;. Si no es proporcionado, el sistema usará "
+"&apos;menu/default.html&apos;."
+msgstr "Example: &apos;menu/principal.html&apos;. If not provided, the system will default to &apos;menu/default.html&apos;."
 
 #: apps/menu/models.py:36
 msgid "menu"
@@ -684,7 +684,7 @@ msgid ""
 "Ya estan abiertas las inscripciones para el 11er Campeonato Nacional de "
 "Tennis. Este a&ntilde;o contamos con grandes figuras del tennis nacional, "
 "grandes premios y muchas sorpresas que iremos descubriendo juego a juego."
-msgstr "The inscriptions for the 11st National Tennis Championship are open. This year we'll have the visit of many national tennis celebrities, great prizes and many surprises that we will discover toghether each game."
+msgstr "The inscriptions for the 11st National Tennis Championship are open. This year we&apos;ll have the visit of many national tennis celebrities, great prizes and many surprises that we will discover toghether each game."
 
 #: templates/base.html:75
 msgid "&iexcl;XHTML 1.0 Strict V&aacute;lido!"
@@ -779,7 +779,7 @@ msgstr "Do you really want to delete your reservation?"
 
 #: templates/canchas/confirmar.html:11
 msgid "Descripci&oacute;n de la reserva"
-msgstr "Reservation's description"
+msgstr "Reservation&apos;s description"
 
 #: templates/canchas/confirmar.html:13
 msgid "D&iacute;a"
@@ -828,7 +828,7 @@ msgstr "de"
 #: templates/canchas/index.html:30 templates/canchas/index.html.py:53
 #: templates/canchas/reserva_list.html:23
 msgid "Junto a"
-msgstr "Next to"
+msgstr "With"
 
 #: templates/canchas/index.html:33 templates/canchas/reserva_list.html:27
 msgid "el"
@@ -856,7 +856,7 @@ msgstr "Invited"
 
 #: templates/canchas/index.html:95
 msgid "No olvide ingresar el n&uacute;mero de socio de su compa&ntilde;ero."
-msgstr "Don't forget to type your partner's member number."
+msgstr "Don&apos;t forget to type your partner&apos;s member number."
 
 #: templates/canchas/index.html:96
 msgid ""
@@ -866,7 +866,7 @@ msgstr "If you are going to play with someone who is not a member, you have to e
 
 #: templates/canchas/index.html:97
 msgid "No olvide elegir con quien desea jugar."
-msgstr "Don't forget to choose your partner."
+msgstr "Don&apos;t forget to choose your partner."
 
 #: templates/canchas/index.html:98 templates/canchas/reservar.html:35
 msgid ""
@@ -874,11 +874,19 @@ msgid ""
 "baja pero s&iacute; un tel&eacute;fono con el cual puede hacer la "
 "cancelaci&oacute;n telef&oacute;nicamente. Si no la marca solo Ud puede "
 "darla de baja."
-msgstr "This is useful when you don't have a computer and/or an Internet conection available, but you do have a phone. If you check this you can call and have an administrator cancel your reservation."
+msgstr "This is useful when you don&apos;t have a computer and/or an Internet conection available, but you do have a phone. If you check this you can call and have an administrator cancel your reservation."
 
 #: templates/canchas/index.html:100
 msgid "N&uacute;mero de socio"
 msgstr "Member number"
+
+#: templates/canchas/index.html:112
+msgid "Cancelable por admin"
+msgstr "Admin can cancel"
+
+#: templates/canchas/index.html:112
+msgid "&iquest;Qu&eacute; es esto?"
+msgstr "What&apos;s this?"
 
 #: templates/canchas/index.html:139
 msgid "Ma&ntilde;ana"
@@ -886,7 +894,7 @@ msgstr "Tomorrow"
 
 #: templates/canchas/index.html:154
 msgid "No puede realizar otra reserva, ya tiene una pendiente."
-msgstr "You can't make another reservation, you have one pending already."
+msgstr "You can&apos;t make another reservation, you have one pending already."
 
 #: templates/canchas/login.html:14
 msgid "Autentificarse"
@@ -940,17 +948,19 @@ msgid ""
 "las <strong>%(hora)s:00 horas</strong> en la cancha \"<strong>%(cancha)s</"
 "strong>\" con un costo de <strong>$U%(costo)s</strong>.\n"
 "                "
-msgstr "You wish to play the day <strong>%(dia)s</strong> at <strong>%(hora)s:00</strong> in the \"<strong>%(cancha)s</strong>\" court, which costs <strong>$U%(costo)s</strong>.\n"
+msgstr ""
+"\n"
+"You wish to play the day <strong>%(dia)s</strong> at <strong>%(hora)s:00</strong> in the \"<strong>%(cancha)s</strong>\" court, which costs <strong>$U%(costo)s</strong>."
 
 #: templates/canchas/reservar.html:16
 msgid "Ingrese el n&uacute;mero de socio de su compa&ntilde;ero."
-msgstr "input your partner's member number."
+msgstr "input your partner&apos;s member number."
 
 #: templates/canchas/reservar.html:22
 msgid ""
 "Si su compa&ntilde;ero no es socio, no se preocupe, puede ingresar nombre y "
 "c&eacute;dula de la persona."
-msgstr "If your partner is not a member of our club, don't worry, you can still play with him/her by introducing his/her name and document."
+msgstr "If your partner is not a member of our club, don&apos;t worry, you can still play with him/her by introducing his/her name and document."
 
 #: templates/canchas/reservar.html:28
 msgid ""
@@ -972,7 +982,7 @@ msgstr "members"
 
 #: templates/canchas/socio_list.html:17
 msgid "Número de socio"
-msgstr "Member's number"
+msgstr "Member&apos;s number"
 
 #: templates/canchas/socio_list.html:29
 msgid "Fecha de nacimiento"
