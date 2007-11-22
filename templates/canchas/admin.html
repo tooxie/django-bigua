@@ -15,7 +15,8 @@
         <ul>
             <li>{% trans "Socios" %}
                 <ul>
-                    <li><a href="/administrador/socios/"><img src="/media/images/agenda.png" alt="{% trans "Agenda de socios" %}" /> {% trans "Directorio" %}</a></li>
+                    <li><a href="http://localhost:8080/bigua/SrvltAjx?accion=cargarPagina&pagina=mantenimientoUsuario.jsp&idioma={{ DEFAULT_LANGUAGE_CODE }}&nroUsuario={{ user.username }}"><img src="/media/images/socio_nuevo.png" alt="{% trans "Socio nuevo" %}" /> {% trans "Ingresar nuevo" %}</a> (java)</li>
+                    <li><a href="/administrador/socios/"><img src="/media/images/agenda.png" alt="{% trans "Agenda de socios" %}" /> {% trans "Directorio" %}</a> (django)</li>
                     <li><a href="/administrador/socio/nuevo/"><img src="/media/images/socio_nuevo.png" alt="{% trans "Socio nuevo" %}" /> {% trans "Ingresar nuevo" %}</a></li>
                 </ul>
                 
