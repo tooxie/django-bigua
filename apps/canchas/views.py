@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django import newforms as forms
 from django.contrib import auth
 from models import *
+from datetime import date, datetime, timedelta
 to_response = render_response('canchas/')
 
 # Create your views here.
@@ -225,6 +226,30 @@ def cancelar(request):
             else:
                 return 'confirmar.html', { 'reserva': reserva }
         except:
+            if 'next' in post:
+                return HttpResponseRedirect(post['next'])
+            else:
+                return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
+
+@to_response
+def sancionar(request):
+    if request.method == 'POST':
+        post=request.POST.copy()
+        sancionar_a=User.objects.get(id=post['usuario'])
+        try:
+            sancion=Sancion.objects.get(socio=sancionar_a)
+            hasta_cuando=sancion.hasta+timedelta(7)
+            sancion.save()
+            if 'next' in post:
+                return HttpResponseRedirect(post['next'])
+            else:
+                return HttpResponseRedirect('/')
+        except:
+            hasta_cuando=date.today()+timedelta(7)
+            sancion=Sancion(socio=sancionar_a, hasta=hasta_cuando)
+            sancion.save()
             if 'next' in post:
                 return HttpResponseRedirect(post['next'])
             else:

@@ -124,7 +124,8 @@ class Socio(models.Model):
             from exceptions import SocioDeudorError
             raise SocioDeudorError, u_(u'Usted tiene una deuda con el club, por favor regularice su situación para poder realizar reservas.')
         # Si está sancionado
-        sancion = self.user.sanciones.filter(hasta__gt=date.today())
+        sancion = Sancion.objects.filter(socio=self.user, hasta__gt=date.today())
+        print sancion
         if len(sancion) > 0:
             from exceptions import SocioSancionadoError
             raise SocioSancionadoError, u_(u'Lo sentimos, pero usted tiene una sanción en curso, la cual le impide realizar reservas. En menos de una semana podrá continuar disfrutando de nuestro servicio.')
@@ -164,7 +165,7 @@ class Sancion(models.Model):
         help_text=_(u'¿Cuándo termina la sanción?'))
 
     class Translation(Translation):
-        razon = models.CharField(_(u'Razón'), max_length=255,
+        razon = models.CharField(_(u'Razón'), max_length=255, blank=True, null=True,
             help_text=_(u'Breve razón de la sanción.'))
 
     class Admin:

@@ -71,6 +71,9 @@ JS_PATH = '%sjs/' % MEDIA_URL
 TEMPLATE_DIRS = (
     join(PROJECT_ABSOLUTE_DIR, "templates"),
 )
+ADMIN_TEMPLATE_DIRS = (
+    join(PROJECT_ABSOLUTE_DIR, "templates"),
+)
 
 # Add apps/ dir to python path.
 sys.path.append(join(PROJECT_ABSOLUTE_DIR, "apps"))

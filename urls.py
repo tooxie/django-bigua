@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     (r'^administrador/$', 'canchas.views_admin.index'),
     (r'^administrador/socio/nuevo/$', 'canchas.views_admin.socio_nuevo'),
     (r'^administrador/reservar/$', 'canchas.views_admin.reservar'),
+    (r'^administrador/reserva/sancionar/$', 'canchas.views.sancionar'),
 
     (r'^admin/', include('django.contrib.admin.urls')),
 )
