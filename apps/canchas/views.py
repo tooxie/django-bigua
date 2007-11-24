@@ -75,7 +75,7 @@ def do_logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/')
 
-# Forgive me Guido for I have sin...
+# Una ofrenda a Guido
 #FIXME: Un FIXME grande como una casa!!!
 @login_required
 def tablas(request):
@@ -98,6 +98,8 @@ def tablas(request):
             except Reserva.DoesNotExist, e:
                 pass
         if mi_reserva is not None:
+            # Si tiene reservas pendientes no puede realizar
+            # otra, así que termino acá y le mando el html.
             return { 'puede_reservar': False, 'mes': mes_to_string(datetime.today().month), 'reserva': mi_reserva, 'reservas_canceladas': canceladas }
 
     # Interfaz de reserva
@@ -105,36 +107,9 @@ def tablas(request):
     # Solo se puede reservar a las horas en punto.
     club = Club.objects.get(id=1)
     horas = club.get_horas()
-    html_hoy, html_man = '', ''
-    # HTML para reservar hoy
-    for hora in horas:
-        html_hoy += '<tr>'
-        html_hoy += '<td class="tdhora">%i:00 hs</td>' % hora
-        for cancha in canchas:
-            if cancha.esta_libre(hora, datetime.today().day):
-                html_hoy += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'), 'cancha': cancha.id, 'dia': datetime.today().day, 'hora': hora }
-            else:
-                html_hoy += '<td class="ocupada" title="%(ocupada)s"><span class="escondido">%(ocupada)s</span>&nbsp;</td>' % { 'ocupada': u_(u'Ocupada') }
-        html_hoy += '</tr>'
-    # HTML para reservar mañana
-    for hora in horas:
-        html_man += '<tr>'
-        html_man += '<td class="tdhora">%i:00 hs</td>' % hora
-        for cancha in canchas:
-            maniana=datetime.today()+timedelta(1)
-            if cancha.esta_libre(hora, maniana.day):
-                html_man += '<td class="libre"><a href="/reservar/%(cancha)i/%(dia)i/%(hora)i/" title="%(reservar)s" class="reserva_link"><span class="escondido">%(reservar)s</span>&nbsp;</a></td>' % { 'reservar': u_(u'Reservar'),'cancha': cancha.id, 'dia': datetime.today().day + 1, 'hora': hora }
-            else:
-                html_man += '<td class="ocupada" title="%(ocupada)s"><span class="escondido">%(ocupada)s</span>&nbsp;</td>' % { 'ocupada': u_(u'Ocupada') }
-        html_man += '</tr>'
-    # - - - - - - - - - - - - - - - #
-    hoy, maniana = {}, {}
-    for hora in horas:
-        for cancha in canchas:
-            hoy[hora] = cancha.esta_libre(hora, date.today().day)
 
     maniana = "%(dia)i-%(mes)i-%(anio)i" % { 'dia': datetime.today().day + 1, 'mes': datetime.today().month, 'anio': datetime.today().year }
-    return { 'canchas': canchas, 'hoy': hoy, 'maniana': maniana, 'tabla_hoy': html_hoy, 'tabla_man': html_man, 'puede_reservar': request.user.get_profile().puede_reservar(), 'reservas_canceladas': canceladas }
+    return { 'canchas': canchas, 'maniana': maniana, 'puede_reservar': request.user.get_profile().puede_reservar(), 'reservas_canceladas': canceladas, 'horas': horas }
 
 @login_required
 @to_response

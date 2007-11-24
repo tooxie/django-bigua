@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n canchas_utils %}
 {% block css %}
     <link rel="stylesheet" media="print" href="{{ CSS_PATH }}print.css" type="text/css" />
 {% endblock %}
@@ -129,7 +129,16 @@
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}
                 </tr>
-                {{ tabla_hoy }}
+                {% for hora in horas %}
+                    <tr>
+                        <td>
+                            {{ hora }}:00 hs
+                        </td>
+                        {% for cancha in canchas %}
+                            {% estado_cancha cancha hora hoy %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
             </table>
         </div>
 
@@ -144,7 +153,16 @@
                         <td style="text-align: center;">{{ cancha.nombre }}</td>
                     {% endfor %}
                 </tr>
-                {{ tabla_man }}
+                {% for hora in horas %}
+                    <tr>
+                        <td>
+                            {{ hora }}:00 hs
+                        </td>
+                        {% for cancha in canchas %}
+                            {% estado_cancha cancha hora mañana %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
             </table>
         </div>
         {% else %}

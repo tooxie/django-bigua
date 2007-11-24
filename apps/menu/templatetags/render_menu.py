@@ -1,4 +1,4 @@
-from django.template import Library, Node
+from django.template import Library, Node, TemplateSyntaxError
 from menu.models import Menu, Link
 from string import lower
 
