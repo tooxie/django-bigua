@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block javascript %}
+    <script type="text/javascript" src="/media/js/jquery.js"></script>
+    <script type="text/javascript" src="/media/js/ajax_usuario.js"></script>
+{% endblock %}
 {% block content %}
     {% if user.is_staff %}
     <fieldset>
         <legend>{% trans "Nuevo Socio" %}</legend>
+        <p id="loading">
+            {% trans "Cargando usuario..." %}
+        </p>
         <form method="post" action="/administrador/socio/nuevo/" id="newuserform">
             {{ socio_form.as_p }}
             <div>

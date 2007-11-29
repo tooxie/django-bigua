@@ -69,11 +69,49 @@ class Cuota(models.Model):
         verbose_name = 'Cuota'
         verbose_name_plural = 'Cuotas'
 
+class SocioIncompleto(models.Model):
+    socio = models.ForeignKey(User, related_name="incompleto")
+    documento = models.CharField(max_length=150, blank=True, null=True)
+    numero = models.CharField(max_length=150, blank=True, null=True)
+    primer_nombre = models.CharField(max_length=150, blank=True, null=True)
+    segundo_nombre = models.CharField(max_length=150, blank=True, null=True)
+    primer_apellido = models.CharField(max_length=150, blank=True, null=True)
+    segundo_apellido = models.CharField(max_length=150, blank=True, null=True)
+    nacimiento = models.CharField(max_length=150, blank=True, null=True)
+    sexo = models.CharField(max_length=150, blank=True, null=True)
+    domicilio = models.CharField(max_length=150, blank=True, null=True)
+    email = models.CharField(max_length=150, blank=True, null=True)
+    ficha_medica = models.CharField(max_length=150, blank=True, null=True)
+    ultimo_mes = models.CharField(max_length=150, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.socio
+
+    def save(self):
+        if not self.id:
+            try:
+                socio=SocioIncompleto.objects.get(id=self.socio.id)
+                socio.documento=self.documento
+                socio.numero=self.numero
+                socio.primer_nombre=self.primer_nombre
+                socio.segundo_nombre=self.segundo_nombre
+                socio.primer_apellido=self.primer_apellido
+                socio.segundo_apellido=self.segundo_apellido
+                socio.nacimiento=self.nacimiento
+                socio.sexo=self.sexo
+                socio.domicilio=self.domicilio
+                socio.email=self.email
+                socio.ficha_medica=self.ficha_medica
+                socio.ultimo_mes=self.ultimo_mes
+                socio.save()
+            except:
+                super(SocioIncompleto, self).save()
+
 class Socio(models.Model):
     from choices import SEXO_CHOICES
 
     user = models.ForeignKey(User, unique=True)
-    cedula = models.CharField(_(u'Documento de Identidad'), max_length=15,
+    documento = models.CharField(_(u'Documento de Identidad'), max_length=15,
         help_text=_(u'Documento de Identidad del nuevo socio.'))
     domicilio = models.CharField(_(u'Domicilio'), max_length=255, blank=True, null=True,
         help_text=_(u'Domicilio donde vive el socio.'))

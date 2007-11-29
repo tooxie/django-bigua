@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'^cancelar/reserva/$', 'canchas.views.cancelar'),
     (r'^administrador/$', 'canchas.views_admin.index'),
     (r'^administrador/socio/nuevo/$', 'canchas.views_admin.socio_nuevo'),
+    (r'^administrador/socio/formulario/$', 'canchas.views_ajax.get_form_socio'),
     (r'^administrador/reservar/$', 'canchas.views_admin.reservar'),
     (r'^administrador/reserva/sancionar/$', 'canchas.views.sancionar'),
 

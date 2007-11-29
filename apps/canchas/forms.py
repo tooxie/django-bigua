@@ -38,12 +38,12 @@ class NuevoSocioForm(forms.Form):
     primer_apellido = forms.CharField(label=_(u'Primer Apellido'), max_length=30)
     segundo_apellido = forms.CharField(label=_(u'Segundo Apellido'), max_length=30, required=False)
     fecha_de_nacimiento = forms.DateField(label=_(u'Fecha de Nacimiento'), required=False,
-        help_text=_(u'Formato de fecha: aaaa-mm-dd'))
+        help_text=_(u'(aaaa-mm-dd)'))
     sexo = forms.ChoiceField(label=_(u'Sexo'), choices=SEXO_CHOICES, widget=forms.RadioSelect)
     domicilio = forms.CharField(label=_(u'Dirección'), max_length=150, required=False)
     email = forms.EmailField(label=_(u'e-Mail'), required=False)
     vencimiento_ficha_medica = forms.DateField(label=_(u'Vencimiento de Ficha Médica'),
-        help_text=_(u'Formato de fecha: aaaa-mm-dd'))
+        help_text=_(u'(aaaa-mm-dd)'))
     ultima_cuota_paga = forms.ModelChoiceField(label=_(u'Última Cuota Paga'), queryset=Cuota.objects.all())
     password1 = forms.CharField(label=_(u'Contraseña'), widget=forms.PasswordInput)
     password2 = forms.CharField(label=_(u'Repita la Contraseña'), widget=forms.PasswordInput)
