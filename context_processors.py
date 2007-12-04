@@ -1,4 +1,4 @@
-from settings import CSS_PATH, JS_PATH, MEDIA_URL
+from local_settings import CSS_PATH, JS_PATH, MEDIA_URL
 # from flash.models import Flash
 
 def urls(request):

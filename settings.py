@@ -20,6 +20,8 @@ INSTALLED_APPS = (
     'canchas',
 )
 
+AUTH_PROFILE_MODULE = 'canchas.Socio'
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,15 +59,6 @@ SITE_ID = 1
 SECRET_KEY = '+h7%#*o!3^ko2_^4ZA27#.,a.,N^^7s7s7^(CRGL&&^5lax1&sw(uuf'
 
 ROOT_URLCONF = '%s.urls' % PROJECT_NAME
-
-
-# MEDIA
-MEDIA_ROOT = PROJECT_ABSOLUTE_DIR + "/media/"
-MEDIA_URL = '/media/'
-ADMIN_MEDIA_PREFIX = '/admin_media/'
-
-CSS_PATH = '%scss/' % MEDIA_URL
-JS_PATH = '%sjs/' % MEDIA_URL
 
 # TEMPLATES
 TEMPLATE_DIRS = (
